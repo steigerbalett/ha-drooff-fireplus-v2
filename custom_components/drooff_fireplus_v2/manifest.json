@@ -1,10 +1,16 @@
 {
   "domain": "drooff_fireplus_v2",
   "name": "Drooff fire+ V2",
+  "categories": [
+    "climate.thermostats_heating"
+  ],
   "codeowners": [
     "@steigerbalett"
   ],
   "config_flow": true,
+  "connectivity": [
+    "network"
+  ],
   "dependencies": [
     "frontend",
     "http"
