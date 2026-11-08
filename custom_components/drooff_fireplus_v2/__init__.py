@@ -1,8 +1,10 @@
 """
-Custom integration to integrate drooff_fireplus with Home Assistant.
+Drooff fire+ V2: custom integration for the Drooff fire+ combustion control.
+
+Based on the original integration by Thorsten Ehlers (@tehlers).
 
 For more details about this integration, please refer to
-https://github.com/tehlers/ha-drooff-fireplus
+https://github.com/steigerbalett/ha-drooff-fireplus
 """
 
 from __future__ import annotations
@@ -23,7 +25,7 @@ from homeassistant.helpers.event import async_track_time_interval
 from homeassistant.helpers.start import async_at_started
 from homeassistant.loader import async_get_loaded_integration
 
-from custom_components.drooff_fireplus.const import (
+from custom_components.drooff_fireplus_v2.const import (
     CARD_FILENAME,
     CARD_URL,
     CARD_VERSION,

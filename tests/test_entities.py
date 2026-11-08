@@ -8,7 +8,7 @@ import pytest
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import entity_registry as er
 
-from custom_components.drooff_fireplus.const import DOMAIN
+from custom_components.drooff_fireplus_v2.const import DOMAIN
 
 from .conftest import (
     CONFIGURATION_V1,

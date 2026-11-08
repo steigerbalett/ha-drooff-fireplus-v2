@@ -9,4 +9,4 @@ homeassistant:
 logger:
   default: info
   logs:
-    custom_components.drooff_fireplus: debug
+    custom_components.drooff_fireplus_v2: debug

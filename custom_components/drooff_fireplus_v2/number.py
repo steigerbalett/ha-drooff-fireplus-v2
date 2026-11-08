@@ -1,4 +1,4 @@
-"""Number platform for drooff_fireplus."""
+"""Number platform for drooff_fireplus_v2."""
 
 from __future__ import annotations
 

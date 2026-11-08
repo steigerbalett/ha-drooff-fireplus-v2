@@ -12,7 +12,7 @@ from homeassistant.setup import async_setup_component
 from homeassistant.util import dt as dt_util
 from pytest_homeassistant_custom_component.common import async_fire_time_changed, async_mock_service
 
-from custom_components.drooff_fireplus import BLUEPRINTS, async_install_blueprints
+from custom_components.drooff_fireplus_v2 import BLUEPRINTS, async_install_blueprints
 
 from .conftest import mock_fireplus, setup_integration
 
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from pytest_homeassistant_custom_component.common import MockConfigEntry
     from pytest_homeassistant_custom_component.test_util.aiohttp import AiohttpClientMocker
 
-BLUEPRINT = "drooff_fireplus/wood_required_notification.yaml"
+BLUEPRINT = "drooff_fireplus_v2/wood_required_notification.yaml"
 STATUS = "sensor.drooff_fire_operation_status"
 
 

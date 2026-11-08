@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 from homeassistant.util import dt as dt_util
 from pytest_homeassistant_custom_component.common import async_fire_time_changed
 
-from custom_components.drooff_fireplus.statistics import FireplusEvent, FireplusStatistics, parse_events
+from custom_components.drooff_fireplus_v2.statistics import FireplusEvent, FireplusStatistics, parse_events
 
 from .conftest import EVENTS, events_response, mock_fireplus, setup_integration
 from .test_entities import entity_id

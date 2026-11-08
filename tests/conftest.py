@@ -9,7 +9,7 @@ import pytest
 from homeassistant.const import CONF_HOST
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.drooff_fireplus.const import CONF_FORCE_IPV4, CONF_POLLING_INTERVAL, DOMAIN
+from custom_components.drooff_fireplus_v2.const import CONF_FORCE_IPV4, CONF_POLLING_INTERVAL, DOMAIN
 
 if TYPE_CHECKING:
     from collections.abc import Generator

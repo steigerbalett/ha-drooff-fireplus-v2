@@ -2,7 +2,7 @@
 
 [← Zurück zur Integration](../README.md)
 
-Eine Dashboard-Card für die Home-Assistant-Integration [Drooff fire+](https://github.com/tehlers/ha-drooff-fireplus). Sie zeigt ein animiertes Feuer, dessen Größe dem aktuellen Abbrandzustand folgt, neben den Werten und Bedienelementen der fire+ Abbrandsteuerung.
+Eine Dashboard-Card für die Home-Assistant-Integration [Drooff fire+ V2](https://github.com/steigerbalett/ha-drooff-fireplus). Sie zeigt ein animiertes Feuer, dessen Größe dem aktuellen Abbrandzustand folgt, neben den Werten und Bedienelementen der fire+ Abbrandsteuerung.
 
 **[English documentation](dashboard-card.md)**
 
@@ -20,7 +20,7 @@ Eine Dashboard-Card für die Home-Assistant-Integration [Drooff fire+](https://g
   - *Glutabbrand*: hell glühendes Glutbett mit kleinen Flämmchen und Funken
 - Tür offen: gestrichelter, pulsierender Rahmen um die Scheibe
 - Betriebsstatus als farbiges Badge
-- Alarmanzeige, nur sichtbar, wenn etwas nicht stimmt: Fehler des fire+ (die Zugwarner-Fehler „Kaminzug zu gering“ und „Kein Kaminzug“ als **Zugwarnung** gekennzeichnet), Tür zu lange offen, Problem mit dem Feinstaubfilter
+- Alarmanzeige, nur sichtbar, wenn etwas nicht stimmt: Fehler des fire+ (die Zugwarner-Fehler „Kaminzug zu niedrig“ und „Kein Kaminzug“ als **Zugwarnung** gekennzeichnet), Tür zu lange offen, Problem mit dem Feinstaubfilter
 - Temperatur mit Ziel- und Maximaltemperatur, Anheizfortschritt, Luftschieber, Kaminzug
 - **Empfohlene Holzauflage als Holzscheite** (Stapel gespaltener Scheite, ein halbes Scheit wird kleiner gezeigt)
 - **Optional: Bild deines Ofens**, das Feuer erscheint dann in seinem Sichtfenster (Standard ist die Feuerstelle)

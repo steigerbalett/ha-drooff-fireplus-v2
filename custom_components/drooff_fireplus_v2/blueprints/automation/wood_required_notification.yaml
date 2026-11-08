@@ -24,7 +24,7 @@ blueprint:
     überschrieben. / The integration installs and updates this file, changes
     are overwritten.
   domain: automation
-  source_url: https://github.com/tehlers/ha-drooff-fireplus/blob/main/custom_components/drooff_fireplus/blueprints/automation/wood_required_notification.yaml
+  source_url: https://github.com/steigerbalett/ha-drooff-fireplus/blob/main/custom_components/drooff_fireplus_v2/blueprints/automation/wood_required_notification.yaml
   author: Drooff fire+ integration
   homeassistant:
     min_version: "2026.3.0"
@@ -46,7 +46,7 @@ blueprint:
       selector:
         entity:
           filter:
-            - integration: drooff_fireplus
+            - integration: drooff_fireplus_v2
               domain: sensor
     wood_load_sensor:
       name: Empfohlene Holzauflage / Recommended wood load (optional)
@@ -57,7 +57,7 @@ blueprint:
       selector:
         entity:
           filter:
-            - integration: drooff_fireplus
+            - integration: drooff_fireplus_v2
               domain: sensor
     section:
       name: Aktion bei Holz nachlegen / Action when wood is required

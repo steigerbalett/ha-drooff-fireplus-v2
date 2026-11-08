@@ -1,10 +1,10 @@
-"""Constants for drooff_fireplus."""
+"""Constants for drooff_fireplus_v2."""
 
 from logging import Logger, getLogger
 
 LOGGER: Logger = getLogger(__package__)
 
-DOMAIN = "drooff_fireplus"
+DOMAIN = "drooff_fireplus_v2"
 
 DEFAULT_HOST = "fire"
 

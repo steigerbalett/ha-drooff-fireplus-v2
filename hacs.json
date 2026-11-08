@@ -1,5 +1,7 @@
 {
-    "name": "Drooff fire+",
+    "name": "Drooff fire+ V2",
     "homeassistant": "2026.3.2",
-    "hacs": "2.0.5"
+    "hacs": "2.0.5",
+    "zip_release": true,
+    "filename": "drooff_fireplus_v2.zip"
 }

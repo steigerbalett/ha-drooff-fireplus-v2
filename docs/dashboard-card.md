@@ -2,7 +2,7 @@
 
 [← Back to the integration](../README.md)
 
-A Lovelace dashboard card for the Home Assistant integration [Drooff fire+](https://github.com/tehlers/ha-drooff-fireplus). It shows an animated fire whose size follows the current combustion state, next to the values and controls of the fire+ combustion control.
+A Lovelace dashboard card for the Home Assistant integration [Drooff fire+ V2](https://github.com/steigerbalett/ha-drooff-fireplus). It shows an animated fire whose size follows the current combustion state, next to the values and controls of the fire+ combustion control.
 
 **[Deutsche Anleitung](dashboard-card.de.md)**
 

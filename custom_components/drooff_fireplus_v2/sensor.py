@@ -1,4 +1,4 @@
-"""Sensor platform for drooff_fireplus."""
+"""Sensor platform for drooff_fireplus_v2."""
 
 from __future__ import annotations
 

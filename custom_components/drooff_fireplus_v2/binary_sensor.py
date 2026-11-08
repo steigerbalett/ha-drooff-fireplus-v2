@@ -1,4 +1,4 @@
-"""Binary sensor platform for drooff_fireplus."""
+"""Binary sensor platform for drooff_fireplus_v2."""
 
 from __future__ import annotations
 

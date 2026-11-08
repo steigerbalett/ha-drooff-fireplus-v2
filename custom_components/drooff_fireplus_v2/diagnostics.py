@@ -1,4 +1,4 @@
-"""Diagnostics support for drooff_fireplus."""
+"""Diagnostics support for drooff_fireplus_v2."""
 
 from __future__ import annotations
 

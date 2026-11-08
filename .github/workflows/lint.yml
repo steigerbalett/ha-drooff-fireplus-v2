@@ -36,4 +36,4 @@ jobs:
         run: python3 -m ruff format . --check
 
       - name: Check dashboard card syntax
-        run: node --check custom_components/drooff_fireplus/frontend/drooff-fireplus-card.js
+        run: node --check custom_components/drooff_fireplus_v2/frontend/drooff-fireplus-card.js

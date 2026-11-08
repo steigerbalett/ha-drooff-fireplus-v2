@@ -1,4 +1,4 @@
-"""DataUpdateCoordinator for drooff_fireplus."""
+"""DataUpdateCoordinator for drooff_fireplus_v2."""
 
 from __future__ import annotations
 

@@ -1,0 +1,44 @@
+name: Release
+
+# Attaches drooff_fireplus_v2.zip to every published release. HACS installs this file
+# (hacs.json: zip_release), so its downloads are counted by GitHub and shown in the README.
+
+on:
+  release:
+    types:
+      - published
+
+permissions: {}
+
+jobs:
+  zip:
+    name: "Attach the integration as ZIP"
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check that the tag matches the version in manifest.json
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          version=$(python3 -c "import json; print(json.load(open('custom_components/drooff_fireplus_v2/manifest.json'))['version'])")
+          if [ "${TAG#v}" != "$version" ]; then
+            echo "::error::Tag $TAG does not match version $version in manifest.json"
+            exit 1
+          fi
+
+      - name: Create the ZIP
+        run: |
+          cd custom_components/drooff_fireplus_v2
+          zip -r -X "$GITHUB_WORKSPACE/drooff_fireplus_v2.zip" . -x "__pycache__/*" "*.pyc"
+
+      - name: Upload the ZIP to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$TAG" drooff_fireplus_v2.zip --clobber --repo "$GITHUB_REPOSITORY"

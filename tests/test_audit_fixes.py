@@ -9,7 +9,7 @@ from unittest.mock import patch
 import pytest
 from homeassistant.exceptions import ServiceValidationError
 
-from custom_components.drooff_fireplus import api
+from custom_components.drooff_fireplus_v2 import api
 
 from .conftest import mock_fireplus, setup_integration
 from .test_config_flow import USER_INPUT

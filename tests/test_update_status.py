@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 import pytest
 from homeassistant.helpers import entity_registry as er
 
-from custom_components.drooff_fireplus.api import FireplusUpdateResult, FireplusUpdateStatus
+from custom_components.drooff_fireplus_v2.api import FireplusUpdateResult, FireplusUpdateStatus
 
 from .conftest import UPDATE, mock_fireplus, setup_integration
 from .test_entities import entity_id

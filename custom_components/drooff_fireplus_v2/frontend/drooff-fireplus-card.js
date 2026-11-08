@@ -1,13 +1,13 @@
 /*
  * Drooff fire+ Card for Home Assistant
- * Custom Lovelace card for the integration https://github.com/tehlers/ha-drooff-fireplus
+ * Custom Lovelace card for the integration https://github.com/steigerbalett/ha-drooff-fireplus
  *
  * Shows an animated flame whose size follows the current combustion state
  * next to the values of the fire+ combustion control. Every value can be hidden.
  */
 
 const CARD_VERSION = "1.0.7";
-const DOMAIN = "drooff_fireplus";
+const DOMAIN = "drooff_fireplus_v2";
 
 /* translation_key -> entity domain, plus entity_id suffixes as fallback */
 const KEYS = {
@@ -3750,7 +3750,7 @@ if (!window.customCards.some((c) => c.type === "drooff-fireplus-card")) {
     name: "Drooff fire+ Card",
     description: "Kaminofen mit Flammenanimation und Werten der Drooff fire+ Abbrandsteuerung",
     preview: true,
-    documentationURL: "https://github.com/tehlers/ha-drooff-fireplus",
+    documentationURL: "https://github.com/steigerbalett/ha-drooff-fireplus",
   });
 }
 

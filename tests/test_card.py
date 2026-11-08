@@ -23,6 +23,6 @@ async def test_card_is_served(
     mock_fireplus(aioclient_mock)
     await setup_integration(hass, config_entry)
     client = await hass_client()
-    response = await client.get("/drooff_fireplus/drooff-fireplus-card.js")
+    response = await client.get("/drooff_fireplus_v2/drooff-fireplus-card.js")
     assert response.status == 200
     assert "customElements.define" in await response.text()
