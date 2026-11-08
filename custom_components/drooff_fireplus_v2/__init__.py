@@ -4,7 +4,7 @@ Drooff fire+ V2: custom integration for the Drooff fire+ combustion control.
 Based on the original integration by Thorsten Ehlers (@tehlers).
 
 For more details about this integration, please refer to
-https://github.com/steigerbalett/ha-drooff-fireplus
+https://github.com/steigerbalett/ha-drooff-fireplus-v2
 """
 
 from __future__ import annotations

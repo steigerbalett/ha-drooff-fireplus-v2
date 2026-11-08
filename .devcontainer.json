@@ -1,5 +1,5 @@
 {
-    "name": "ha-drooff-fireplus",
+    "name": "ha-drooff-fireplus-v2",
     "image": "mcr.microsoft.com/devcontainers/base:debian",
     "postCreateCommand": "scripts/setup",
     "forwardPorts": [

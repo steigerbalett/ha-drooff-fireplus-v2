@@ -2,7 +2,7 @@
 
 [← Zurück zur Integration](../README.md)
 
-Eine Dashboard-Card für die Home-Assistant-Integration [Drooff fire+ V2](https://github.com/steigerbalett/ha-drooff-fireplus). Sie zeigt ein animiertes Feuer, dessen Größe dem aktuellen Abbrandzustand folgt, neben den Werten und Bedienelementen der fire+ Abbrandsteuerung.
+Eine Dashboard-Card für die Home-Assistant-Integration [Drooff fire+ V2](https://github.com/steigerbalett/ha-drooff-fireplus-v2). Sie zeigt ein animiertes Feuer, dessen Größe dem aktuellen Abbrandzustand folgt, neben den Werten und Bedienelementen der fire+ Abbrandsteuerung.
 
 **[English documentation](dashboard-card.md)**
 

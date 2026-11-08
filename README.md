@@ -1,11 +1,11 @@
 # Drooff fire+ V2 for Home Assistant
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/docs/faq/custom_repositories/)
-[![Release](https://img.shields.io/github/v/release/steigerbalett/ha-drooff-fireplus)](https://github.com/steigerbalett/ha-drooff-fireplus/releases)
-[![Downloads](https://img.shields.io/github/downloads/steigerbalett/ha-drooff-fireplus/total?label=downloads)](https://github.com/steigerbalett/ha-drooff-fireplus/releases)
-[![Downloads of the latest release](https://img.shields.io/github/downloads/steigerbalett/ha-drooff-fireplus/latest/total?label=downloads%40latest)](https://github.com/steigerbalett/ha-drooff-fireplus/releases/latest)
-[![Validate](https://github.com/steigerbalett/ha-drooff-fireplus/actions/workflows/validate.yml/badge.svg)](https://github.com/steigerbalett/ha-drooff-fireplus/actions/workflows/validate.yml)
-[![License: MIT](https://img.shields.io/github/license/steigerbalett/ha-drooff-fireplus)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/steigerbalett/ha-drooff-fireplus-v2)](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases)
+[![Downloads](https://img.shields.io/github/downloads/steigerbalett/ha-drooff-fireplus-v2/total?label=downloads)](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases)
+[![Downloads of the latest release](https://img.shields.io/github/downloads/steigerbalett/ha-drooff-fireplus-v2/latest/total?label=downloads%40latest)](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases/latest)
+[![Validate](https://github.com/steigerbalett/ha-drooff-fireplus-v2/actions/workflows/validate.yml/badge.svg)](https://github.com/steigerbalett/ha-drooff-fireplus-v2/actions/workflows/validate.yml)
+[![License: MIT](https://img.shields.io/github/license/steigerbalett/ha-drooff-fireplus-v2)](LICENSE)
 
 **English** | [Deutsch](README.de.md)
 
@@ -17,7 +17,7 @@ A custom integration for [Home Assistant](https://www.home-assistant.io/) for th
 
 The idea and the foundation of this integration come from **Thorsten Ehlers ([@tehlers](https://github.com/tehlers))** and his [ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus). He worked out how the fire+ web application talks to the stove, built the integration and maintained it with the help of its contributors. Without all this preparatory work, this fork and version 2 would not exist. Thank you very much!
 
-Drooff fire+ V2 continues this work as an independent project, because the extensions became too large for the original repository. Please report problems with V2 [here](https://github.com/steigerbalett/ha-drooff-fireplus/issues), not to the original project.
+Drooff fire+ V2 continues this work as an independent project, because the extensions became too large for the original repository. Please report problems with V2 [here](https://github.com/steigerbalett/ha-drooff-fireplus-v2/issues), not to the original project.
 
 ## What is new in version 2
 
@@ -35,15 +35,15 @@ The full list of changes is in the [changelog](CHANGELOG.md).
 ### HACS
 
 1. Ensure that [HACS](https://hacs.xyz) is installed.
-2. In HACS, open the menu (three dots), choose *Custom repositories* and add `https://github.com/steigerbalett/ha-drooff-fireplus` with the type *Integration*.
+2. In HACS, open the menu (three dots), choose *Custom repositories* and add `https://github.com/steigerbalett/ha-drooff-fireplus-v2` with the type *Integration*.
 3. Search for "Drooff fire+ V2" in HACS and download it.
 4. Restart Home Assistant.
 
-[![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=steigerbalett&repository=ha-drooff-fireplus&category=integration)
+[![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=steigerbalett&repository=ha-drooff-fireplus-v2&category=integration)
 
 ### Manual installation
 
-1. Download `drooff_fireplus_v2.zip` from the [latest release](https://github.com/steigerbalett/ha-drooff-fireplus/releases/latest).
+1. Download `drooff_fireplus_v2.zip` from the [latest release](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases/latest).
 2. Unpack it into `custom_components/drooff_fireplus_v2` in the `config` directory of your Home Assistant.
 3. Restart Home Assistant.
 
