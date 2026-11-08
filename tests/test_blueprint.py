@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import pytest
+import yaml
 from homeassistant.setup import async_setup_component
 from homeassistant.util import dt as dt_util
 from pytest_homeassistant_custom_component.common import async_fire_time_changed, async_mock_service
@@ -104,6 +105,90 @@ async def test_all_channels_can_be_empty(hass: HomeAssistant, caplog: pytest.Log
     await set_status(hass, "wood_required")
     await wait(hass, 1)
     assert persistent == []
+    assert "Error" not in caplog.text
+
+
+async def test_pushover_preset_is_off(hass: HomeAssistant) -> None:
+    """The preset Pushover action is switched off, the Home Assistant notification is on."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    pushover = async_mock_service(hass, "notify", "pushover")
+    await setup_automation(hass, {})
+    await set_status(hass, "wood_required")
+    assert len(persistent) == 1
+    assert pushover == []
+
+
+def preset(key: str) -> list[dict[str, Any]]:
+    """Return the default of an input of the blueprint."""
+    loader = type("Loader", (yaml.SafeLoader,), {})
+    loader.add_constructor("!input", lambda ldr, node: ldr.construct_scalar(node))
+    source = (BLUEPRINTS / "automation" / "wood_required_notification.yaml").read_text(encoding="utf-8")
+    blueprint = yaml.load(source, Loader=loader)["blueprint"]  # noqa: S506
+    sections = blueprint["input"].values()
+    return next(section["input"][key]["default"] for section in sections if key in section.get("input", {}))
+
+
+@pytest.mark.parametrize(
+    ("key", "status", "priority", "sound"),
+    [
+        ("notify_actions", "wood_required", 0, "pushover"),
+        ("urgent_notify_actions", "wood_urgently_required", 1, "siren"),
+    ],
+)
+async def test_pushover_preset_switched_on(
+    hass: HomeAssistant, key: str, status: str, priority: int, sound: str
+) -> None:
+    """Switching the preset Pushover action on sends title, message, priority and sound."""
+    pushover = async_mock_service(hass, "notify", "pushover")
+    actions = [{**action, "enabled": True} for action in preset(key) if action["action"] == "notify.pushover"]
+    await setup_automation(hass, {"urgent_enabled": True, key: actions})
+    await set_status(hass, status)
+    assert len(pushover) == 1
+    assert pushover[0].data["data"] == {"priority": priority, "sound": sound}
+    assert pushover[0].data["title"] == "Kaminofen"
+
+
+@pytest.mark.parametrize(
+    "inputs",
+    [
+        {"notify_actions": [], "alexa_notify_entities": ["notify.kitchen_announce"]},
+        {
+            "notify_actions": None,
+            "custom_actions": None,
+            "alexa_media_players": None,
+            "alexa_notify_entities": ["notify.kitchen_announce"],
+            "notify_delay": None,
+            "echo_delay": None,
+            "custom_delay": None,
+            "title": None,
+            "message": None,
+            "echo_message": None,
+        },
+    ],
+)
+async def test_echo_only(hass: HomeAssistant, inputs: dict[str, Any], caplog: pytest.LogCaptureFixture) -> None:
+    """Echo alone is enough, also when the editor stores empty inputs as null."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    send_message = async_mock_service(hass, "notify", "send_message")
+    await setup_automation(hass, inputs)
+    await set_status(hass, "wood_required")
+    assert persistent == []
+    assert [call.data for call in send_message] == [
+        {"entity_id": ["notify.kitchen_announce"], "message": "Bitte Holz nachlegen."}
+    ]
+    assert "Error" not in caplog.text
+
+
+async def test_notification_only(hass: HomeAssistant, caplog: pytest.LogCaptureFixture) -> None:
+    """A notification alone is enough, Echo stays silent."""
+    pushover = async_mock_service(hass, "notify", "pushover")
+    alexa = async_mock_service(hass, "notify", "alexa_media")
+    send_message = async_mock_service(hass, "notify", "send_message")
+    await setup_automation(hass, {"notify_actions": notify("notify.pushover")})
+    await set_status(hass, "wood_required")
+    assert len(pushover) == 1
+    assert alexa == []
+    assert send_message == []
     assert "Error" not in caplog.text
 
 

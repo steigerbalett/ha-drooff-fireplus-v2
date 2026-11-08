@@ -17,28 +17,27 @@ Die Beschriftungen im Blueprint sind zweisprachig (Deutsch / Englisch), weil Hom
 
 ## Kanäle
 
-Jeder Kanal ist optional. Leere Kanäle tun nichts. Jeder Kanal hat eine eigene **Verzögerung**. Er meldet sich erst, wenn der fire+ so lange ununterbrochen „Holz nachlegen“ anzeigt. Wird vorher nachgelegt, kommt nichts.
+Jeder Kanal ist optional, ein einziger reicht, z. B. nur Echo oder nur Pushover. Leere Kanäle tun nichts. Jeder Kanal hat eine eigene **Verzögerung**. Er meldet sich erst, wenn der fire+ so lange ununterbrochen „Holz nachlegen“ anzeigt. Wird vorher nachgelegt, kommt nichts.
 
 | Kanal | Eingaben | Aufruf |
 |---|---|---|
-| Nachricht | Aktionen, vorbelegt mit einer Benachrichtigung in Home Assistant (`notify.persistent_notification`) | wie eingetragen |
+| Nachricht | Aktionen, vorbelegt mit einer Benachrichtigung in Home Assistant (`notify.persistent_notification`, eingeschaltet) und Pushover (`notify.pushover`, ausgeschaltet) | wie eingetragen |
 | Echo | Geräte von *Alexa Media Player* (HACS) mit Art „Ansage“ oder „TTS“; Notify-Entitäten von *Alexa Devices* (z. B. `notify.kueche_announce`); eigener Ansagetext | `notify.alexa_media`; `notify.send_message` |
 | Weitere Aktionen | Beliebige Aktionen, die Variablen `title` und `text` enthalten Titel und Nachricht | wie eingetragen |
 
 ### Nachricht per Pushover (oder Handy-App, Telegram, …)
 
-Unter **Nachricht: Aktionen** im Aktions-Editor:
+Pushover ist unter **Nachricht: Aktionen** schon vorbereitet, aber ausgeschaltet:
 
-1. Die vorbelegte Aktion öffnen, über das Drei-Punkte-Menü *Aktion ändern* bzw. eine neue Aktion hinzufügen und **Benachrichtigungen: Send a notification via pushover** wählen (bei der Handy-App *notify.mobile_app_…*).
-2. **Nachricht:** `{{ text }}` eintragen, **Titel:** `{{ title }}`.
-3. Optional unter **Daten** Pushover-Felder setzen, zum Beispiel:
-   ```yaml
-   priority: 1
-   sound: siren
-   ```
-4. Die vorbelegte Home-Assistant-Benachrichtigung löschen, wenn sie nicht mehr gebraucht wird.
+1. Bei der Aktion *Pushover* über das Drei-Punkte-Menü **Aktivieren** wählen.
+2. Unter **Daten** stehen Priorität und Ton, vorbelegt mit `priority: 0` und `sound: pushover`, bei „Dringend“ mit `priority: 1` und `sound: siren`. Weitere Pushover-Felder wie `url` oder `ttl` lassen sich dort ergänzen.
+3. Soll keine Benachrichtigung in Home Assistant erscheinen, diese Aktion ausschalten oder löschen.
 
-In YAML sieht das so aus:
+Für die Handy-App oder Telegram eine Aktion hinzufügen, z. B. *notify.mobile_app_…*, mit **Nachricht** `{{ text }}` und **Titel** `{{ title }}`.
+
+**Nur Echo:** beide vorbelegten Nachrichten-Aktionen ausschalten oder löschen und unter Echo Geräte oder Notify-Entitäten wählen.
+
+Die vorbereitete Pushover-Aktion für „Dringend“ sieht eingeschaltet in YAML so aus:
 ```yaml
 - action: notify.pushover
   data:

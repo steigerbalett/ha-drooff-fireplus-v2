@@ -84,19 +84,31 @@ blueprint:
         notify_actions:
           name: "Nachricht: Aktionen / Message: actions"
           description: >-
-            Vorbelegt ist eine Benachrichtigung in Home Assistant. Ersetze oder
-            ergänze sie z. B. durch "Benachrichtigungen: Pushover" (notify.pushover)
-            oder notify.mobile_app_… und lass title "{{ title }}" und
-            message "{{ text }}" stehen. Alle Felder der Aktion (z. B. Priorität
-            und Ton bei Pushover unter data) lassen sich im Editor setzen.
-            / Preset is a Home Assistant notification. Replace or extend it, e.g.
-            with notify.pushover or notify.mobile_app_…, and keep title
-            "{{ title }}" and message "{{ text }}".
+            Vorbelegt sind zwei Aktionen: eine Benachrichtigung in Home Assistant
+            (eingeschaltet) und Pushover (notify.pushover, ausgeschaltet).
+            Pushover einschalten: im Menü der Aktion "Aktivieren" wählen, Priorität
+            und Ton stehen unter data. Ohne Nachricht, z. B. nur mit Echo: beide
+            Aktionen ausschalten oder löschen. Weitere Dienste wie
+            notify.mobile_app_… lassen sich ergänzen, title "{{ title }}" und
+            message "{{ text }}" enthalten Titel und Nachricht.
+            / Preset are a Home Assistant notification (on) and Pushover
+            (notify.pushover, off). Turn Pushover on with "Enable" in the menu of
+            the action, priority and sound are under data. Without a message, e.g.
+            Echo only: turn off or delete both actions.
           default:
             - action: notify.persistent_notification
               data:
                 title: "{{ title }}"
                 message: "{{ text }}"
+            - action: notify.pushover
+              enabled: false
+              continue_on_error: true
+              data:
+                title: "{{ title }}"
+                message: "{{ text }}"
+                data:
+                  priority: 0
+                  sound: pushover
           selector:
             action: {}
         notify_delay:
@@ -194,19 +206,31 @@ blueprint:
         urgent_notify_actions:
           name: "Nachricht: Aktionen / Message: actions"
           description: >-
-            Vorbelegt ist eine Benachrichtigung in Home Assistant. Ersetze oder
-            ergänze sie z. B. durch "Benachrichtigungen: Pushover" (notify.pushover)
-            oder notify.mobile_app_… und lass title "{{ title }}" und
-            message "{{ text }}" stehen. Alle Felder der Aktion (z. B. Priorität
-            und Ton bei Pushover unter data) lassen sich im Editor setzen.
-            / Preset is a Home Assistant notification. Replace or extend it, e.g.
-            with notify.pushover or notify.mobile_app_…, and keep title
-            "{{ title }}" and message "{{ text }}".
+            Vorbelegt sind zwei Aktionen: eine Benachrichtigung in Home Assistant
+            (eingeschaltet) und Pushover (notify.pushover, ausgeschaltet).
+            Pushover einschalten: im Menü der Aktion "Aktivieren" wählen, Priorität
+            und Ton stehen unter data. Ohne Nachricht, z. B. nur mit Echo: beide
+            Aktionen ausschalten oder löschen. Weitere Dienste wie
+            notify.mobile_app_… lassen sich ergänzen, title "{{ title }}" und
+            message "{{ text }}" enthalten Titel und Nachricht.
+            / Preset are a Home Assistant notification (on) and Pushover
+            (notify.pushover, off). Turn Pushover on with "Enable" in the menu of
+            the action, priority and sound are under data. Without a message, e.g.
+            Echo only: turn off or delete both actions.
           default:
             - action: notify.persistent_notification
               data:
                 title: "{{ title }}"
                 message: "{{ text }}"
+            - action: notify.pushover
+              enabled: false
+              continue_on_error: true
+              data:
+                title: "{{ title }}"
+                message: "{{ text }}"
+                data:
+                  priority: 1
+                  sound: siren
           selector:
             action: {}
         urgent_notify_delay:
@@ -343,8 +367,8 @@ actions:
       c: "{{ urgent if use_urgent else normal }}"
       texts: "{{ defaults[language] if language in defaults else defaults.en }}"
       status: "{{ trigger.to_state.state }}"
-      title: "{{ c.title if c.title | length > 0 else texts.title }}"
-      message: "{{ c.message if c.message | length > 0 else texts[trigger.id] }}"
+      title: "{{ c.title if c.title else texts.title }}"
+      message: "{{ c.message if c.message else texts[trigger.id] }}"
       wood_load: "{{ states(wood_load_sensor) | float(0) if wood_load_sensor else 0 }}"
       text: >-
         {%- if wood_load > 0 -%}
@@ -352,11 +376,16 @@ actions:
         {%- else -%}
         {{ message }}
         {%- endif -%}
-      echo_text: "{{ c.echo_message if c.echo_message | length > 0 else text }}"
+      echo_text: "{{ c.echo_message if c.echo_message else text }}"
+      # Empty inputs may arrive as null, so lists and delays get a fallback
+      media_players: "{{ c.alexa_media_players or [] }}"
+      notify_entities: "{{ c.alexa_notify_entities or [] }}"
+      no_delay:
+        minutes: 0
   - parallel:
       # actions can not be stored in variables, so both lists are used directly
       - sequence:
-          - delay: "{{ c.notify_delay }}"
+          - delay: "{{ c.notify_delay or no_delay }}"
           - condition: template
             value_template: "{{ states(sensor) == status }}"
           - if:
@@ -366,33 +395,33 @@ actions:
             else: !input notify_actions
       - sequence:
           - condition: template
-            value_template: "{{ (c.alexa_media_players + c.alexa_notify_entities) | length > 0 }}"
-          - delay: "{{ c.echo_delay }}"
+            value_template: "{{ (media_players + notify_entities) | length > 0 }}"
+          - delay: "{{ c.echo_delay or no_delay }}"
           - condition: template
             value_template: "{{ states(sensor) == status }}"
           - if:
               - condition: template
-                value_template: "{{ c.alexa_media_players | length > 0 }}"
+                value_template: "{{ media_players | length > 0 }}"
             then:
               - action: notify.alexa_media
                 continue_on_error: true
                 data:
-                  target: "{{ c.alexa_media_players }}"
+                  target: "{{ media_players }}"
                   message: "{{ echo_text }}"
                   data:
-                    type: "{{ c.alexa_media_type }}"
+                    type: "{{ c.alexa_media_type or 'announce' }}"
           - if:
               - condition: template
-                value_template: "{{ c.alexa_notify_entities | length > 0 }}"
+                value_template: "{{ notify_entities | length > 0 }}"
             then:
               - action: notify.send_message
                 continue_on_error: true
                 target:
-                  entity_id: "{{ c.alexa_notify_entities }}"
+                  entity_id: "{{ notify_entities }}"
                 data:
                   message: "{{ echo_text }}"
       - sequence:
-          - delay: "{{ c.custom_delay }}"
+          - delay: "{{ c.custom_delay or no_delay }}"
           - condition: template
             value_template: "{{ states(sensor) == status }}"
           - if:

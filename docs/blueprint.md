@@ -17,17 +17,21 @@ The labels of the blueprint are bilingual (German / English), because Home Assis
 
 ## Channels
 
-Every channel is optional and has its own **delay** (*Verzögerung*). It only fires if the fire+ still asks for wood after the delay, so nothing is sent once the wood has been added.
+Every channel is optional, a single one is enough (e.g. Echo only or Pushover only), and each has its own **delay** (*Verzögerung*). It only fires if the fire+ still asks for wood after the delay, so nothing is sent once the wood has been added.
 
 | Channel | Inputs | Action |
 |---|---|---|
-| Message (*Nachricht*) | actions, preset with a Home Assistant notification (`notify.persistent_notification`) | as entered |
+| Message (*Nachricht*) | actions, preset with a Home Assistant notification (`notify.persistent_notification`, on) and Pushover (`notify.pushover`, off) | as entered |
 | Echo | devices of *Alexa Media Player* (HACS) with type announce or TTS; notify entities of *Alexa Devices* (e.g. `notify.kitchen_announce`); own announcement text | `notify.alexa_media`; `notify.send_message` |
 | Other actions (*Weitere Aktionen*) | any actions, the variables `title` and `text` hold title and message | as entered |
 
 ### Message via Pushover (or mobile app, Telegram, …)
 
-In **Message: actions**, change the preset action or add one, choose **Notifications: Send a notification via pushover** (or *notify.mobile_app_…*), enter `{{ text }}` as message and `{{ title }}` as title, and optionally set Pushover fields under data. In YAML:
+Pushover is already prepared in **Message: actions**, but switched off. Choose **Enable** in the three-dot menu of the *Pushover* action. Priority and sound are under data, preset with `priority: 0` and `sound: pushover` (urgent: `priority: 1`, `sound: siren`). Switch off or delete the Home Assistant notification if you do not want it. For the mobile app or Telegram add an action such as *notify.mobile_app_…* with message `{{ text }}` and title `{{ title }}`.
+
+**Echo only:** switch off or delete both preset message actions and choose devices or notify entities under Echo.
+
+The preset Pushover action for *wood urgently required* in YAML, switched on:
 ```yaml
 - action: notify.pushover
   data:

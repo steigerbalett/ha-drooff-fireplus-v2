@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+- Blueprint *Holz nachlegen / Add wood*: Pushover is prepared in the message actions (switched off, priority and sound under data, siren for urgent). A single channel is enough, e.g. Echo only or Pushover only. Inputs the automation editor stores as empty values no longer stop the reminder.
+
 ## 2.0.1
 
 - Dashboard card 1.0.8: larger flame animation. The flames are taller and wider, and the stove takes more room in the card (side by side up to 300 px wide instead of 250 px, stacked 300 px high instead of 240 px).
