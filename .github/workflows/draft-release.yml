@@ -1,0 +1,121 @@
+name: Draft release
+
+# Creates a draft release when the version in manifest.json is raised on main,
+# but only after Lint, Tests and Validate succeeded for that commit.
+# The notes are the matching section of CHANGELOG.md ("## 2.0.1").
+# Publishing the draft creates the tag, and the workflow "Release" then attaches the ZIP.
+
+on:
+  # Runs after each of the checks. Only the run that sees all of them green goes on.
+  workflow_run:
+    workflows:
+      - "Lint"
+      - "Tests"
+      - "Validate"
+    types:
+      - completed
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: draft-release
+  cancel-in-progress: false
+
+env:
+  # Checks that must have succeeded on a push to main for the commit
+  REQUIRED_CHECKS: "Lint Tests Validate"
+
+jobs:
+  draft:
+    name: "Create a draft release for a new version"
+    runs-on: "ubuntu-latest"
+    # After a check: only for pushes to main that succeeded
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.event == 'push' &&
+       github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.conclusion == 'success')
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - name: Determine the commit
+        id: commit
+        env:
+          SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+        run: echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+
+      - name: Check that all checks succeeded for the commit
+        id: checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ steps.commit.outputs.sha }}
+        run: |
+          # Latest push run of every workflow for this commit: "name conclusion"
+          runs=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$SHA&event=push&per_page=100" \
+            --jq '.workflow_runs | sort_by(.run_started_at) | group_by(.name) | map(last) | .[] | "\(.name) \(.conclusion // .status)"')
+          echo "$runs"
+          ready=true
+          for check in $REQUIRED_CHECKS; do
+            result=$(echo "$runs" | awk -v n="$check" '$1 == n { print $2 }')
+            if [ "$result" != "success" ]; then
+              echo "$check: ${result:-not started}"
+              ready=false
+            fi
+          done
+          if [ "$ready" != true ]; then
+            if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+              echo "::error::Not all checks succeeded for $SHA."
+              exit 1
+            fi
+            echo "Not all checks are green yet. The run after the last check decides."
+          fi
+          echo "ready=$ready" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout the repository
+        if: steps.checks.outputs.ready == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ steps.commit.outputs.sha }}
+          persist-credentials: false
+
+      - name: Create the draft release
+        if: steps.checks.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ steps.commit.outputs.sha }}
+        run: |
+          version=$(python3 -c "import json; print(json.load(open('custom_components/drooff_fireplus_v2/manifest.json'))['version'])")
+          tag="v$version"
+          echo "Version in manifest.json: $version"
+
+          # One release per version, drafts included
+          if gh release list --repo "$GITHUB_REPOSITORY" --limit 200 --json tagName --jq '.[].tagName' | grep -qx "$tag"; then
+            echo "A release for $tag already exists, nothing to do."
+            exit 0
+          fi
+
+          # Only an increase creates a draft
+          latest=$(gh release list --repo "$GITHUB_REPOSITORY" --exclude-drafts --limit 1 --json tagName --jq '.[0].tagName // ""')
+          latest=${latest#v}
+          if [ -n "$latest" ] && [ "$(printf '%s\n%s\n' "$latest" "$version" | sort -V | tail -n 1)" != "$version" ]; then
+            echo "Version $version is not higher than the latest release $latest, no draft created."
+            exit 0
+          fi
+
+          # Release notes: the section of this version in CHANGELOG.md
+          awk -v v="$version" '
+            $0 ~ "^## " { if (found) exit; if ($2 == v) { found = 1; next } }
+            found { print }
+          ' CHANGELOG.md > "$RUNNER_TEMP/notes.md"
+          if ! grep -q '[^[:space:]]' "$RUNNER_TEMP/notes.md"; then
+            echo "::warning::CHANGELOG.md has no section \"## $version\"."
+            echo "See CHANGELOG.md." > "$RUNNER_TEMP/notes.md"
+          fi
+
+          gh release create "$tag" --repo "$GITHUB_REPOSITORY" --draft \
+            --target "$SHA" --title "$version" --notes-file "$RUNNER_TEMP/notes.md"
+          echo "Draft release $tag created. Publish it under Releases."
