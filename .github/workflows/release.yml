@@ -33,9 +33,18 @@ jobs:
           fi
 
       - name: Create the ZIP
+        # Python instead of the zip tool, which is not guaranteed on every runner image
+        shell: python
         run: |
-          cd custom_components/drooff_fireplus_v2
-          zip -r -X "$GITHUB_WORKSPACE/drooff_fireplus_v2.zip" . -x "__pycache__/*" "*.pyc"
+          import os, zipfile
+          from pathlib import Path
+
+          src = Path("custom_components/drooff_fireplus_v2")
+          target = Path(os.environ["GITHUB_WORKSPACE"]) / "drooff_fireplus_v2.zip"
+          with zipfile.ZipFile(target, "w", zipfile.ZIP_DEFLATED) as zf:
+              for path in sorted(src.rglob("*")):
+                  if path.is_file() and "__pycache__" not in path.parts:
+                      zf.write(path, path.relative_to(src).as_posix())
 
       - name: Upload the ZIP to the release
         env:
