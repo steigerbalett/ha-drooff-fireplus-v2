@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- Dashboard card 1.0.8: larger flame animation. The flames are taller and wider, and the stove takes more room in the card (side by side up to 300 px wide instead of 250 px, stacked 300 px high instead of 240 px).
+
 ## 2.0.0
 
 First version of **Drooff fire+ V2**, an independent continuation of [ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus) by Thorsten Ehlers (@tehlers), version 1.5.0.

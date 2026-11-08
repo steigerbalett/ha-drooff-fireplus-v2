@@ -6,7 +6,7 @@
  * next to the values of the fire+ combustion control. Every value can be hidden.
  */
 
-const CARD_VERSION = "1.0.7";
+const CARD_VERSION = "1.0.8";
 const DOMAIN = "drooff_fireplus_v2";
 
 /* translation_key -> entity domain, plus entity_id suffixes as fallback */
@@ -1514,7 +1514,7 @@ class FireRenderer {
 
     /* emit flame particles */
     this.acc += (i > 0.01 ? 1.5 + i * 11 : 0) * dt;
-    const half = 14 + 52 * i;
+    const half = 16 + 60 * i;
     while (this.acc >= 1 && this.flames.length < 700) {
       this.acc -= 1;
       /* pick a tongue, weighted towards the middle */
@@ -1529,8 +1529,8 @@ class FireRenderer {
         vx: (100 - x) * 0.004 + gauss() * 0.08,
         vy: -(0.5 + 1.5 * i) * (0.75 + 0.5 * Math.random()),
         age: 0,
-        life: (20 + 78 * i) * (0.6 + 0.5 * Math.random()) * src.w * str,
-        size: (5 + 10 * i) * (0.7 + 0.6 * Math.random()),
+        life: (26 + 112 * i) * (0.6 + 0.5 * Math.random()) * src.w * str,
+        size: (6 + 13 * i) * (0.7 + 0.6 * Math.random()),
         seed: src.ph,
         sp: src.sp,
       });
@@ -2104,18 +2104,18 @@ const STYLE = `
 ha-card { overflow: hidden; container-type: inline-size; height: 100%; box-sizing: border-box; }
 .wrap { display: flex; gap: 16px; padding: 16px; align-items: center; }
 .wrap.vertical { flex-direction: column; align-items: stretch; }
-.flame-box { flex: 0 0 40%; max-width: 250px; min-width: 120px; display: flex; justify-content: center; }
-.wrap.vertical .flame-box { max-width: none; flex-basis: auto; height: 240px; }
+.flame-box { flex: 0 0 42%; max-width: 300px; min-width: 130px; display: flex; justify-content: center; }
+.wrap.vertical .flame-box { max-width: none; flex-basis: auto; height: 300px; }
 .values { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 10px; align-self: stretch; justify-content: center; }
 @container (max-width: 380px) {
   .wrap:not(.horizontal) { flex-direction: column; align-items: stretch; }
-  .wrap:not(.horizontal) .flame-box { max-width: none; flex-basis: auto; height: 240px; }
+  .wrap:not(.horizontal) .flame-box { max-width: none; flex-basis: auto; height: 300px; }
   .wrap:not(.horizontal) .stove { width: auto; height: 100%; }
-  .wrap:not(.horizontal) .stove-img { max-width: 260px; margin: 0 auto; }
+  .wrap:not(.horizontal) .stove-img { max-width: 320px; margin: 0 auto; }
 }
 
 /* stove */
-.stove { position: relative; width: 100%; aspect-ratio: 4 / 5; max-height: 320px; border-radius: 18px;
+.stove { position: relative; width: 100%; aspect-ratio: 4 / 5; max-height: 420px; border-radius: 18px;
   background: linear-gradient(145deg, #3a3a3a, #1c1c1c); padding: 8px; box-sizing: border-box;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 2px 6px rgba(0,0,0,0.35); }
 .wrap.vertical .stove { width: auto; height: 100%; }
