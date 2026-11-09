@@ -123,7 +123,7 @@ Außerdem zeigt die Karte einen Link zur Produktseite bei Drooff und erklärt, w
 2. Das freigestellte Produktbild (Ofen ohne Hintergrund) mit Rechtsklick → „Bild speichern unter …“ auf deinem Gerät speichern.
 3. Im Karten-Editor **Bild auswählen …** klicken und die Datei wählen. Der Hintergrund wird entfernt und die Scheibe automatisch erkannt.
 
-Die Produktbilder sind urheberrechtlich geschützt (© Drooff). Deshalb lädt die Karte sie nicht selbst herunter und liefert sie nicht mit; bitte nur privat im eigenen Dashboard verwenden. Modellliste und Zugwerte stammen aus Katalog und technischen Informationen von Drooff und können veraltet sein; maßgeblich ist immer die technische Dokumentation deines Ofens.
+Die Produktbilder gehören der DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. Sie werden mit freundlicher Genehmigung von Drooff verwendet und dürfen nicht verändert oder anderweitig genutzt werden (siehe [NOTICE.md](../NOTICE.md)). Modellliste und Zugwerte stammen aus Katalog und technischen Informationen von Drooff und können veraltet sein; maßgeblich ist immer die technische Dokumentation deines Ofens.
 
 ```yaml
 stove_model: brunello2l

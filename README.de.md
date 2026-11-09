@@ -19,6 +19,10 @@ Die Idee und das Fundament dieser Integration stammen von **Thorsten Ehlers ([@t
 
 Drooff fire+ V2 führt diese Arbeit als eigenständiges Projekt fort, weil die Erweiterungen für das ursprüngliche Repository zu umfangreich geworden sind. Probleme mit V2 bitte [hier melden](https://github.com/steigerbalett/ha-drooff-fireplus-v2/issues), nicht beim ursprünglichen Projekt.
 
+### Dank an Drooff
+
+Ein großes Dankeschön an die **DROOFF Kaminöfen GmbH & Co. KG**, die diesem Projekt freundlicherweise erlaubt, das Drooff-Logo und die Produktbilder der Öfen zu verwenden. So fügt sich die Integration in Home Assistant und in der Dashboard-Karte wie selbstverständlich ein.
+
 ## Neu in Version 2
 
 - **Dashboard-Karte** mit animiertem Feuer, Bedienung, optionalem Bild des eigenen Ofens, Zeigerinstrument für den Kaminzug, Verlaufsgrafiken und einer Alarmanzeige, die nur erscheint, wenn etwas nicht stimmt
@@ -161,6 +165,17 @@ Der Blueprint ist deutsch und englisch beschriftet, seine Standardtexte folgen d
 - [Thorsten Ehlers (@tehlers)](https://github.com/tehlers): ursprüngliche Integration [ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus), auf der diese Version aufbaut
 - Alle Mitwirkenden des ursprünglichen Projekts
 - Grundlage ist der [Integration Blueprint](https://github.com/ludeeus/integration_blueprint) von @ludeeus
+- [DROOFF Kaminöfen GmbH & Co. KG](https://www.drooff-kaminofen.de/): Logo und Produktbilder, mit freundlicher Genehmigung
+
+## Logo und Bilder
+
+Das Drooff-Logo (`custom_components/drooff_fireplus_v2/brand/`) und die Produktbilder der Öfen sind Eigentum der
+
+DROOFF Kaminöfen GmbH & Co. KG
+Keffelker Str. 40
+D-59929 Brilon
+
+Sie werden mit freundlicher Genehmigung von Drooff verwendet. Sie fallen **nicht** unter die MIT-Lizenz dieses Projekts und dürfen nicht verändert oder anderweitig genutzt werden. Details stehen in [NOTICE.md](NOTICE.md).
 
 ## Haftungsausschluss
 

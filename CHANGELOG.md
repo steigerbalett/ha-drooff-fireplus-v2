@@ -2,6 +2,7 @@
 
 ## 2.0.3
 
+- The official Drooff logo is the icon of the integration, and the product pictures may be used, with the kind permission of DROOFF Kaminöfen GmbH & Co. KG. Thanks to Drooff! Logo and pictures are not covered by the MIT license, see NOTICE.md.
 - Blueprint: a copy you changed in `blueprints/automation/drooff_fireplus_v2/` is no longer overwritten. The integration stores the hash of the version it installed and only updates a file that still matches it (or one of the versions shipped before). Deleting the file installs the current version again.
 - Dashboard card 1.0.9: texts from the `translations` option are escaped before they go into the card and the editor, so markup in them is shown as text.
 

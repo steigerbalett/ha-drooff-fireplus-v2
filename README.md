@@ -19,6 +19,10 @@ The idea and the foundation of this integration come from **Thorsten Ehlers ([@t
 
 Drooff fire+ V2 continues this work as an independent project, because the extensions became too large for the original repository. Please report problems with V2 [here](https://github.com/steigerbalett/ha-drooff-fireplus-v2/issues), not to the original project.
 
+### Thanks to Drooff
+
+A big thank you to **DROOFF Kaminöfen GmbH & Co. KG** for kindly allowing this project to use the Drooff logo and the product pictures of the stoves. This makes the integration look right at home in Home Assistant and in the dashboard card.
+
 ## What is new in version 2
 
 - **Dashboard card** with an animated fire, controls, optional picture of your own stove, draught gauge, history graphics and an alarm area that only appears when something is wrong
@@ -161,6 +165,17 @@ The blueprint is labelled in German and English, its default texts follow the se
 - [Thorsten Ehlers (@tehlers)](https://github.com/tehlers): original integration [ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus), on which this version is built
 - All contributors of the original project
 - Based on the [integration blueprint](https://github.com/ludeeus/integration_blueprint) by @ludeeus
+- [DROOFF Kaminöfen GmbH & Co. KG](https://www.drooff-kaminofen.de/): logo and product pictures, used with kind permission
+
+## Logo and pictures
+
+The Drooff logo (`custom_components/drooff_fireplus_v2/brand/`) and the product pictures of the stoves are the property of
+
+DROOFF Kaminöfen GmbH & Co. KG
+Keffelker Str. 40
+D-59929 Brilon
+
+They are used with the kind permission of Drooff. They are **not** covered by the MIT license of this project and must not be changed or used in any other way. Details are in [NOTICE.md](NOTICE.md).
 
 ## Disclaimer
 
