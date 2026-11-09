@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
 from datetime import timedelta
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
+from unittest.mock import patch
 
 import pytest
 import yaml
@@ -13,7 +15,12 @@ from homeassistant.setup import async_setup_component
 from homeassistant.util import dt as dt_util
 from pytest_homeassistant_custom_component.common import async_fire_time_changed, async_mock_service
 
-from custom_components.drooff_fireplus_v2 import BLUEPRINTS, async_install_blueprints
+from custom_components.drooff_fireplus_v2 import (
+    BLUEPRINTS,
+    SHIPPED_BLUEPRINTS,
+    async_install_blueprints,
+    blueprint_store,
+)
 
 from .conftest import mock_fireplus, setup_integration
 
@@ -24,6 +31,7 @@ if TYPE_CHECKING:
 
 BLUEPRINT = "drooff_fireplus_v2/wood_required_notification.yaml"
 STATUS = "sensor.drooff_fire_operation_status"
+KEY = "automation/wood_required_notification.yaml"
 
 
 def installed(hass: HomeAssistant) -> Path:
@@ -34,7 +42,7 @@ def installed(hass: HomeAssistant) -> Path:
 async def test_blueprint_is_installed_and_updated(
     hass: HomeAssistant, aioclient_mock: AiohttpClientMocker, config_entry: MockConfigEntry
 ) -> None:
-    """Setting up the integration installs the blueprint, a changed copy is replaced and automations reloaded."""
+    """The blueprint is installed, an unchanged older copy is updated and automations reloaded."""
     mock_fireplus(aioclient_mock)
     await setup_integration(hass, config_entry)
     source = BLUEPRINTS / "automation" / "wood_required_notification.yaml"
@@ -44,10 +52,60 @@ async def test_blueprint_is_installed_and_updated(
     await async_install_blueprints(hass)
     assert reloads == []
 
-    installed(hass).write_text("old version", encoding="utf-8")
+    # an older version the integration installed itself
+    old = b"old version"
+    installed(hass).write_bytes(old)
+    await blueprint_store(hass).async_save({KEY: hashlib.sha256(old).hexdigest()})
     await async_install_blueprints(hass)
     assert installed(hass).read_bytes() == source.read_bytes()
     assert len(reloads) == 1
+
+
+async def test_changed_blueprint_is_kept(hass: HomeAssistant) -> None:
+    """A copy the user changed is neither overwritten at the next start nor by an update."""
+    reloads = async_mock_service(hass, "automation", "reload")
+    await async_install_blueprints(hass)
+    changed = installed(hass).read_text(encoding="utf-8").replace("Holz nachlegen", "Holz holen")
+    installed(hass).write_text(changed, encoding="utf-8")
+
+    await async_install_blueprints(hass)
+    assert installed(hass).read_text(encoding="utf-8") == changed
+
+    # also when the integration ships a new version
+    await blueprint_store(hass).async_save({KEY: "hash of an older version"})
+    await async_install_blueprints(hass)
+    assert installed(hass).read_text(encoding="utf-8") == changed
+    assert reloads == []
+
+
+@pytest.mark.parametrize("shipped", sorted(SHIPPED_BLUEPRINTS[KEY]))
+async def test_unchanged_copy_of_an_earlier_version_is_updated(hass: HomeAssistant, shipped: str) -> None:
+    """Copies installed before the hash was stored are updated when they match a shipped version."""
+    reloads = async_mock_service(hass, "automation", "reload")
+    old = b"shipped by an earlier version"
+    installed(hass).parent.mkdir(parents=True, exist_ok=True)
+    installed(hass).write_bytes(old)
+    with patch.dict(SHIPPED_BLUEPRINTS, {KEY: {shipped, hashlib.sha256(old).hexdigest()}}):
+        await async_install_blueprints(hass)
+    source = BLUEPRINTS / "automation" / "wood_required_notification.yaml"
+    assert installed(hass).read_bytes() == source.read_bytes()
+    assert len(reloads) == 1
+
+
+async def test_unknown_copy_without_hash_is_kept(hass: HomeAssistant) -> None:
+    """A copy that matches no shipped version and has no stored hash is treated as changed by the user."""
+    installed(hass).parent.mkdir(parents=True, exist_ok=True)
+    installed(hass).write_bytes(b"my own version")
+    await async_install_blueprints(hass)
+    assert installed(hass).read_bytes() == b"my own version"
+
+
+async def test_deleted_blueprint_is_installed_again(hass: HomeAssistant) -> None:
+    """A deleted copy is installed again."""
+    await async_install_blueprints(hass)
+    installed(hass).unlink()
+    await async_install_blueprints(hass)
+    assert installed(hass).is_file()
 
 
 def notify(action: str, **data: Any) -> list[dict[str, Any]]:

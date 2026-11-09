@@ -150,11 +150,11 @@ Der Karteneditor findet das fire+ Gerät und seine Entitäten automatisch. Jeder
 
 ## Blueprint: Holz nachlegen
 
-Die Integration installiert den Automations-Blueprint **Drooff fire+: Holz nachlegen / Add wood** nach dem Start von Home Assistant in `blueprints/automation/drooff_fireplus_v2/` und aktualisiert ihn mit jeder neuen Version der Integration. Unter *Einstellungen*, *Automationen & Szenen*, *Blueprints* lässt sich daraus eine Automation anlegen.
+Die Integration installiert den Automations-Blueprint **Drooff fire+: Holz nachlegen / Add wood** nach dem Start von Home Assistant in `blueprints/automation/drooff_fireplus_v2/` und aktualisiert ihn mit neuen Versionen der Integration, solange du die Datei nicht geändert hast. Unter *Einstellungen*, *Automationen & Szenen*, *Blueprints* lässt sich daraus eine Automation anlegen.
 
 Er erinnert, wenn der fire+ nach Holz verlangt. *Holz nachlegen* und *Dringend Holz nachlegen* bekommen eigene Aktionen, die dringenden sind optional und stecken in einem eigenen Abschnitt. Jede Art der Erinnerung kann als Nachricht (Pushover, Telegram, Companion-App oder jede andere Notify-Aktion oder -Entität), als Ansage auf Amazon-Echo-Geräten (Alexa Media Player oder Alexa Devices) und als beliebige andere Aktionen gesendet werden. Jeder Kanal ist optional und hat eine eigene Verzögerung, und sobald Holz nachgelegt wurde, wird nichts mehr gesendet. Details stehen in der [Blueprint-Dokumentation](docs/blueprint.de.md) ([English](docs/blueprint.md)).
 
-Der Blueprint ist deutsch und englisch beschriftet, seine Standardtexte folgen der gewählten Sprache. Eigene Änderungen an der installierten Datei werden bei Updates überschrieben; zum Anpassen den Blueprint unter einem anderen Namen kopieren.
+Der Blueprint ist deutsch und englisch beschriftet, seine Standardtexte folgen der gewählten Sprache. Änderst du die installierte Datei, bleiben deine Änderungen erhalten und die Integration aktualisiert sie nicht mehr. Wer die Datei löscht, bekommt beim nächsten Start wieder die aktuelle Version.
 
 ## Mitwirkende und Dank
 

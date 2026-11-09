@@ -1,6 +1,6 @@
 # Blueprint „Drooff fire+: Holz nachlegen / Add wood“
 
-Die Integration installiert den Blueprint nach dem Start von Home Assistant nach `config/blueprints/automation/drooff_fireplus_v2/wood_required_notification.yaml` und aktualisiert ihn mit jeder neuen Version. Ist eine Automation mit einer älteren Version des Blueprints aktiv, lädt die Integration die Automationen danach neu.
+Die Integration installiert den Blueprint nach dem Start von Home Assistant nach `config/blueprints/automation/drooff_fireplus_v2/wood_required_notification.yaml` und aktualisiert ihn mit neuen Versionen, solange du die Datei nicht geändert hast. Ist eine Automation mit einer älteren Version des Blueprints aktiv, lädt die Integration die Automationen danach neu.
 
 ## Einrichten
 
@@ -57,4 +57,4 @@ Wechselt der Status von „Holz nachlegen“ zu „Dringend“, werden noch auss
 
 ## Anpassen
 
-Änderungen an der installierten Datei werden beim nächsten Update überschrieben. Für eigene Anpassungen die Datei im selben Ordner unter einem anderen Namen speichern.
+Die installierte Datei darf geändert werden. Die Integration merkt sich, welche Version sie installiert hat, und lässt eine davon abweichende Datei in Ruhe, beim Neustart wie beim Update. Um wieder die aktuelle Version zu bekommen, die Datei löschen und Home Assistant neu starten. Wer weiter Updates bekommen möchte, speichert seine Anpassung im selben Ordner unter einem anderen Namen.

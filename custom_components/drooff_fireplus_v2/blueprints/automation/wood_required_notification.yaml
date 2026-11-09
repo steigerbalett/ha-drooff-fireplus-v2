@@ -20,9 +20,10 @@ blueprint:
     are used. The language selects the default texts.
 
 
-    Die Integration installiert und aktualisiert diese Datei, Änderungen werden
-    überschrieben. / The integration installs and updates this file, changes
-    are overwritten.
+    Die Integration installiert und aktualisiert diese Datei. Wird sie
+    geändert, bleibt die Änderung erhalten und es gibt keine Updates mehr.
+    / The integration installs and updates this file. Once it is changed, the
+    changes are kept and it is no longer updated.
   domain: automation
   source_url: https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/main/custom_components/drooff_fireplus_v2/blueprints/automation/wood_required_notification.yaml
   author: Drooff fire+ integration
