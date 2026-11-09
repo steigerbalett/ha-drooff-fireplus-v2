@@ -6,7 +6,7 @@
  * next to the values of the fire+ combustion control. Every value can be hidden.
  */
 
-const CARD_VERSION = "1.0.8";
+const CARD_VERSION = "1.0.9";
 const DOMAIN = "drooff_fireplus_v2";
 
 /* translation_key -> entity domain, plus entity_id suffixes as fallback */
@@ -2533,7 +2533,7 @@ class DrooffFireplusCard extends HTMLElement {
 
     const headBits = [];
     if (this._show("name")) headBits.push(`<div class="name">${esc(name)}</div>`);
-    if (this._sim) headBits.push(`<div class="badge" style="--sc:#5c6bc0"><span class="dot"></span>${t.simulation}</div>`);
+    if (this._sim) headBits.push(`<div class="badge" style="--sc:#5c6bc0"><span class="dot"></span>${esc(t.simulation)}</div>`);
     if (this._show("status") && statusObj) {
       const blink = ["HEATING", "WOOD_URGENTLY_REQUIRED", "ERROR"].includes(status);
       headBits.push(
@@ -2574,13 +2574,13 @@ class DrooffFireplusCard extends HTMLElement {
     if (this._show("temperature") && usable(tempObj)) {
       const sub = [];
       const tgt = num(this._st("target_temperature"));
-      if (this._show("target_temperature") && Number.isFinite(tgt)) sub.push(`${t.target} ${Math.round(tgt)} °C`);
+      if (this._show("target_temperature") && Number.isFinite(tgt)) sub.push(`${esc(t.target)} ${Math.round(tgt)} °C`);
       const mx = parseFloat(tempObj.attributes.max_temperature);
-      if (this._show("max_temperature") && Number.isFinite(mx)) sub.push(`${t.max} ${Math.round(mx)} °C`);
+      if (this._show("max_temperature") && Number.isFinite(mx)) sub.push(`${esc(t.max)} ${Math.round(mx)} °C`);
       if (this._gfx("temp_ring")) parts.push(this._tempRing(temp, tgt, mx, t, sub));
       else parts.push(`
         <div class="row">
-          <span class="label">${t.temperature}</span>
+          <span class="label">${esc(t.temperature)}</span>
           <div class="temp">
             <div class="big">${Math.round(temp)}<small>°C</small></div>
             ${sub.length ? `<div class="sub">${sub.map((s) => `<span>${esc(s)}</span>`).join("")}</div>` : ""}
@@ -2594,7 +2594,7 @@ class DrooffFireplusCard extends HTMLElement {
       const p = clamp(num(hp) / 100);
       parts.push(`
         <div class="row">
-          <div class="top"><span class="label">${t.heating_progress}</span><span class="val">${Math.round(p * 100)} %</span></div>
+          <div class="top"><span class="label">${esc(t.heating_progress)}</span><span class="val">${Math.round(p * 100)} %</span></div>
           <div class="bar" style="--bc: linear-gradient(90deg,#ffb300,#f4511e)"><div style="width:${p * 100}%"></div></div>
         </div>`);
     }
@@ -2615,9 +2615,9 @@ class DrooffFireplusCard extends HTMLElement {
       }
       parts.push(`
         <div class="row">
-          <div class="top"><span class="label">${t.burn_rate}</span><span class="val">${cur} / ${max}</span></div>
+          <div class="top"><span class="label">${esc(t.burn_rate)}</span><span class="val">${cur} / ${max}</span></div>
           <div class="steps ${ctl ? "ctl" : ""}">${btns}</div>
-          <div class="steps"><div class="ends" style="flex:1"><span>${t.eco}</span><span>${t.power}</span></div></div>
+          <div class="steps"><div class="ends" style="flex:1"><span>${esc(t.eco)}</span><span>${esc(t.power)}</span></div></div>
         </div>`);
     }
 
@@ -2627,7 +2627,7 @@ class DrooffFireplusCard extends HTMLElement {
       const a = clamp(num(air) / 100);
       parts.push(`
         <div class="row">
-          <div class="top"><span class="label">${t.air_slider}</span><span class="val">${this._gfx("air_flap") ? this._airFlap(a) : ""}${Math.round(a * 100)} %</span></div>
+          <div class="top"><span class="label">${esc(t.air_slider)}</span><span class="val">${this._gfx("air_flap") ? this._airFlap(a) : ""}${Math.round(a * 100)} %</span></div>
           <div class="bar" style="--bc: linear-gradient(90deg,#64b5f6,#1e88e5)"><div style="width:${a * 100}%"></div></div>
         </div>`);
     }
@@ -2651,11 +2651,11 @@ class DrooffFireplusCard extends HTMLElement {
       const n = logs.toLocaleString(lang(this._hass, this._config));
       wood.push(`
         <div class="row">
-          <div class="top"><span class="label">${t.wood_load}</span></div>
+          <div class="top"><span class="label">${esc(t.wood_load)}</span></div>
           <div class="wood ${warn ? "warn" : ""}" title="${esc(`${n} × ${per} kg`)}">
             ${this._show("wood_logs") ? woodPile(logs) : ""}
             <span class="val">${kg.toLocaleString(lang(this._hass, this._config), { minimumFractionDigits: 1, maximumFractionDigits: 1 })} kg<br><small style="color:var(--secondary-text-color);font-weight:400">≈ ${n} ${
-              logs === 1 ? t.log : t.logs
+              esc(logs === 1 ? t.log : t.logs)
             }</small></span>
           </div>
         </div>`);
@@ -2670,14 +2670,14 @@ class DrooffFireplusCard extends HTMLElement {
       const ctl = cfg.controls !== false && !this._locked("ember_burndown");
       tiles.push(`
         <div class="tile ${ctl ? "click" : ""}" ${ctl ? 'data-act="ember"' : ""}>
-          <span class="label">${t.ember}</span>
-          <span class="val"><span class="switch ${on ? "on" : ""}"></span>${on ? t.ember_on : t.ember_off}</span>
+          <span class="label">${esc(t.ember)}</span>
+          <span class="val"><span class="switch ${on ? "on" : ""}"></span>${esc(on ? t.ember_on : t.ember_off)}</span>
         </div>`);
     }
     const ot = this._st("operating_time");
     if (this._show("operating_time") && usable(ot) && cfg.show_operating_time !== false) {
       const h = num(ot) / 3600;
-      tiles.push(this._tile(t.operating_time, "mdi:history", `${Math.round(h).toLocaleString(lang(this._hass, this._config))} ${t.hours}`));
+      tiles.push(this._tile(t.operating_time, "mdi:history", `${Math.round(h).toLocaleString(lang(this._hass, this._config))} ${esc(t.hours)}`));
     }
     const ctl = cfg.controls !== false;
     const led = this._st("led");
@@ -2686,7 +2686,7 @@ class DrooffFireplusCard extends HTMLElement {
       tiles.push(`
         <div class="tile ${ctl ? "click" : ""}" ${ctl ? 'data-act="led"' : ""}>
           <span class="label">LED</span>
-          <span class="val"><span class="switch led ${on ? "on" : ""}"></span>${on ? t.on : t.off}</span>
+          <span class="val"><span class="switch led ${on ? "on" : ""}"></span>${esc(on ? t.on : t.off)}</span>
         </div>`);
     }
     for (const [key, icon] of [["brightness", "mdi:led-strip"], ["volume", "mdi:volume-high"]]) {
@@ -2697,7 +2697,7 @@ class DrooffFireplusCard extends HTMLElement {
       const icn = key === "volume" ? (v === 0 ? "mdi:volume-off" : v <= 30 ? "mdi:volume-low" : v <= 70 ? "mdi:volume-medium" : "mdi:volume-high") : icon;
       tiles.push(`
         <div class="tile">
-          <span class="label">${t[key]}</span>
+          <span class="label">${esc(t[key])}</span>
           <span class="val"><ha-icon icon="${icn}"></ha-icon>${v} %</span>
           ${ctl && !this._locked(key) ? `<input type="range" min="${parseFloat(st.attributes.min) || 0}" max="${parseFloat(st.attributes.max) || 100}" step="${step}" value="${v}" data-range="${key}">` : ""}
         </div>`);
@@ -2787,7 +2787,7 @@ class DrooffFireplusCard extends HTMLElement {
       .join("");
     return `
       <div class="row gauge-row">
-        <div class="top"><span class="label">${t.draught}</span></div>
+        <div class="top"><span class="label">${esc(t.draught)}</span></div>
         <div class="gauge-wrap">
           <svg class="gauge" viewBox="0 -8 120 78">
             ${arc(min, max, "var(--divider-color, rgba(127,127,127,0.3))")}
@@ -2806,7 +2806,7 @@ class DrooffFireplusCard extends HTMLElement {
             <div class="sub">${esc(status)}</div>
             ${
               c.draught_show_optimal === true
-                ? `<div class="hint">${t.draught_target}${partial ? ` (${esc(t.draught_partial)})` : ""} <span style="white-space:nowrap">${fmt(hi)} … ${fmt(lo)} Pa</span></div>`
+                ? `<div class="hint">${esc(t.draught_target)}${partial ? ` (${esc(t.draught_partial)})` : ""} <span style="white-space:nowrap">${fmt(hi)} … ${fmt(lo)} Pa</span></div>`
                 : ""
             }
           </div>
@@ -2893,7 +2893,7 @@ class DrooffFireplusCard extends HTMLElement {
     const inWin = pts.filter(([x]) => x >= t0);
     const before = pts.filter(([x]) => x < t0).pop();
     if (before) inWin.unshift([t0, before[1]]);
-    if (inWin.length < 2) return `<div class="row"><span class="label">${t.temp_history}</span><div class="sub" style="color:var(--secondary-text-color);font-size:0.85em">${t.no_history}</div></div>`;
+    if (inWin.length < 2) return `<div class="row"><span class="label">${esc(t.temp_history)}</span><div class="sub" style="color:var(--secondary-text-color);font-size:0.85em">${esc(t.no_history)}</div></div>`;
     const tg = (h ? h.target : []).map(([x, v]) => [x, parseFloat(v)]).filter(([, v]) => Number.isFinite(v));
     const vmax = Math.max(100, ...inWin.map(([, v]) => v), ...tg.map(([, v]) => v)) * 1.08;
     const X = (x) => ((x - t0) / (now - t0)) * W;
@@ -2909,7 +2909,7 @@ class DrooffFireplusCard extends HTMLElement {
     const peak = Math.max(...inWin.map(([, v]) => v));
     return `
       <div class="row">
-        <div class="top"><span class="label">${t.temp_history}</span><span class="sub2">${t.max} ${Math.round(peak)} °C</span></div>
+        <div class="top"><span class="label">${esc(t.temp_history)}</span><span class="sub2">${esc(t.max)} ${Math.round(peak)} °C</span></div>
         <svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
           <defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stop-color="#ff7043" stop-opacity="0.55"/><stop offset="1" stop-color="#ff7043" stop-opacity="0"/>
@@ -2918,7 +2918,7 @@ class DrooffFireplusCard extends HTMLElement {
           ${target}
           <path d="${d}" fill="none" stroke="#ff7043" stroke-width="1.8" vector-effect="non-scaling-stroke"/>
         </svg>
-        <div class="axis"><span>${this._timeLabel(hours)}</span><span>${t.now}</span></div>
+        <div class="axis"><span>${this._timeLabel(hours)}</span><span>${esc(t.now)}</span></div>
       </div>`;
   }
 
@@ -2952,9 +2952,9 @@ class DrooffFireplusCard extends HTMLElement {
       .join("");
     return `
       <div class="row">
-        <span class="label">${t.timeline}</span>
+        <span class="label">${esc(t.timeline)}</span>
         <div class="tl">${segs.join("")}</div>
-        <div class="axis"><span>${this._timeLabel(hours)}</span><span>${t.now}</span></div>
+        <div class="axis"><span>${this._timeLabel(hours)}</span><span>${esc(t.now)}</span></div>
         <div class="legend">${legend}</div>
       </div>`;
   }
@@ -3005,7 +3005,7 @@ class DrooffFireplusCard extends HTMLElement {
       .join("");
     return `
       <div class="row">
-        <div class="top"><span class="label">${t.wood_usage}</span><span class="sub2">Σ ${fmt(total)} kg</span></div>
+        <div class="top"><span class="label">${esc(t.wood_usage)}</span><span class="sub2">Σ ${fmt(total)} kg</span></div>
         <div class="wchart">${bars}</div>
       </div>`;
   }
@@ -3036,7 +3036,7 @@ class DrooffFireplusCard extends HTMLElement {
     const v = Number.isFinite(temp) ? temp : 0;
     return `
       <div class="row">
-        <span class="label">${t.temperature}</span>
+        <span class="label">${esc(t.temperature)}</span>
         <div class="tring">
           <svg viewBox="0 0 100 92">
             <defs><linearGradient id="trg" x1="0" y1="1" x2="1" y2="0">
@@ -3601,12 +3601,12 @@ class DrooffFireplusCardEditor extends HTMLElement {
           .dfp-pick .pv .w { position: absolute; outline: 2px solid #ff1744; background: rgba(255, 23, 68, 0.15); }
         </style>
         <div class="dfp-pick">
-          <div class="row"><button class="primary" data-a="sim">${t.sim_start}</button></div>
-          <div class="hint">${t.sim_hint}</div>
+          <div class="row"><button class="primary" data-a="sim">${esc(t.sim_start)}</button></div>
+          <div class="hint">${esc(t.sim_hint)}</div>
         </div>
         <div class="dfp-pick">
-          <div class="label" style="font-weight:500;margin-bottom:8px">${t.stove_picture}</div>
-          <label class="lbl" style="display:block;margin:0 0 4px;font-size:0.85em;color:var(--secondary-text-color)">${t.stove_model}</label>
+          <div class="label" style="font-weight:500;margin-bottom:8px">${esc(t.stove_picture)}</div>
+          <label class="lbl" style="display:block;margin:0 0 4px;font-size:0.85em;color:var(--secondary-text-color)">${esc(t.stove_model)}</label>
           <select data-a="model" style="font:inherit;padding:6px 8px;border-radius:6px;border:1px solid var(--divider-color,#ccc);background:var(--card-background-color,#fff);color:var(--primary-text-color);max-width:100%">
             <option value="">${esc(t.stove_model_none)}</option>
             ${STOVE_MODELS.map((m) => `<option value="${m.id}">${esc(m.name)}</option>`).join("")}
@@ -3618,8 +3618,8 @@ class DrooffFireplusCardEditor extends HTMLElement {
             <div class="mhint" style="font-size:0.85em;color:var(--secondary-text-color);font-style:italic;margin-top:6px">${esc(t.stove_model_copyright)}</div>
           </div>
           <div class="row">
-            <button class="primary" data-a="pick">${t.stove_pick}</button>
-            <button data-a="remove">${t.stove_remove}</button>
+            <button class="primary" data-a="pick">${esc(t.stove_pick)}</button>
+            <button data-a="remove">${esc(t.stove_remove)}</button>
             <input type="file" accept="image/*" hidden>
           </div>
           <div class="hint"></div>
