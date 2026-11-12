@@ -6,8 +6,10 @@
  * next to the values of the fire+ combustion control. Every value can be hidden.
  */
 
-const CARD_VERSION = "1.0.9";
+const CARD_VERSION = "1.0.10";
 const DOMAIN = "drooff_fireplus_v2";
+/* share of the window on each side that fades into the picture (stove_window_soft) */
+const SOFT_EDGE = 0.15;
 
 /* translation_key -> entity domain, plus entity_id suffixes as fallback */
 const KEYS = {
@@ -251,11 +253,18 @@ const I18N = {
       stove_model_partial: " Bei Teillast (fire+ Leistung „4“, Brennstufe 1–3 bzw. 1–4 bei Firmware 1.x) gilt laut Drooff ein Mindestförderdruck von {pp} Pa. Experimentell: Mit „Teillast berücksichtigen“ unter „Erweitert: Kaminzug“ beginnt die Anzeige dann bei −{pp} Pa.",
       stove_model_link: "Produktseite bei Drooff öffnen",
       stove_model_steps: "So kommt das Ofenbild in die Karte: 1. Produktseite öffnen und die gewünschte Ausführung wählen. 2. Das freigestellte Produktbild (Ofen ohne Hintergrund) mit Rechtsklick → „Bild speichern unter …“ auf deinem Gerät speichern. 3. Hier „Bild auswählen …“ klicken und die Datei wählen. Die Karte stellt das Bild frei und erkennt die Scheibe automatisch.",
-      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. Die Produktbilder werden mit freundlicher Genehmigung von Drooff verwendet und dürfen nicht verändert oder anderweitig genutzt werden.",
+      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. Die Produktbilder werden mit freundlicher Genehmigung von Drooff verwendet. Sie dürfen nur in dieser Integration verwendet und außer durch das Freistellen in der Karte nicht verändert oder anderweitig genutzt werden.",
+      stove_variant: "Ausführung (Bild von Drooff)",
+      stove_variant_hint: "Wähle die Ausführung deines Ofens. Das Bild wird dann aus dem GitHub-Repository der Integration geladen und in der Karte gespeichert. Alternativ lässt sich mit „Bild auswählen …“ ein eigenes Foto verwenden.",
+      stove_download_error: "Das Bild konnte nicht von GitHub geladen werden. Ist das Internet erreichbar?",
+      stove_handle_left: ", Griff links",
+      stove_handle_right: ", Griff rechts",
+      stove_wood_door: ", mit Holzfachtür",
+      stove_window_soft: "Weicher Rand (für mitgelieferte Bilder)",
       stove_remove: "Entfernen",
       stove_loading: "Bild wird verarbeitet …",
       stove_error: "Das Bild konnte nicht gelesen werden.",
-      stove_none: "Ohne Bild wird die Feuerstelle gezeigt. Wähle ein Foto deines Ofens (frontal, gern mit weißem Hintergrund) – das Sichtfenster wird automatisch erkannt.",
+      stove_none: "Ohne Bild wird die Feuerstelle gezeigt. Wähle oben Ofenmodell und Ausführung oder ein eigenes Foto deines Ofens (frontal, gern mit weißem Hintergrund) – das Sichtfenster wird automatisch erkannt.",
       stove_hint: "Rot markiert: hier erscheint das Feuer. Bei Bedarf unter „Sichtfenster“ feinjustieren.",
       stove_not_found: "Kein Sichtfenster erkannt – bitte unter „Sichtfenster“ einstellen.",
       stove_window: "Sichtfenster (Prozent des Bildes)",
@@ -394,11 +403,18 @@ const I18N = {
       stove_model_partial: " At partial load (fire+ power “4”, burn rate 1–3, or 1–4 with firmware 1.x) Drooff specifies a minimum draught of {pp} Pa. Experimental: with “Consider partial load” under “Advanced: draught” the gauge then starts at −{pp} Pa.",
       stove_model_link: "Open product page at Drooff",
       stove_model_steps: "How to get the stove picture into the card: 1. Open the product page and choose the variant you have. 2. Right-click the cut-out product picture (stove without background) → “Save image as …” and save it on your device. 3. Click “Choose picture …” here and select the file. The card removes the background and detects the window automatically.",
-      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. The product pictures are used with the kind permission of Drooff and must not be changed or used in any other way.",
+      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. The product pictures are used with the kind permission of Drooff. They may only be used in this integration and must not be changed, apart from the cut-out by the card, or used in any other way.",
+      stove_variant: "Variant (picture by Drooff)",
+      stove_variant_hint: "Choose the variant of your stove. The picture is then loaded from the GitHub repository of the integration and stored in the card. You can also use your own photo with “Choose picture …”.",
+      stove_download_error: "The picture could not be loaded from GitHub. Is the internet reachable?",
+      stove_handle_left: ", handle on the left",
+      stove_handle_right: ", handle on the right",
+      stove_wood_door: ", with wood compartment door",
+      stove_window_soft: "Soft edge (for supplied pictures)",
       stove_remove: "Remove",
       stove_loading: "Processing picture …",
       stove_error: "The picture could not be read.",
-      stove_none: "Without a picture the open fireplace is shown. Choose a front photo of your stove (white background works best) – the window is detected automatically.",
+      stove_none: "Without a picture the open fireplace is shown. Choose stove model and variant above, or a front photo of your stove (white background works best) – the window is detected automatically.",
       stove_hint: "Red area: this is where the fire appears. Fine-tune under “Window” if needed.",
       stove_not_found: "No window detected – please set it under “Window”.",
       stove_window: "Window (percent of the picture)",
@@ -2136,6 +2152,15 @@ ha-card { overflow: hidden; container-type: inline-size; height: 100%; box-sizin
 .flame-box.has-img { height: auto !important; }
 .wrap.vertical .stove-img { max-width: 260px; margin: 0 auto; }
 .stove-img .win { position: absolute; overflow: hidden; background: #0b0807; }
+/* soft edge: the window fades into the glass of the picture (pictures supplied with the integration) */
+.stove-img .win.soft { --f: 15%;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--f), #000 calc(100% - var(--f)), transparent),
+    linear-gradient(to bottom, transparent, #000 var(--f), #000 calc(100% - var(--f)), transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 var(--f), #000 calc(100% - var(--f)), transparent),
+    linear-gradient(to bottom, transparent, #000 var(--f), #000 calc(100% - var(--f)), transparent);
+  mask-composite: intersect; }
+.stove-img .win.soft .glass { box-shadow: none; }
 .stove-img .win canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
 .stove-img .glass { position: absolute; pointer-events: none;
   background: linear-gradient(125deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 28%, rgba(255,255,255,0) 45%);
@@ -2453,13 +2478,22 @@ class DrooffFireplusCard extends HTMLElement {
     const w = { left: 20, top: 20, width: 60, height: 40, ...(cfg.stove_window || {}) };
     const pct = (v) => `${Number(v)}%`;
     const r = Number(cfg.stove_window_radius ?? 4);
+    const box = (b) => `left:${pct(b.left)};top:${pct(b.top)};width:${pct(b.width)};height:${pct(b.height)}`;
+    /* with a soft edge the door marker and the heating ring sit on the fully covered inner part */
+    const f = cfg.stove_window_soft ? SOFT_EDGE : 0;
+    const inner = {
+      left: Number(w.left) + f * w.width,
+      top: Number(w.top) + f * w.height,
+      width: w.width * (1 - 2 * f),
+      height: w.height * (1 - 2 * f),
+    };
     return `<div class="stove-img ${cfg.stove_window_debug ? "debug" : ""}">
         <img src="${esc(cfg.stove_image)}" alt="">
-        <div class="win" style="left:${pct(w.left)};top:${pct(w.top)};width:${pct(w.width)};height:${pct(w.height)};border-radius:${r}px">
+        <div class="win${cfg.stove_window_soft ? " soft" : ""}" style="${box(w)};border-radius:${r}px">
           <canvas></canvas><div class="glass" style="inset:0;border-radius:${r}px"></div>
         </div>
-        <div class="door" style="left:${pct(w.left)};top:${pct(w.top)};width:${pct(w.width)};height:${pct(w.height)};border-radius:${r}px"></div>
-        <div class="hring" style="inset:auto;left:${pct(w.left)};top:${pct(w.top)};width:${pct(w.width)};height:${pct(w.height)};--hr:${r}px"><div class="bg"></div><div class="glow"><div class="p"></div></div></div>
+        <div class="door" style="${box(inner)};border-radius:${r}px"></div>
+        <div class="hring" style="inset:auto;${box(inner)};--hr:${r}px"><div class="bg"></div><div class="glow"><div class="p"></div></div></div>
       </div>`;
   }
 
@@ -3150,6 +3184,150 @@ const STOVE_MODELS = [
   ["varese3w", "VARESE 3 W", "7.9 / 10.5", 12, null],
 ].map(([id, name, kw, pa, partial, slug]) => ({ id, name, kw, pa, partial, url: DROOFF_BASE + (slug || "kaminofen") }));
 
+/* Product pictures of DROOFF Kaminöfen GmbH & Co. KG, used with permission, see pictures/stoves/LICENSE.md.
+   The integration serves small previews from frontend/stoves/<file>.webp, the picture itself is loaded
+   from the repository when it is chosen, so it is not part of every download of the integration.
+   [file, series, finish, window in percent of the cut-out picture: left, top, width, height].
+   The window is the fire of the picture plus the soft edge (SOFT_EDGE) on each side.
+   In the finish, {L} / {R} stand for the handle on the left / right, {D} for the wood compartment door. */
+const STOVES_URL = `/${DOMAIN}/stoves`;
+const PICTURES_URL = "https://raw.githubusercontent.com/steigerbalett/ha-drooff-fireplus-v2/main/pictures/stoves";
+const STOVE_PICTURES = {
+  andalo3l: [
+    ["andalo-3-l-stahl-schwarz", "", "Stahl schwarz", [4.4, 39.9, 84.6, 29.0]],
+  ],
+  andalo3s: [
+    ["andalo-3-s-stahl-schwarz", "", "Stahl schwarz", [3.7, 10.1, 86.3, 44.3]],
+  ],
+  andalo3m: [
+    ["andalo-3-m-natstone", "", "NatStone", [3.3, 23.4, 86.7, 37.6]],
+    ["andalo-3-m-stahl-schwarz", "", "Stahl schwarz", [3.3, 21.8, 86.3, 38.4]],
+  ],
+  aprica2: [
+    ["aprica-2-premiumwhite", "APRICA 2", "PremiumWhite", [7.2, 14.7, 82.3, 43.7]],
+    ["aprica-2-natstone", "APRICA 2", "NatStone", [7.4, 14.6, 81.3, 44.0]],
+    ["aprica-2-premiumgrey", "APRICA 2", "PremiumGrey", [7.3, 14.8, 82.0, 44.0]],
+    ["aprica-2-speckstein", "APRICA 2", "Speckstein", [7.3, 14.6, 81.6, 44.4]],
+    ["aprica-2-stilbeton-cream", "APRICA 2", "StilBeton cream handpoliert", [7.2, 14.7, 82.3, 43.7]],
+    ["aprica-2-stilbeton-basalt", "APRICA 2", "StilBeton basalt sandgestrahlt", [7.2, 14.8, 82.3, 43.9]],
+    ["aprica-2-stahl-schwarz", "APRICA 2", "Stahl schwarz", [7.1, 12.3, 82.4, 45.7]],
+    ["aprica-2-stahl-natstone", "APRICA 2", "Stahl / NatStone", [9.4, 17.5, 68.4, 41.4]],
+    ["aprica-2-stahl-premiumgrey", "APRICA 2", "Stahl / PremiumGrey", [8.4, 17.3, 73.4, 41.6]],
+    ["aprica-2-stahl-premiumwhite", "APRICA 2", "Stahl / PremiumWhite", [8.9, 17.3, 70.1, 41.6]],
+    ["aprica-2-stahl-speckstein", "APRICA 2", "Stahl / Speckstein", [8.1, 17.3, 75.4, 41.6]],
+    ["aprica-2-trend-premiumwhite", "APRICA 2 Trend", "PremiumWhite", [8.0, 14.9, 80.3, 43.6]],
+    ["aprica-2-trend-natstone", "APRICA 2 Trend", "NatStone", [8.2, 14.8, 79.3, 43.9]],
+    ["aprica-2-trend-premiumgrey", "APRICA 2 Trend", "PremiumGrey", [7.4, 14.7, 81.0, 44.0]],
+    ["aprica-2-trend-speckstein", "APRICA 2 Trend", "Speckstein", [7.7, 14.5, 81.3, 44.4]],
+    ["aprica-2-trend-stilbeton-cream", "APRICA 2 Trend", "StilBeton cream handpoliert", [6.8, 14.8, 82.0, 43.9]],
+    ["aprica-2-trend-stilbeton-basalt", "APRICA 2 Trend", "StilBeton basalt sandgestrahlt", [8.2, 14.9, 79.3, 43.6]],
+    ["aprica-2-trend-stahl-schwarz", "APRICA 2 Trend", "Stahl schwarz", [7.6, 12.4, 80.4, 45.9]],
+    ["aprica-2-trend-stahl-natstone", "APRICA 2 Trend", "Stahl / NatStone", [8.6, 17.1, 73.7, 41.7]],
+    ["aprica-2-trend-stahl-premiumgrey", "APRICA 2 Trend", "Stahl / PremiumGrey", [8.6, 17.1, 73.7, 41.7]],
+    ["aprica-2-trend-stahl-premiumwhite", "APRICA 2 Trend", "Stahl / PremiumWhite", [8.7, 17.5, 73.1, 41.4]],
+    ["aprica-2-trend-stahl-speckstein", "APRICA 2 Trend", "Stahl / Speckstein", [8.6, 17.5, 73.7, 41.4]],
+    ["aprica-2-trend-sp-natstone", "APRICA 2 Trend SP", "NatStone", [9.2, 27.0, 72.6, 36.4]],
+    ["aprica-2-trend-sp-natstone-handpoliert", "APRICA 2 Trend SP", "NatStone handpoliert", [14.1, 24.5, 65.3, 39.6]],
+    ["aprica-2-trend-sp-premiumwhite", "APRICA 2 Trend SP", "PremiumWhite", [9.7, 27.0, 69.6, 36.4]],
+    ["aprica-2-trend-sp-speckstein", "APRICA 2 Trend SP", "Speckstein", [9.0, 27.0, 74.1, 36.4]],
+    ["aprica-2-plus-premiumwhite", "APRICA 2 Plus", "PremiumWhite", [9.1, 29.6, 69.9, 35.6]],
+    ["aprica-2-plus-natstone", "APRICA 2 Plus", "NatStone", [9.2, 29.3, 73.0, 36.0]],
+    ["aprica-2-plus-premiumwhite-holzfachtuer", "APRICA 2 Plus", "PremiumWhite{D}", [9.9, 29.1, 68.3, 36.3]],
+    ["aprica-2-plus-natstone-holzfachtuer", "APRICA 2 Plus", "NatStone{D}", [9.2, 29.6, 73.0, 35.6]],
+    ["aprica-2-plus-trend-premiumwhite", "APRICA 2 Plus Trend", "PremiumWhite", [7.6, 27.5, 80.0, 37.4]],
+    ["aprica-2-plus-trend-natstone", "APRICA 2 Plus Trend", "NatStone", [8.1, 27.5, 80.0, 37.4]],
+    ["aprica-2-edition-trend-premiumwhite", "APRICA 2 Edition Trend", "PremiumWhite", [8.5, 12.8, 80.0, 34.4]],
+    ["aprica-2-edition-trend-natstone", "APRICA 2 Edition Trend", "NatStone", [8.6, 12.6, 79.6, 34.1]],
+    ["aprica-2-edition-trend-stahl-schwarz", "APRICA 2 Edition Trend", "Stahl schwarz", [8.5, 15.3, 77.9, 30.3]],
+  ],
+  arola: [
+    ["arola-natstone", "AROLA", "NatStone", [6.2, 26.2, 88.3, 43.1]],
+    ["arola-premiumgrey", "AROLA", "PremiumGrey", [6.3, 26.2, 87.6, 43.0]],
+    ["arola-sandstone", "AROLA", "SandStone", [6.2, 26.2, 88.3, 43.1]],
+    ["arola-edition-natstone", "AROLA Edition", "NatStone", [9.4, 25.9, 84.6, 43.3]],
+    ["arola-edition-premiumgrey", "AROLA Edition", "PremiumGrey", [9.4, 25.9, 84.6, 43.3]],
+    ["arola-edition-sandstone", "AROLA Edition", "SandStone", [9.4, 25.9, 84.6, 43.3]],
+  ],
+  arola2: [
+    ["arola-natstone", "AROLA", "NatStone", [6.2, 26.2, 88.3, 43.1]],
+    ["arola-premiumgrey", "AROLA", "PremiumGrey", [6.3, 26.2, 87.6, 43.0]],
+    ["arola-sandstone", "AROLA", "SandStone", [6.2, 26.2, 88.3, 43.1]],
+    ["arola-edition-natstone", "AROLA Edition", "NatStone", [9.4, 25.9, 84.6, 43.3]],
+    ["arola-edition-premiumgrey", "AROLA Edition", "PremiumGrey", [9.4, 25.9, 84.6, 43.3]],
+    ["arola-edition-sandstone", "AROLA Edition", "SandStone", [9.4, 25.9, 84.6, 43.3]],
+  ],
+  brunello2s: [
+    ["brunello-2-s-stahl-schwarz", "", "Stahl schwarz", [12.9, 10.7, 71.0, 41.4]],
+  ],
+  brunello2m: [
+    ["brunello-2-m-stahl-schwarz", "", "Stahl schwarz", [13.5, 12.2, 71.0, 33.6]],
+  ],
+  brunello2l: [
+    ["brunello-2-l-stahl-schwarz", "BRUNELLO 2 L", "Stahl schwarz", [13.5, 35.4, 70.9, 30.4]],
+    ["brunello-2-l-stilbeton-cream", "BRUNELLO 2 L", "StilBeton cream handpoliert", [13.6, 40.8, 71.4, 24.4]],
+    ["brunello-2-l-stilbeton-basalt", "BRUNELLO 2 L", "StilBeton basalt sandgestrahlt", [13.7, 40.9, 70.4, 24.1]],
+    ["brunello-2-l-groove-stilbeton-cream", "BRUNELLO 2 L Groove", "StilBeton cream handpoliert", [3.1, 37.2, 83.7, 28.4]],
+    ["brunello-2-l-groove-stilbeton-basalt", "BRUNELLO 2 L Groove", "StilBeton basalt", [3.1, 37.1, 83.7, 28.6]],
+    ["brunello-2-l-groove-stilbeton-basalt-black-edition", "BRUNELLO 2 L Groove", "StilBeton basalt, Glas Black Edition", [3.1, 37.1, 83.7, 28.6]],
+  ],
+  catania: [
+    ["catania-stilbeton-cream", "", "StilBeton cream handpoliert", [12.4, 32.0, 66.3, 34.3]],
+    ["catania-stilbeton-basalt", "", "StilBeton basalt sandgestrahlt", [11.6, 32.0, 67.7, 34.4]],
+  ],
+  forano: [
+    ["forano-premiumwhite", "", "PremiumWhite", [11.8, 32.0, 65.6, 30.6]],
+    ["forano-natstone", "", "NatStone", [16.0, 41.4, 58.1, 19.4]],
+  ],
+  garda: [
+    ["garda-2-premiumwhite", "GARDA 2", "PremiumWhite", [3.5, 12.1, 92.4, 37.1]],
+    ["garda-2-premiumgrey", "GARDA 2", "PremiumGrey", [3.7, 12.3, 92.1, 36.9]],
+    ["garda-2-natstone", "GARDA 2", "NatStone", [3.5, 12.1, 92.4, 37.1]],
+    ["garda-2-speckstein", "GARDA 2", "Speckstein", [3.4, 11.8, 92.7, 37.3]],
+    ["garda-2-plus-premiumwhite", "GARDA 2 Plus", "PremiumWhite", [8.7, 27.5, 86.4, 31.1]],
+    ["garda-2-plus-natstone", "GARDA 2 Plus", "NatStone", [4.2, 27.9, 91.6, 30.9]],
+  ],
+  imola: [
+    ["imola-stahl-schwarz", "", "Stahl schwarz", [11.2, 11.8, 77.0, 35.0]],
+  ],
+  livera2m: [
+    ["livera-2-m-stahl-griff-links", "", "Stahl{L}", [14.4, 18.8, 80.4, 38.0]],
+    ["livera-2-m-stahl-griff-rechts", "", "Stahl{R}", [9.7, 18.1, 82.7, 38.4]],
+  ],
+  livera2l: [
+    ["livera-2-l-stahl-griff-links", "", "Stahl{L}", [15.3, 32.9, 79.4, 31.9]],
+    ["livera-2-l-stahl-griff-rechts", "", "Stahl{R}", [9.7, 33.3, 82.7, 31.6]],
+  ],
+  liverapm: [
+    ["livera-panorama-m-stahl-griff-links", "", "Stahl{L}", [22.7, 21.1, 70.3, 34.7]],
+    ["livera-panorama-m-stahl-griff-rechts", "", "Stahl{R}", [20.2, 24.9, 57.9, 30.0]],
+    ["livera-panorama-m-artbeton-pure-griff-links", "", "ArtBeton pure{L}", [24.9, 17.6, 65.4, 38.9]],
+    ["livera-panorama-m-artbeton-pure-griff-rechts", "", "ArtBeton pure{R}", [9.7, 17.6, 65.4, 38.9]],
+  ],
+  liverapl: [
+    ["livera-panorama-l-stahl-griff-links", "", "Stahl{L}", [22.0, 36.2, 71.0, 28.1]],
+    ["livera-panorama-l-stahl-griff-rechts", "", "Stahl{R}", [19.5, 39.0, 59.4, 24.7]],
+    ["livera-panorama-l-artbeton-pure-griff-links", "", "ArtBeton pure{L}", [30.0, 33.3, 59.4, 31.6]],
+    ["livera-panorama-l-artbeton-pure-griff-rechts", "", "ArtBeton pure{R}", [10.6, 33.3, 59.4, 31.6]],
+  ],
+  varese3: [
+    ["varese-3-premiumwhite", "", "PremiumWhite", [17.0, 28.4, 65.0, 36.9]],
+    ["varese-3-natstone", "", "NatStone", [17.0, 28.5, 65.0, 36.6]],
+    ["varese-3-sandstone", "", "SandStone", [17.2, 28.4, 64.4, 36.9]],
+    ["varese-3-speckstein", "", "Speckstein", [17.0, 28.4, 64.4, 36.9]],
+    ["varese-3-stilbeton-cream", "", "StilBeton cream handpoliert", [17.7, 28.4, 61.9, 36.9]],
+    ["varese-3-stilbeton-basalt", "", "StilBeton basalt sandgestrahlt", [17.5, 28.6, 62.7, 36.7]],
+  ],
+  varese3w: [
+    ["varese-3-w-natstone-handpoliert", "", "NatStone handpoliert", [18.8, 28.4, 56.3, 37.1]],
+  ],
+};
+
+const stovePictureLabel = (t, finish) =>
+  finish
+    .replace("{L}", t.stove_handle_left)
+    .replace("{R}", t.stove_handle_right)
+    .replace("{D}", t.stove_wood_door);
+
 const loadImageFile = (file) =>
   new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
@@ -3277,7 +3455,9 @@ const detectWindow = (data, w, h) => {
 };
 
 /* scale down, make a white background transparent, crop to the stove, find its window */
-const processStoveImage = async (file) => {
+/* `transparent`: the picture is already cut out, only transparent pixels are background
+   (keeps white stoves intact) */
+const processStoveImage = async (file, transparent = false) => {
   const img = await loadImageFile(file);
   const sc = Math.min(1, 640 / img.naturalHeight, 900 / img.naturalWidth);
   const w = Math.max(1, Math.round(img.naturalWidth * sc));
@@ -3293,6 +3473,7 @@ const processStoveImage = async (file) => {
   const isBg = (k) => {
     const o = k * 4;
     if (p[o + 3] < 20) return true;
+    if (transparent) return false;
     const mn = Math.min(p[o], p[o + 1], p[o + 2]);
     const mx = Math.max(p[o], p[o + 1], p[o + 2]);
     return mn > 232 && mx - mn < 16;
@@ -3524,6 +3705,7 @@ class DrooffFireplusCardEditor extends HTMLElement {
                 { name: "stove_window_radius", selector: { number: { min: 0, max: 60, step: 1, mode: "box", unit_of_measurement: "px" } } },
               ],
             },
+            { name: "stove_window_soft", selector: { boolean: {} } },
             { name: "stove_window_debug", selector: { boolean: {} } },
           ]
         : []),
@@ -3599,6 +3781,13 @@ class DrooffFireplusCardEditor extends HTMLElement {
           .dfp-pick .pv { position: relative; display: inline-block; margin-top: 10px; max-width: 160px; }
           .dfp-pick .pv img { display: block; max-width: 160px; max-height: 260px; }
           .dfp-pick .pv .w { position: absolute; outline: 2px solid #ff1744; background: rgba(255, 23, 68, 0.15); }
+          .dfp-pick .vgroup { font-size: 0.8em; color: var(--secondary-text-color); margin: 6px 0 2px; }
+          .dfp-pick .vrow { display: flex; flex-wrap: wrap; gap: 4px; }
+          .dfp-pick .vrow button { width: 52px; height: 72px; padding: 2px; border-radius: 6px; cursor: pointer;
+            border: 2px solid transparent; background: var(--secondary-background-color, rgba(127,127,127,0.12)); }
+          .dfp-pick .vrow button:hover { border-color: var(--divider-color, #888); }
+          .dfp-pick .vrow button.sel { border-color: var(--primary-color, #03a9f4); }
+          .dfp-pick .vrow img { display: block; width: 100%; height: 100%; object-fit: contain; }
         </style>
         <div class="dfp-pick">
           <div class="row"><button class="primary" data-a="sim">${esc(t.sim_start)}</button></div>
@@ -3614,7 +3803,12 @@ class DrooffFireplusCardEditor extends HTMLElement {
           <div class="model" style="display:none;margin:8px 0 12px;font-size:0.9em">
             <div class="mi"></div>
             <div style="margin:6px 0"><a class="ml" target="_blank" rel="noopener noreferrer" style="color:var(--primary-color,#03a9f4)">${esc(t.stove_model_link)} ↗</a></div>
-            <div class="mhint" style="font-size:0.85em;color:var(--secondary-text-color);line-height:1.45">${t.stove_model_steps.split(/\s(?=\d\.\s)/).map(esc).join("<br>")}</div>
+            <div class="variant" style="margin:10px 0 6px">
+              <label class="lbl" style="display:block;margin:0 0 4px;font-size:0.85em;color:var(--secondary-text-color)">${esc(t.stove_variant)}</label>
+              <div class="vgrid"></div>
+              <div class="mhint" style="font-size:0.85em;color:var(--secondary-text-color);line-height:1.45;margin-top:4px">${esc(t.stove_variant_hint)}</div>
+            </div>
+            <div class="mhint steps" style="font-size:0.85em;color:var(--secondary-text-color);line-height:1.45">${t.stove_model_steps.split(/\s(?=\d\.\s)/).map(esc).join("<br>")}</div>
             <div class="mhint" style="font-size:0.85em;color:var(--secondary-text-color);font-style:italic;margin-top:6px">${esc(t.stove_model_copyright)}</div>
           </div>
           <div class="row">
@@ -3636,6 +3830,36 @@ class DrooffFireplusCardEditor extends HTMLElement {
         }
         this._changed(data);
       });
+      this._picker.querySelector(".vgrid").addEventListener("click", async (ev) => {
+        const btn = ev.target.closest("button[data-pic]");
+        if (!btn) return;
+        const pics = STOVE_PICTURES[this._config.stove_model] || [];
+        const pic = pics.find((x) => x[0] === btn.dataset.pic);
+        if (!pic) return;
+        const hint = this._picker.querySelectorAll(".hint")[1];
+        hint.textContent = t.stove_loading;
+        try {
+          /* the picture comes from the repository of the integration, only when it is chosen */
+          const resp = await fetch(`${PICTURES_URL}/${pic[0]}.webp`).catch(() => null);
+          if (!resp || !resp.ok) {
+            hint.textContent = t.stove_download_error;
+            return;
+          }
+          if (!resp.ok) throw new Error(String(resp.status));
+          const res = await processStoveImage(await resp.blob(), true);
+          const [left, top, width, height] = pic[3];
+          this._lastDetect = true;
+          this._changed({
+            ...this._form.data,
+            stove_image: res.dataUrl,
+            stove_picture: pic[0],
+            stove_window_soft: true,
+            stove_window: { left, top, width, height, stove_window_radius: 6 },
+          });
+        } catch (e) {
+          hint.textContent = t.stove_error;
+        }
+      });
       if (!this._onSimDone) {
         this._onSimDone = (ev) => {
           if (!ev.detail || !ev.detail.done || !this._picker) return;
@@ -3653,7 +3877,8 @@ class DrooffFireplusCardEditor extends HTMLElement {
           a.textContent = this._simOn ? t.sim_stop : t.sim_start;
           window.dispatchEvent(new CustomEvent(SIM_EVENT, { detail: { on: this._simOn } }));
         }
-        if (a.dataset.a === "remove") this._changed({ ...this._form.data, stove_image: undefined });
+        if (a.dataset.a === "remove")
+          this._changed({ ...this._form.data, stove_image: undefined, stove_picture: undefined, stove_window_soft: undefined });
       });
       input.addEventListener("change", async () => {
         const file = input.files && input.files[0];
@@ -3665,7 +3890,13 @@ class DrooffFireplusCardEditor extends HTMLElement {
           const res = await processStoveImage(file);
           this._lastDetect = res.window.found;
           const { found, ...win } = res.window;
-          this._changed({ ...this._form.data, stove_image: res.dataUrl, stove_window: { ...win, stove_window_radius: 6 } });
+          this._changed({
+            ...this._form.data,
+            stove_image: res.dataUrl,
+            stove_picture: undefined,
+            stove_window_soft: undefined,
+            stove_window: { ...win, stove_window_radius: 6 },
+          });
         } catch (e) {
           hint.textContent = t.stove_error;
         }
@@ -3681,6 +3912,27 @@ class DrooffFireplusCardEditor extends HTMLElement {
         t.stove_model_info.replace(/\{kw\}/g, model.kw).replace(/\{pa\}/g, model.pa).replace(/\{max\}/g, DRAUGHT_LIMIT) +
         (model.partial && t.stove_model_partial ? t.stove_model_partial.replace(/\{pp\}/g, model.partial) : "");
       mbox.querySelector(".ml").href = model.url;
+      const pics = STOVE_PICTURES[model.id] || [];
+      const grid = this._picker.querySelector(".vgrid");
+      if (grid.dataset.model !== model.id) {
+        /* small previews, one row per series */
+        const groups = [...new Set(pics.map((x) => x[1]))];
+        const item = (x) => {
+          const label = esc((x[1] ? `${x[1]}: ` : "") + stovePictureLabel(t, x[2]));
+          return `<button type="button" data-pic="${esc(x[0])}" title="${label}" aria-label="${label}"><img src="${STOVES_URL}/${esc(x[0])}.webp" alt="" loading="lazy"></button>`;
+        };
+        grid.innerHTML = groups
+          .map((g) => {
+            const items = pics.filter((x) => x[1] === g).map(item).join("");
+            return `${g ? `<div class="vgroup">${esc(g)}</div>` : ""}<div class="vrow">${items}</div>`;
+          })
+          .join("");
+        grid.dataset.model = model.id;
+      }
+      for (const b of grid.querySelectorAll("button[data-pic]"))
+        b.classList.toggle("sel", !!this._config.stove_image && b.dataset.pic === this._config.stove_picture);
+      mbox.querySelector(".variant").style.display = pics.length ? "" : "none";
+      mbox.querySelector(".steps").style.display = pics.length ? "none" : "";
     }
     const has = !!this._config.stove_image;
     this._picker.querySelector("[data-a=remove]").style.display = has ? "" : "none";
@@ -3720,6 +3972,8 @@ class DrooffFireplusCardEditor extends HTMLElement {
       delete cfg.stove_window;
       delete cfg.stove_window_radius;
       delete cfg.stove_window_debug;
+      delete cfg.stove_window_soft;
+      delete cfg.stove_picture;
     }
     /* only keep entities that differ from the detected ones */
     const ents = {};
@@ -3729,7 +3983,7 @@ class DrooffFireplusCardEditor extends HTMLElement {
     if (cfg.device && cfg.device === det.device && !this._config.device) delete cfg.device;
     for (const [k, v] of Object.entries(DEFAULTS)) if (cfg[k] === v && this._config[k] === undefined) delete cfg[k];
     for (const k of Object.keys(cfg)) {
-      if (cfg[k] === "" || cfg[k] === undefined || cfg[k] === false && k === "stove_window_debug" || (Array.isArray(cfg[k]) && cfg[k].length === 0 && k !== "hide"))
+      if (cfg[k] === "" || cfg[k] === undefined || cfg[k] === false && (k === "stove_window_debug" || k === "stove_window_soft") || (Array.isArray(cfg[k]) && cfg[k].length === 0 && k !== "hide"))
         delete cfg[k];
     }
     if (cfg.translations && (typeof cfg.translations !== "object" || !Object.keys(cfg.translations).length)) delete cfg.translations;

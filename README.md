@@ -25,7 +25,7 @@ A big thank you to **DROOFF Kaminöfen GmbH & Co. KG** for kindly allowing this 
 
 ## What is new in version 2
 
-- **Dashboard card** with an animated fire, controls, optional picture of your own stove, draught gauge, history graphics and an alarm area that only appears when something is wrong
+- **Dashboard card** with an animated fire, controls, picture of your stove (83 product pictures of Drooff included), draught gauge, history graphics and an alarm area that only appears when something is wrong
 - **Blueprint "Add wood"** with messages (Pushover, Telegram, mobile app, …), Echo announcements and any other actions, each with its own delay
 - **Statistics** from the event log of the fire+: fires, reloads, estimated wood consumption, last reload
 - **Control locks** like the web app (remote control, room controller, panel), Blue Angel stoves with Eco and Power only
@@ -175,7 +175,7 @@ DROOFF Kaminöfen GmbH & Co. KG
 Keffelker Str. 40
 D-59929 Brilon
 
-They are used with the kind permission of Drooff. They are **not** covered by the MIT license of this project and must not be changed or used in any other way. Details are in [NOTICE.md](NOTICE.md).
+They are used with the kind permission of Drooff. They are **not** covered by the MIT license of this project. The product pictures are in `pictures/stoves/`, small previews of them in `custom_components/drooff_fireplus_v2/frontend/stoves/`. They may only be used in this integration; the card loads a picture from this repository when it is chosen and may cut it out for display. Otherwise they must not be changed or used in any other way. Details are in [NOTICE.md](NOTICE.md) and the [license of the pictures](pictures/stoves/LICENSE.md).
 
 ## Disclaimer
 
