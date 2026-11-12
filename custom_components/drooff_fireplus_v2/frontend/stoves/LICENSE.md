@@ -2,10 +2,12 @@
 
 ## Deutsch
 
-**Rechteinhaber:**
-DROOFF Kaminöfen GmbH & Co. KG
-Keffelker Str. 40
-D-59929 Brilon
+**Rechteinhaber:**\
+DROOFF Kaminöfen GmbH & Co. KG\
+Keffelker Str. 40\
+D-59929 Brilon\
+Web: [www.drooff-kaminofen.de](https://www.drooff-kaminofen.de)\
+Kontakt: [Kontaktformular](https://www.drooff-kaminofen.de/de/service/kontakt/)
 
 Alle Bilder in diesem Ordner, in `pictures/stoves/` und in `custom_components/drooff_fireplus_v2/frontend/stoves/` sind Eigentum der DROOFF Kaminöfen GmbH & Co. KG. Das gilt auch für ihre Kopien in den Release-Archiven dieses Projekts. Alle Rechte vorbehalten.
 
@@ -33,11 +35,13 @@ Die Genehmigung kann von der DROOFF Kaminöfen GmbH & Co. KG widerrufen werden. 
 
 ## English
 
-**Copyright holder:**
-DROOFF Kaminöfen GmbH & Co. KG
-Keffelker Str. 40
-D-59929 Brilon
-Germany
+**Copyright holder:**\
+DROOFF Kaminöfen GmbH & Co. KG\
+Keffelker Str. 40\
+D-59929 Brilon\
+Germany\
+Web: [www.drooff-kaminofen.de](https://www.drooff-kaminofen.de)\
+Contact: [contact form](https://www.drooff-kaminofen.de/de/service/kontakt/)
 
 All pictures in this folder, in `pictures/stoves/` and in `custom_components/drooff_fireplus_v2/frontend/stoves/` are the property of DROOFF Kaminöfen GmbH & Co. KG. This includes their copies in the release archives of this project. All rights reserved.
 

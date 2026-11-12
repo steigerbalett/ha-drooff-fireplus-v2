@@ -129,7 +129,7 @@ translations:
     stove_model_info: "{kw} kW · Mindestförderdruck {pa} Pa. Optimaler Zug −{pa} … −{max} Pa wurde übernommen (änderbar unter „Erweitert: Kaminzug“)."
     stove_model_link: "Produktseite bei Drooff öffnen"
     stove_model_steps: "So kommt das Ofenbild in die Karte: 1. Produktseite öffnen und die gewünschte Ausführung wählen. 2. Das freigestellte Produktbild (Ofen ohne Hintergrund) mit Rechtsklick → „Bild speichern unter …“ auf deinem Gerät speichern. 3. Hier „Bild auswählen …“ klicken und die Datei wählen. Die Karte stellt das Bild frei und erkennt die Scheibe automatisch."
-    stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. Die Produktbilder werden mit freundlicher Genehmigung von Drooff verwendet. Sie dürfen nur in dieser Integration verwendet und außer durch das Freistellen in der Karte nicht verändert oder anderweitig genutzt werden."
+    stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG\nKeffelker Str. 40\nD-59929 Brilon\nwww.drooff-kaminofen.de\nKontakt: www.drooff-kaminofen.de/de/service/kontakt/\n\nDie Produktbilder werden mit freundlicher Genehmigung von Drooff verwendet. Sie dürfen nur in dieser Integration verwendet und außer durch das Freistellen in der Karte nicht verändert oder anderweitig genutzt werden."
     stove_series: "Variante"
     stove_variant: "Ausführung"
     stove_color: "Farbe (Bild von Drooff)"

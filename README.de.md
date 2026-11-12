@@ -171,9 +171,11 @@ Der Blueprint ist deutsch und englisch beschriftet, seine Standardtexte folgen d
 
 Das Drooff-Logo (`custom_components/drooff_fireplus_v2/brand/`) und die Produktbilder der Öfen sind Eigentum der
 
-DROOFF Kaminöfen GmbH & Co. KG
-Keffelker Str. 40
-D-59929 Brilon
+DROOFF Kaminöfen GmbH & Co. KG\
+Keffelker Str. 40\
+D-59929 Brilon\
+Web: [www.drooff-kaminofen.de](https://www.drooff-kaminofen.de)\
+Kontakt: [Kontaktformular](https://www.drooff-kaminofen.de/de/service/kontakt/)
 
 Sie werden mit freundlicher Genehmigung von Drooff verwendet. Sie fallen **nicht** unter die MIT-Lizenz dieses Projekts. Die Produktbilder liegen in `pictures/stoves/`, kleine Vorschaubilder davon in `custom_components/drooff_fireplus_v2/frontend/stoves/`. Sie dürfen nur in dieser Integration verwendet werden; die Karte lädt ein Bild aus diesem Repository, wenn es ausgewählt wird, und darf es für die Anzeige freistellen. Darüber hinaus dürfen sie nicht verändert oder anderweitig genutzt werden. Details stehen in [NOTICE.md](NOTICE.md) und in der [Lizenz der Bilder](pictures/stoves/LICENSE.md).
 

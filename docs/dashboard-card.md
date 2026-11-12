@@ -127,7 +127,15 @@ For a model without a supplied picture the card links to the product page at Dro
 2. Right-click the cut-out product picture (stove without background), choose “Save image as …” and save it on your device.
 3. Click **Choose picture …** in the card editor and select the file. The background is removed and the window is detected automatically.
 
-The product pictures are the property of DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. They are used with the kind permission of Drooff and may only be used in this integration. Apart from the cut-out by the card and the previews they must not be changed or used in any other way (see [NOTICE.md](../NOTICE.md) and [pictures/stoves/LICENSE.md](../pictures/stoves/LICENSE.md)). The model list and draught values come from Drooff’s catalogue and technical information and may be outdated; the technical documentation of your stove always takes precedence.
+The product pictures are the property of
+
+DROOFF Kaminöfen GmbH & Co. KG\
+Keffelker Str. 40\
+D-59929 Brilon\
+Web: [www.drooff-kaminofen.de](https://www.drooff-kaminofen.de)\
+Contact: [contact form](https://www.drooff-kaminofen.de/de/service/kontakt/)
+
+They are used with the kind permission of Drooff and may only be used in this integration. Apart from the cut-out by the card and the previews they must not be changed or used in any other way (see [NOTICE.md](../NOTICE.md) and [pictures/stoves/LICENSE.md](../pictures/stoves/LICENSE.md)). The model list and draught values come from Drooff’s catalogue and technical information and may be outdated; the technical documentation of your stove always takes precedence.
 
 ```yaml
 stove_model: brunello2l

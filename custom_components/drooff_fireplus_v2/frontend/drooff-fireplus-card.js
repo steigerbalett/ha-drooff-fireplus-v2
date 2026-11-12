@@ -6,7 +6,7 @@
  * next to the values of the fire+ combustion control. Every value can be hidden.
  */
 
-const CARD_VERSION = "1.0.11";
+const CARD_VERSION = "1.0.12";
 const DOMAIN = "drooff_fireplus_v2";
 /* share of the window on each side that fades into the picture (stove_window_soft) */
 const SOFT_EDGE = 0.15;
@@ -253,7 +253,7 @@ const I18N = {
       stove_model_partial: " Bei Teillast (fire+ Leistung „4“, Brennstufe 1–3 bzw. 1–4 bei Firmware 1.x) gilt laut Drooff ein Mindestförderdruck von {pp} Pa. Experimentell: Mit „Teillast berücksichtigen“ unter „Erweitert: Kaminzug“ beginnt die Anzeige dann bei −{pp} Pa.",
       stove_model_link: "Produktseite bei Drooff öffnen",
       stove_model_steps: "So kommt das Ofenbild in die Karte: 1. Produktseite öffnen und die gewünschte Ausführung wählen. 2. Das freigestellte Produktbild (Ofen ohne Hintergrund) mit Rechtsklick → „Bild speichern unter …“ auf deinem Gerät speichern. 3. Hier „Bild auswählen …“ klicken und die Datei wählen. Die Karte stellt das Bild frei und erkennt die Scheibe automatisch.",
-      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. Die Produktbilder werden mit freundlicher Genehmigung von Drooff verwendet. Sie dürfen nur in dieser Integration verwendet und außer durch das Freistellen in der Karte nicht verändert oder anderweitig genutzt werden.",
+      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG\nKeffelker Str. 40\nD-59929 Brilon\nwww.drooff-kaminofen.de\nKontakt: www.drooff-kaminofen.de/de/service/kontakt/\n\nDie Produktbilder werden mit freundlicher Genehmigung von Drooff verwendet. Sie dürfen nur in dieser Integration verwendet und außer durch das Freistellen in der Karte nicht verändert oder anderweitig genutzt werden.",
       stove_series: "Variante",
       stove_variant: "Ausführung",
       stove_color: "Farbe (Bild von Drooff)",
@@ -408,7 +408,7 @@ const I18N = {
       stove_model_partial: " At partial load (fire+ power “4”, burn rate 1–3, or 1–4 with firmware 1.x) Drooff specifies a minimum draught of {pp} Pa. Experimental: with “Consider partial load” under “Advanced: draught” the gauge then starts at −{pp} Pa.",
       stove_model_link: "Open product page at Drooff",
       stove_model_steps: "How to get the stove picture into the card: 1. Open the product page and choose the variant you have. 2. Right-click the cut-out product picture (stove without background) → “Save image as …” and save it on your device. 3. Click “Choose picture …” here and select the file. The card removes the background and detects the window automatically.",
-      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. The product pictures are used with the kind permission of Drooff. They may only be used in this integration and must not be changed, apart from the cut-out by the card, or used in any other way.",
+      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG\nKeffelker Str. 40\nD-59929 Brilon\nwww.drooff-kaminofen.de\nContact: www.drooff-kaminofen.de/de/service/kontakt/\n\nThe product pictures are used with the kind permission of Drooff. They may only be used in this integration and must not be changed, apart from the cut-out by the card, or used in any other way.",
       stove_series: "Version",
       stove_variant: "Variant",
       stove_color: "Colour (picture by Drooff)",
@@ -3822,7 +3822,7 @@ class DrooffFireplusCardEditor extends HTMLElement {
               <div class="mhint" style="font-size:0.85em;color:var(--secondary-text-color);line-height:1.45;margin-top:4px">${esc(t.stove_variant_hint)}</div>
             </div>
             <div class="mhint steps" style="font-size:0.85em;color:var(--secondary-text-color);line-height:1.45">${t.stove_model_steps.split(/\s(?=\d\.\s)/).map(esc).join("<br>")}</div>
-            <div class="mhint" style="font-size:0.85em;color:var(--secondary-text-color);font-style:italic;margin-top:6px">${esc(t.stove_model_copyright)}</div>
+            <div class="mhint" style="font-size:0.85em;color:var(--secondary-text-color);font-style:italic;margin-top:6px;white-space:pre-line">${esc(t.stove_model_copyright)}</div>
           </div>
           <div class="row">
             <button class="primary" data-a="pick">${esc(t.stove_pick)}</button>
