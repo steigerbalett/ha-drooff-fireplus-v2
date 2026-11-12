@@ -1,6 +1,7 @@
 # Drooff fire+ V2 für Home Assistant
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/docs/faq/custom_repositories/)
+[![Home Assistant 2026.3.1+](https://img.shields.io/badge/Home%20Assistant-2026.3.1%2B-41BDF5?logo=homeassistant&logoColor=white)](https://www.home-assistant.io/)
 [![Release](https://img.shields.io/github/v/release/steigerbalett/ha-drooff-fireplus-v2)](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases)
 [![Downloads](https://img.shields.io/github/downloads/steigerbalett/ha-drooff-fireplus-v2/total?label=downloads)](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases)
 [![Downloads der aktuellen Version](https://img.shields.io/github/downloads/steigerbalett/ha-drooff-fireplus-v2/latest/total?label=downloads%40latest)](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases/latest)
@@ -70,6 +71,8 @@ Was nicht erhalten bleibt: in den Optionen geänderte Einstellungen (Abfrageinte
 1. *Einstellungen* > *Geräte & Dienste* > *Integration hinzufügen* öffnen.
 2. Nach „Drooff fire+ V2“ suchen und auswählen.
 3. Den Hostnamen der fire+ Webapp eingeben. In der Standardeinstellung ist das „fire“.
+
+[![Home Assistant öffnen und die Einrichtung von Drooff fire+ V2 starten.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=drooff_fireplus_v2)
 
 Behält der fire+ seinen Standard-Hostnamen „fire“, findet Home Assistant ihn meist automatisch (DHCP) und bietet unter *Geräte & Dienste* die Einrichtung an. Wurde der fire+ mit seiner IP-Adresse eingerichtet, wird eine geänderte IP-Adresse automatisch übernommen.
 
