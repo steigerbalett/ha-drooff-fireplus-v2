@@ -69,8 +69,8 @@ Everything else is detected automatically.
 | `stove_model` | – | Drooff model, sets the optimal draught range in the editor: `andalo3s`, `andalo3m`, `andalo3l`, `aprica2`, `arola`, `brunello2s`, `brunello2m`, `brunello2l`, `catania`, `forano`, `garda`, `imola`, `livera2m`, `livera2l`, `liverapm`, `liverapl`, `varese3`, `varese3w` |
 | `stove_window` | `{left: 20, top: 20, width: 60, height: 40}` | Position of the window in the picture, in percent of width/height |
 | `stove_window_radius` | `4` | Corner radius of the window in px |
-| `stove_window_soft` | `false` | Lets the edge of the window fade into the picture. Set for the pictures supplied with the integration |
-| `stove_picture` | – | Supplied picture chosen in the editor (only used by the editor) |
+| `stove_window_soft` | `false` | Lets the edge of the window fade into the picture. Set for the pictures of Drooff chosen in the editor |
+| `stove_picture` | – | Picture of Drooff chosen in the editor (only used by the editor) |
 | `stove_window_debug` | `false` | Shows the window as red frame for alignment |
 | `draught_display` | `tile` | Chimney draught as `tile` or `gauge` |
 | `draught_min` / `draught_max` | `-30` / `10` | Gauge scale in Pa (strong draught on the right, overpressure on the left) |
@@ -119,7 +119,7 @@ Please only use pictures you are allowed to use; product photos are usually copy
 
 Under **Stove picture → Stove model (Drooff)** you can choose your Drooff model (all wood stoves that support fire+). The card then applies the optimal draught range of that model: from its minimum draught (12 Pa according to Drooff’s technical information, 13 Pa for AROLA 2 and GARDA 2) to −20 Pa, above which Drooff requires a draught limiter. For BRUNELLO 2, CATANIA, GARDA 2 and AROLA 2 Drooff specifies only 6 Pa at partial load, so with the experimental option “Consider partial load” (Advanced, off by default) the optimal range for these models starts at −6 Pa at burn rate 1–3. That burn rates 1–3 match Drooff’s partial load is an assumption. Drooff still requires the chimney to provide 12 to 20 Pa. You can still change the values under “Advanced: draught”.
 
-Then choose the finish of your stove under **Variant (picture by Drooff)**. The integration supplies 83 product pictures of Drooff (for every model), grouped by series, e.g. APRICA 2, Trend, Plus and Edition. The card cuts the picture out and uses the window measured for it, with a soft edge so the animated fire blends into the glass. **– own picture –** or **Choose picture …** uses your own photo instead.
+Then choose the finish of your stove under **Variant (picture by Drooff)**. The editor shows small previews of all variants (83 product pictures of Drooff, for every model), grouped by series, e.g. APRICA 2, Trend, Plus and Edition. A click loads the picture from the GitHub repository of the integration (`pictures/stoves/`); only the previews are part of the integration. The card cuts the picture out, stores it in the card configuration and uses the window measured for it, with a soft edge so the animated fire blends into the glass. Choosing a picture needs internet access once, the card itself does not load anything from the internet afterwards. **Choose picture …** uses your own photo instead.
 
 For a model without a supplied picture the card links to the product page at Drooff and explains how to get the picture into the card:
 
@@ -127,7 +127,7 @@ For a model without a supplied picture the card links to the product page at Dro
 2. Right-click the cut-out product picture (stove without background), choose “Save image as …” and save it on your device.
 3. Click **Choose picture …** in the card editor and select the file. The background is removed and the window is detected automatically.
 
-The product pictures are the property of DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. They are supplied with the integration with the kind permission of Drooff and may only be used in it. Apart from the cut-out by the card they must not be changed or used in any other way (see [NOTICE.md](../NOTICE.md) and `custom_components/drooff_fireplus_v2/frontend/stoves/LICENSE.md`). The model list and draught values come from Drooff’s catalogue and technical information and may be outdated; the technical documentation of your stove always takes precedence.
+The product pictures are the property of DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. They are used with the kind permission of Drooff and may only be used in this integration. Apart from the cut-out by the card and the previews they must not be changed or used in any other way (see [NOTICE.md](../NOTICE.md) and [pictures/stoves/LICENSE.md](../pictures/stoves/LICENSE.md)). The model list and draught values come from Drooff’s catalogue and technical information and may be outdated; the technical documentation of your stove always takes precedence.
 
 ```yaml
 stove_model: brunello2l

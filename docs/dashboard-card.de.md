@@ -69,8 +69,8 @@ Alles Weitere wird automatisch erkannt.
 | `stove_model` | – | Drooff-Modell, setzt im Editor den optimalen Zugbereich: `andalo3s`, `andalo3m`, `andalo3l`, `aprica2`, `arola`, `brunello2s`, `brunello2m`, `brunello2l`, `catania`, `forano`, `garda`, `imola`, `livera2m`, `livera2l`, `liverapm`, `liverapl`, `varese3`, `varese3w` |
 | `stove_window` | `{left: 20, top: 20, width: 60, height: 40}` | Lage des Sichtfensters im Bild in Prozent der Breite/Höhe |
 | `stove_window_radius` | `4` | Eckenradius des Sichtfensters in px |
-| `stove_window_soft` | `false` | Lässt den Rand des Sichtfensters ins Bild übergehen. Gesetzt bei den mitgelieferten Bildern |
-| `stove_picture` | – | Im Editor gewähltes mitgeliefertes Bild (nur für den Editor) |
+| `stove_window_soft` | `false` | Lässt den Rand des Sichtfensters ins Bild übergehen. Gesetzt bei den im Editor gewählten Bildern von Drooff |
+| `stove_picture` | – | Im Editor gewähltes Bild von Drooff (nur für den Editor) |
 | `stove_window_debug` | `false` | Zeigt das Sichtfenster als roten Rahmen zum Ausrichten |
 | `draught_display` | `tile` | Kaminzug als `tile` (Kachel) oder `gauge` (Zeigerinstrument) |
 | `draught_min` / `draught_max` | `-30` / `10` | Skala des Gauges in Pa (starker Zug rechts, Überdruck links) |
@@ -119,7 +119,7 @@ Bitte nur Bilder verwenden, die du nutzen darfst; Produktfotos sind in der Regel
 
 Unter **Ofenbild → Ofenmodell (Drooff)** wählst du dein Drooff-Modell aus (alle Holz-Kaminöfen, die fire+ unterstützen). Die Karte übernimmt dann den optimalen Zugbereich des Modells: vom Mindestförderdruck (laut den Technischen Informationen von Drooff 12 Pa, bei AROLA 2 und GARDA 2 13 Pa) bis −20 Pa, ab dem Drooff einen Zugbegrenzer vorschreibt. Für BRUNELLO 2, CATANIA, GARDA 2 und AROLA 2 nennt Drooff bei Teillast nur 6 Pa; mit der experimentellen Option „Teillast berücksichtigen“ (Erweitert, standardmäßig aus) beginnt der optimale Bereich bei diesen Modellen bei Brennstufe 1–3 deshalb schon bei −6 Pa. Dass die Brennstufen 1–3 der Teillast aus den Drooff-Unterlagen entsprechen, ist eine Annahme. Drooff verlangt trotzdem, dass der Schornstein 12 bis 20 Pa Zug liefert. Unter „Erweitert: Kaminzug“ lassen sich die Werte weiter anpassen.
 
-Danach wählst du unter **Ausführung (Bild von Drooff)** die Ausführung deines Ofens. Die Integration bringt 83 Produktbilder von Drooff mit (für alle Modelle), nach Serien gruppiert, z. B. APRICA 2, Trend, Plus und Edition. Die Karte stellt das Bild frei und nimmt das dafür vermessene Sichtfenster, mit weichem Rand, damit das animierte Feuer in die Scheibe übergeht. Mit **– eigenes Bild –** oder **Bild auswählen …** nimmst du stattdessen ein eigenes Foto.
+Danach wählst du unter **Ausführung (Bild von Drooff)** die Ausführung deines Ofens. Der Editor zeigt kleine Vorschaubilder aller Ausführungen (83 Produktbilder von Drooff, für jedes Modell), nach Serien gruppiert, z. B. APRICA 2, Trend, Plus und Edition. Ein Klick lädt das Bild aus dem GitHub-Repository der Integration (`pictures/stoves/`); mit der Integration ausgeliefert werden nur die Vorschaubilder. Die Karte stellt das Bild frei, speichert es in der Kartenkonfiguration und nimmt das dafür vermessene Sichtfenster, mit weichem Rand, damit das animierte Feuer in die Scheibe übergeht. Für die Auswahl braucht es einmal Internet, danach lädt die Karte nichts mehr aus dem Internet. Mit **Bild auswählen …** nimmst du stattdessen ein eigenes Foto.
 
 Für ein Modell ohne mitgeliefertes Bild verlinkt die Karte die Produktseite bei Drooff und erklärt, wie das Bild in die Karte kommt:
 
@@ -127,7 +127,7 @@ Für ein Modell ohne mitgeliefertes Bild verlinkt die Karte die Produktseite bei
 2. Das freigestellte Produktbild (Ofen ohne Hintergrund) mit Rechtsklick → „Bild speichern unter …“ auf deinem Gerät speichern.
 3. Im Karten-Editor **Bild auswählen …** klicken und die Datei wählen. Der Hintergrund wird entfernt und die Scheibe automatisch erkannt.
 
-Die Produktbilder gehören der DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. Sie werden mit freundlicher Genehmigung von Drooff mit der Integration ausgeliefert und dürfen nur in ihr verwendet werden. Außer durch das Freistellen in der Karte dürfen sie nicht verändert oder anderweitig genutzt werden (siehe [NOTICE.md](../NOTICE.md) und `custom_components/drooff_fireplus_v2/frontend/stoves/LICENSE.md`). Modellliste und Zugwerte stammen aus Katalog und technischen Informationen von Drooff und können veraltet sein; maßgeblich ist immer die technische Dokumentation deines Ofens.
+Die Produktbilder gehören der DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. Sie werden mit freundlicher Genehmigung von Drooff verwendet und dürfen nur in dieser Integration verwendet werden. Außer durch das Freistellen in der Karte und die Vorschaubilder dürfen sie nicht verändert oder anderweitig genutzt werden (siehe [NOTICE.md](../NOTICE.md) und [pictures/stoves/LICENSE.md](../pictures/stoves/LICENSE.md)). Modellliste und Zugwerte stammen aus Katalog und technischen Informationen von Drooff und können veraltet sein; maßgeblich ist immer die technische Dokumentation deines Ofens.
 
 ```yaml
 stove_model: brunello2l

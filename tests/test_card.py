@@ -49,8 +49,10 @@ async def test_stove_pictures_are_served(
 
 
 def test_stove_pictures_match_the_card() -> None:
-    """Every picture in the card exists, every picture in the folder is used, windows lie in the picture."""
-    folder = Path(__file__).parent.parent / "custom_components" / "drooff_fireplus_v2" / "frontend"
+    """Every picture in the card has a preview and a picture in the repository, windows lie in the picture."""
+    root = Path(__file__).parent.parent
+    folder = root / "custom_components" / "drooff_fireplus_v2" / "frontend"
+    pictures = root / "pictures" / "stoves"
     card = (folder / "drooff-fireplus-card.js").read_text(encoding="utf-8")
     table = card[card.index("const STOVE_PICTURES = {") :]
     table = table[: table.index("};")]
@@ -65,10 +67,14 @@ def test_stove_pictures_match_the_card() -> None:
     ):
         used.add(name)
         assert (folder / "stoves" / f"{name}.webp").is_file(), name
+        assert (pictures / f"{name}.webp").is_file(), name
         assert float(left) >= 0, name
         assert float(top) >= 0, name
         assert float(left) + float(width) <= 100.5, name
         assert float(top) + float(height) <= 100.5, name
-    files = {p.stem for p in (folder / "stoves").glob("*.webp")}
-    assert files == used
+    assert {p.stem for p in (folder / "stoves").glob("*.webp")} == used
+    assert {p.stem for p in pictures.glob("*.webp")} == used
     assert (folder / "stoves" / "LICENSE.md").is_file()
+    assert (pictures / "LICENSE.md").is_file()
+    # only the small previews are part of the integration
+    assert max(p.stat().st_size for p in (folder / "stoves").glob("*.webp")) < 8000

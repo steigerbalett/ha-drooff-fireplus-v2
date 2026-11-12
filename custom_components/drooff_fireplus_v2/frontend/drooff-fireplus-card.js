@@ -253,10 +253,10 @@ const I18N = {
       stove_model_partial: " Bei Teillast (fire+ Leistung „4“, Brennstufe 1–3 bzw. 1–4 bei Firmware 1.x) gilt laut Drooff ein Mindestförderdruck von {pp} Pa. Experimentell: Mit „Teillast berücksichtigen“ unter „Erweitert: Kaminzug“ beginnt die Anzeige dann bei −{pp} Pa.",
       stove_model_link: "Produktseite bei Drooff öffnen",
       stove_model_steps: "So kommt das Ofenbild in die Karte: 1. Produktseite öffnen und die gewünschte Ausführung wählen. 2. Das freigestellte Produktbild (Ofen ohne Hintergrund) mit Rechtsklick → „Bild speichern unter …“ auf deinem Gerät speichern. 3. Hier „Bild auswählen …“ klicken und die Datei wählen. Die Karte stellt das Bild frei und erkennt die Scheibe automatisch.",
-      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. Die Produktbilder werden mit freundlicher Genehmigung von Drooff mit der Integration ausgeliefert. Sie dürfen nur in dieser Integration verwendet und außer durch das Freistellen in der Karte nicht verändert oder anderweitig genutzt werden.",
+      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. Die Produktbilder werden mit freundlicher Genehmigung von Drooff verwendet. Sie dürfen nur in dieser Integration verwendet und außer durch das Freistellen in der Karte nicht verändert oder anderweitig genutzt werden.",
       stove_variant: "Ausführung (Bild von Drooff)",
-      stove_variant_none: "– eigenes Bild –",
-      stove_variant_hint: "Wähle die Ausführung deines Ofens, das Bild wird mit der Integration mitgeliefert. Alternativ lässt sich mit „Bild auswählen …“ ein eigenes Foto verwenden.",
+      stove_variant_hint: "Wähle die Ausführung deines Ofens. Das Bild wird dann aus dem GitHub-Repository der Integration geladen und in der Karte gespeichert. Alternativ lässt sich mit „Bild auswählen …“ ein eigenes Foto verwenden.",
+      stove_download_error: "Das Bild konnte nicht von GitHub geladen werden. Ist das Internet erreichbar?",
       stove_handle_left: ", Griff links",
       stove_handle_right: ", Griff rechts",
       stove_wood_door: ", mit Holzfachtür",
@@ -403,10 +403,10 @@ const I18N = {
       stove_model_partial: " At partial load (fire+ power “4”, burn rate 1–3, or 1–4 with firmware 1.x) Drooff specifies a minimum draught of {pp} Pa. Experimental: with “Consider partial load” under “Advanced: draught” the gauge then starts at −{pp} Pa.",
       stove_model_link: "Open product page at Drooff",
       stove_model_steps: "How to get the stove picture into the card: 1. Open the product page and choose the variant you have. 2. Right-click the cut-out product picture (stove without background) → “Save image as …” and save it on your device. 3. Click “Choose picture …” here and select the file. The card removes the background and detects the window automatically.",
-      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. The product pictures are supplied with the integration with the kind permission of Drooff. They may only be used in this integration and must not be changed, apart from the cut-out by the card, or used in any other way.",
+      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG, Keffelker Str. 40, D-59929 Brilon. The product pictures are used with the kind permission of Drooff. They may only be used in this integration and must not be changed, apart from the cut-out by the card, or used in any other way.",
       stove_variant: "Variant (picture by Drooff)",
-      stove_variant_none: "– own picture –",
-      stove_variant_hint: "Choose the variant of your stove, the picture is supplied with the integration. You can also use your own photo with “Choose picture …”.",
+      stove_variant_hint: "Choose the variant of your stove. The picture is then loaded from the GitHub repository of the integration and stored in the card. You can also use your own photo with “Choose picture …”.",
+      stove_download_error: "The picture could not be loaded from GitHub. Is the internet reachable?",
       stove_handle_left: ", handle on the left",
       stove_handle_right: ", handle on the right",
       stove_wood_door: ", with wood compartment door",
@@ -3184,12 +3184,14 @@ const STOVE_MODELS = [
   ["varese3w", "VARESE 3 W", "7.9 / 10.5", 12, null],
 ].map(([id, name, kw, pa, partial, slug]) => ({ id, name, kw, pa, partial, url: DROOFF_BASE + (slug || "kaminofen") }));
 
-/* Product pictures of DROOFF Kaminöfen GmbH & Co. KG, used with permission, see stoves/LICENSE.md.
-   Served by the integration from frontend/stoves/<file>.webp.
+/* Product pictures of DROOFF Kaminöfen GmbH & Co. KG, used with permission, see pictures/stoves/LICENSE.md.
+   The integration serves small previews from frontend/stoves/<file>.webp, the picture itself is loaded
+   from the repository when it is chosen, so it is not part of every download of the integration.
    [file, series, finish, window in percent of the cut-out picture: left, top, width, height].
    The window is the fire of the picture plus the soft edge (SOFT_EDGE) on each side.
    In the finish, {L} / {R} stand for the handle on the left / right, {D} for the wood compartment door. */
 const STOVES_URL = `/${DOMAIN}/stoves`;
+const PICTURES_URL = "https://raw.githubusercontent.com/steigerbalett/ha-drooff-fireplus-v2/main/pictures/stoves";
 const STOVE_PICTURES = {
   andalo3l: [
     ["andalo-3-l-stahl-schwarz", "", "Stahl schwarz", [4.4, 39.9, 84.6, 29.0]],
@@ -3779,6 +3781,13 @@ class DrooffFireplusCardEditor extends HTMLElement {
           .dfp-pick .pv { position: relative; display: inline-block; margin-top: 10px; max-width: 160px; }
           .dfp-pick .pv img { display: block; max-width: 160px; max-height: 260px; }
           .dfp-pick .pv .w { position: absolute; outline: 2px solid #ff1744; background: rgba(255, 23, 68, 0.15); }
+          .dfp-pick .vgroup { font-size: 0.8em; color: var(--secondary-text-color); margin: 6px 0 2px; }
+          .dfp-pick .vrow { display: flex; flex-wrap: wrap; gap: 4px; }
+          .dfp-pick .vrow button { width: 52px; height: 72px; padding: 2px; border-radius: 6px; cursor: pointer;
+            border: 2px solid transparent; background: var(--secondary-background-color, rgba(127,127,127,0.12)); }
+          .dfp-pick .vrow button:hover { border-color: var(--divider-color, #888); }
+          .dfp-pick .vrow button.sel { border-color: var(--primary-color, #03a9f4); }
+          .dfp-pick .vrow img { display: block; width: 100%; height: 100%; object-fit: contain; }
         </style>
         <div class="dfp-pick">
           <div class="row"><button class="primary" data-a="sim">${esc(t.sim_start)}</button></div>
@@ -3796,7 +3805,7 @@ class DrooffFireplusCardEditor extends HTMLElement {
             <div style="margin:6px 0"><a class="ml" target="_blank" rel="noopener noreferrer" style="color:var(--primary-color,#03a9f4)">${esc(t.stove_model_link)} ↗</a></div>
             <div class="variant" style="margin:10px 0 6px">
               <label class="lbl" style="display:block;margin:0 0 4px;font-size:0.85em;color:var(--secondary-text-color)">${esc(t.stove_variant)}</label>
-              <select data-a="variant" style="font:inherit;padding:6px 8px;border-radius:6px;border:1px solid var(--divider-color,#ccc);background:var(--card-background-color,#fff);color:var(--primary-text-color);max-width:100%"></select>
+              <div class="vgrid"></div>
               <div class="mhint" style="font-size:0.85em;color:var(--secondary-text-color);line-height:1.45;margin-top:4px">${esc(t.stove_variant_hint)}</div>
             </div>
             <div class="mhint steps" style="font-size:0.85em;color:var(--secondary-text-color);line-height:1.45">${t.stove_model_steps.split(/\s(?=\d\.\s)/).map(esc).join("<br>")}</div>
@@ -3821,17 +3830,21 @@ class DrooffFireplusCardEditor extends HTMLElement {
         }
         this._changed(data);
       });
-      this._picker.querySelector("select[data-a=variant]").addEventListener("change", async (ev) => {
+      this._picker.querySelector(".vgrid").addEventListener("click", async (ev) => {
+        const btn = ev.target.closest("button[data-pic]");
+        if (!btn) return;
         const pics = STOVE_PICTURES[this._config.stove_model] || [];
-        const pic = pics.find((x) => x[0] === ev.target.value);
+        const pic = pics.find((x) => x[0] === btn.dataset.pic);
+        if (!pic) return;
         const hint = this._picker.querySelectorAll(".hint")[1];
-        if (!pic) {
-          this._changed({ ...this._form.data, stove_image: undefined, stove_picture: undefined, stove_window_soft: undefined });
-          return;
-        }
         hint.textContent = t.stove_loading;
         try {
-          const resp = await fetch(`${STOVES_URL}/${pic[0]}.webp`);
+          /* the picture comes from the repository of the integration, only when it is chosen */
+          const resp = await fetch(`${PICTURES_URL}/${pic[0]}.webp`).catch(() => null);
+          if (!resp || !resp.ok) {
+            hint.textContent = t.stove_download_error;
+            return;
+          }
           if (!resp.ok) throw new Error(String(resp.status));
           const res = await processStoveImage(await resp.blob(), true);
           const [left, top, width, height] = pic[3];
@@ -3900,22 +3913,24 @@ class DrooffFireplusCardEditor extends HTMLElement {
         (model.partial && t.stove_model_partial ? t.stove_model_partial.replace(/\{pp\}/g, model.partial) : "");
       mbox.querySelector(".ml").href = model.url;
       const pics = STOVE_PICTURES[model.id] || [];
-      const vsel = this._picker.querySelector("select[data-a=variant]");
-      if (vsel.dataset.model !== model.id) {
-        /* one group per series, a model without series keeps a flat list */
+      const grid = this._picker.querySelector(".vgrid");
+      if (grid.dataset.model !== model.id) {
+        /* small previews, one row per series */
         const groups = [...new Set(pics.map((x) => x[1]))];
-        const opt = (x) => `<option value="${esc(x[0])}">${esc(stovePictureLabel(t, x[2]))}</option>`;
-        vsel.innerHTML =
-          `<option value="">${esc(t.stove_variant_none)}</option>` +
-          groups
-            .map((g) => {
-              const items = pics.filter((x) => x[1] === g).map(opt).join("");
-              return g ? `<optgroup label="${esc(g)}">${items}</optgroup>` : items;
-            })
-            .join("");
-        vsel.dataset.model = model.id;
+        const item = (x) => {
+          const label = esc((x[1] ? `${x[1]}: ` : "") + stovePictureLabel(t, x[2]));
+          return `<button type="button" data-pic="${esc(x[0])}" title="${label}" aria-label="${label}"><img src="${STOVES_URL}/${esc(x[0])}.webp" alt="" loading="lazy"></button>`;
+        };
+        grid.innerHTML = groups
+          .map((g) => {
+            const items = pics.filter((x) => x[1] === g).map(item).join("");
+            return `${g ? `<div class="vgroup">${esc(g)}</div>` : ""}<div class="vrow">${items}</div>`;
+          })
+          .join("");
+        grid.dataset.model = model.id;
       }
-      vsel.value = pics.some((x) => x[0] === this._config.stove_picture) ? this._config.stove_picture : "";
+      for (const b of grid.querySelectorAll("button[data-pic]"))
+        b.classList.toggle("sel", !!this._config.stove_image && b.dataset.pic === this._config.stove_picture);
       mbox.querySelector(".variant").style.display = pics.length ? "" : "none";
       mbox.querySelector(".steps").style.display = pics.length ? "none" : "";
     }
