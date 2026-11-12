@@ -25,7 +25,7 @@ A big thank you to **DROOFF Kaminöfen GmbH & Co. KG** for kindly allowing this 
 
 ## What is new in version 2
 
-- **Dashboard card** with an animated fire, controls, picture of your stove (83 product pictures of Drooff included), draught gauge, history graphics and an alarm area that only appears when something is wrong
+- **Dashboard card** with an animated fire, controls, picture of your stove (86 product pictures of Drooff to choose from), draught gauge, history graphics and an alarm area that only appears when something is wrong
 - **Blueprint "Add wood"** with messages (Pushover, Telegram, mobile app, …), Echo announcements and any other actions, each with its own delay
 - **Statistics** from the event log of the fire+: fires, reloads, estimated wood consumption, last reload
 - **Control locks** like the web app (remote control, room controller, panel), Blue Angel stoves with Eco and Power only
