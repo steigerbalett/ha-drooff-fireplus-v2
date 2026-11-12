@@ -3194,6 +3194,9 @@ const STOVE_PICTURES = {
   andalo3l: [
     ["andalo-3-l-stahl-schwarz", "", "Stahl schwarz", [4.4, 39.9, 84.6, 29.0]],
   ],
+  andalo3s: [
+    ["andalo-3-s-stahl-schwarz", "", "Stahl schwarz", [3.7, 10.1, 86.3, 44.3]],
+  ],
   andalo3m: [
     ["andalo-3-m-natstone", "", "NatStone", [3.3, 23.4, 86.7, 37.6]],
     ["andalo-3-m-stahl-schwarz", "", "Stahl schwarz", [3.3, 21.8, 86.3, 38.4]],
@@ -3280,6 +3283,9 @@ const STOVE_PICTURES = {
     ["garda-2-speckstein", "GARDA 2", "Speckstein", [3.4, 11.8, 92.7, 37.3]],
     ["garda-2-plus-premiumwhite", "GARDA 2 Plus", "PremiumWhite", [8.7, 27.5, 86.4, 31.1]],
     ["garda-2-plus-natstone", "GARDA 2 Plus", "NatStone", [4.2, 27.9, 91.6, 30.9]],
+  ],
+  imola: [
+    ["imola-stahl-schwarz", "", "Stahl schwarz", [11.2, 11.8, 77.0, 35.0]],
   ],
   livera2m: [
     ["livera-2-m-stahl-griff-links", "", "Stahl{L}", [14.4, 18.8, 80.4, 38.0]],
