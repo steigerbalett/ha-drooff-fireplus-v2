@@ -3,6 +3,7 @@ name: Draft release
 # Creates a draft release when the version in manifest.json is raised on main,
 # but only after Lint, Tests and Validate succeeded for that commit.
 # The notes are the matching section of CHANGELOG.md ("## 2.0.1").
+# A beta (2.0.4b1) or release candidate (2.0.4rc1) becomes a pre-release, HACS offers it as beta.
 # Publishing the draft creates the tag, and the workflow "Release" then attaches the ZIP.
 
 on:
@@ -98,13 +99,44 @@ jobs:
             exit 0
           fi
 
-          # Only an increase creates a draft
-          latest=$(gh release list --repo "$GITHUB_REPOSITORY" --exclude-drafts --limit 1 --json tagName --jq '.[0].tagName // ""')
-          latest=${latest#v}
-          if [ -n "$latest" ] && [ "$(printf '%s\n%s\n' "$latest" "$version" | sort -V | tail -n 1)" != "$version" ]; then
-            echo "Version $version is not higher than the latest release $latest, no draft created."
-            exit 0
-          fi
+          # Only an increase over every published release (betas included) creates a draft.
+          # Versions like 2.0.4b1 or 2.0.4rc1 come before 2.0.4 and become a pre-release.
+          gh release list --repo "$GITHUB_REPOSITORY" --exclude-drafts --limit 200 --json tagName --jq '.[].tagName' > "$RUNNER_TEMP/tags.txt"
+          verdict=$(python3 - "$version" "$RUNNER_TEMP/tags.txt" <<'PY'
+          import re
+          import sys
+
+          def key(v):
+              m = re.fullmatch(r"v?(\d+)\.(\d+)\.(\d+)(?:(a|b|rc)(\d+))?", v.strip())
+              if not m:
+                  return None
+              stage = {"a": 0, "b": 1, "rc": 2, None: 3}[m.group(4)]
+              return (*map(int, m.group(1, 2, 3)), stage, int(m.group(5) or 0))
+
+          version = key(sys.argv[1])
+          if version is None:
+              print("invalid")
+              sys.exit()
+          published = [k for k in map(key, open(sys.argv[2]).read().split()) if k]
+          if published and version <= max(published):
+              print("not-higher")
+          else:
+              print("prerelease" if version[3] < 3 else "release")
+          PY
+          )
+          echo "Version $version: $verdict"
+          case "$verdict" in
+            invalid)
+              echo "::error::Version $version is not of the form 2.0.4, 2.0.4b1 or 2.0.4rc1."
+              exit 1
+              ;;
+            not-higher)
+              echo "Version $version is not higher than the latest release, no draft created."
+              exit 0
+              ;;
+            prerelease) prerelease="--prerelease" ;;
+            *) prerelease="" ;;
+          esac
 
           # Release notes: the section of this version in CHANGELOG.md
           awk -v v="$version" '
@@ -116,6 +148,6 @@ jobs:
             echo "See CHANGELOG.md." > "$RUNNER_TEMP/notes.md"
           fi
 
-          gh release create "$tag" --repo "$GITHUB_REPOSITORY" --draft \
+          gh release create "$tag" --repo "$GITHUB_REPOSITORY" --draft $prerelease \
             --target "$SHA" --title "$version" --notes-file "$RUNNER_TEMP/notes.md"
           echo "Draft release $tag created. Publish it under Releases."
