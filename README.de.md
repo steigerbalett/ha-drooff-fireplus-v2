@@ -25,7 +25,7 @@ Ein großes Dankeschön an die **DROOFF Kaminöfen GmbH & Co. KG**, die diesem P
 
 ## Neu in Version 2
 
-- **Dashboard-Karte** mit animiertem Feuer, Bedienung, Bild deines Ofens (86 Produktbilder von Drooff zur Auswahl), Zeigerinstrument für den Kaminzug, Verlaufsgrafiken und einer Alarmanzeige, die nur erscheint, wenn etwas nicht stimmt
+- **Dashboard-Karte** mit animiertem Feuer, Bedienung, Bild deines Ofens (83 Produktbilder von Drooff zur Auswahl), Zeigerinstrument für den Kaminzug, Verlaufsgrafiken und einer Alarmanzeige, die nur erscheint, wenn etwas nicht stimmt
 - **Blueprint „Holz nachlegen“** mit Nachrichten (Pushover, Telegram, Companion-App, …), Echo-Ansagen und beliebigen weiteren Aktionen, jeweils mit eigener Verzögerung
 - **Statistik** aus dem Ereignis-Log des fire+: Abbrände, Nachlegevorgänge, geschätzter Holzverbrauch, zuletzt nachgelegt
 - **Bediensperren** wie in der Webapp (Fernbedienung, Raumregler, Panel), bei Öfen mit Blauem Engel nur Eco und Power

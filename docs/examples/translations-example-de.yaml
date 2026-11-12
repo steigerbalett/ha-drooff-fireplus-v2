@@ -136,7 +136,6 @@ translations:
     stove_mat_steel: "Stahl"
     stove_mat_steel_clad: "Stahl mit Verkleidung"
     stove_mat_clad: "Verkleidung"
-    stove_second: " (2. Version)"
     stove_variant_hint: "Wähle Variante, Ausführung und Farbe deines Ofens. Das Bild wird dann aus dem GitHub-Repository der Integration geladen und in der Karte gespeichert. Alternativ lässt sich mit „Bild auswählen …“ ein eigenes Foto verwenden."
     stove_download_error: "Das Bild konnte nicht von GitHub geladen werden. Ist das Internet erreichbar?"
     stove_handle_left: ", Griff links"

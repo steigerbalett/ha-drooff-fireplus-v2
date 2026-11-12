@@ -4,8 +4,9 @@
 
 Beta: HACS offers it once *Show beta versions* is switched on for the repository.
 
-- Product pictures of Drooff for every fire+ stove (86 variants), with the kind permission of DROOFF Kaminöfen GmbH & Co. KG. They are not covered by the MIT license, see `pictures/stoves/LICENSE.md` and NOTICE.md.
+- Product pictures of Drooff for every fire+ stove (83 variants), with the kind permission of DROOFF Kaminöfen GmbH & Co. KG. They are not covered by the MIT license, see `pictures/stoves/LICENSE.md` and NOTICE.md.
 - Dashboard card 1.0.11: after the stove model, the editor asks step by step for version (e.g. APRICA 2 Trend, BRUNELLO 2 L Groove), variant (steel, steel with cladding, cladding, StilBeton, ArtBeton) and colour. The colours are small previews with their name. Clicking one loads the picture from the GitHub repository of the integration (`pictures/stoves/`), cuts it out and uses the window measured for it. Only the previews (about 130 KB) are part of the integration, so the download stays small. Choosing a picture needs internet access once, afterwards it is stored in the card.
+- Fire chamber of the card (wall *Fire-clay plates*): three plates like in the Drooff stoves, one on the back wall and one on each side wall, instead of seven smaller ones.
 - New card option `stove_window_soft` lets the window fade into the glass of the picture. Pictures that are already transparent keep white parts of the stove.
 - Draft release action: a version like `2.0.4b1` or `2.0.4rc1` becomes a pre-release, and the final version counts as higher than its betas.
 

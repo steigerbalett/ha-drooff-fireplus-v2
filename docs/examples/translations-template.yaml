@@ -134,7 +134,6 @@ translations:
     stove_mat_steel: "Steel"
     stove_mat_steel_clad: "Steel with cladding"
     stove_mat_clad: "Cladding"
-    stove_second: " (2nd version)"
     stove_variant_hint: "Choose version, variant and colour of your stove. The picture is then loaded from the GitHub repository of the integration and stored in the card. You can also use your own photo with “Choose picture …”."
     stove_download_error: "The picture could not be loaded from GitHub. Is the internet reachable?"
     stove_handle_left: ", handle on the left"

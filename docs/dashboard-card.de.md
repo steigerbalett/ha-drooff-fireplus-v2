@@ -10,7 +10,7 @@ Eine Dashboard-Card für die Home-Assistant-Integration [Drooff fire+ V2](https:
 
 ## Funktionen
 
-- **Realistische Flammenanimation** (Partikelsystem auf Canvas mit Flammenzungen und Funkenflug) in einem Brennraum aus **hochkant stehenden weißen Schamotteplatten**, mit Seitenwänden in Perspektive, Rußspuren und flackerndem Feuerschein. Alternativ wählbar: helle oder dunkle Mauer.
+- **Realistische Flammenanimation** (Partikelsystem auf Canvas mit Flammenzungen und Funkenflug) in einem Brennraum aus **drei weißen Schamotteplatten** wie bei Drooff (Rückwand und zwei Seitenwände), mit Seitenwänden in Perspektive, Rußspuren und flackerndem Feuerschein. Alternativ wählbar: helle oder dunkle Mauer.
 - **Spaltholz**: 25 cm lange Buchenscheite mit Rinde, Fasern, Ästen und Jahresringen. Sie verkohlen und glühen beim Abbrand. Das Feuer folgt der Brennraumtemperatur und dem Betriebsstatus:
   - *Aus*: kalte Scheite, bei Restwärme leichte Restglut
   - *Anheizen*: Flamme wächst mit dem Anheizfortschritt
@@ -64,7 +64,7 @@ Alles Weitere wird automatisch erkannt.
 | `min_temperature` | `80` | Brennraumtemperatur, unter der keine Flamme gezeigt wird (°C) |
 | `max_temperature` | `600` | Temperatur für die volle Flamme (°C) |
 | `log_weight` | `0.9` | Gewicht eines Holzscheits in kg (Umrechnung der Holzauflage in Scheite) |
-| `wall` | `chamotte` | Brennraum-Hintergrund: `chamotte` (Schamotteplatten hochkant), `bricks_light` (Mauer hell), `bricks_dark` (Mauer dunkel) |
+| `wall` | `chamotte` | Brennraum-Hintergrund: `chamotte` (drei Schamotteplatten wie bei Drooff), `bricks_light` (Mauer hell), `bricks_dark` (Mauer dunkel) |
 | `stove_image` | – | Bild des Ofens (Dateiauswahl im Editor oder URL wie `/local/ofen.png`). Ohne Bild wird die Feuerstelle gezeigt |
 | `stove_model` | – | Drooff-Modell, setzt im Editor den optimalen Zugbereich: `andalo3s`, `andalo3m`, `andalo3l`, `aprica2`, `arola`, `brunello2s`, `brunello2m`, `brunello2l`, `catania`, `forano`, `garda`, `imola`, `livera2m`, `livera2l`, `liverapm`, `liverapl`, `varese3`, `varese3w` |
 | `stove_window` | `{left: 20, top: 20, width: 60, height: 40}` | Lage des Sichtfensters im Bild in Prozent der Breite/Höhe |
@@ -119,7 +119,7 @@ Bitte nur Bilder verwenden, die du nutzen darfst; Produktfotos sind in der Regel
 
 Unter **Ofenbild → Ofenmodell (Drooff)** wählst du dein Drooff-Modell aus (alle Holz-Kaminöfen, die fire+ unterstützen). Die Karte übernimmt dann den optimalen Zugbereich des Modells: vom Mindestförderdruck (laut den Technischen Informationen von Drooff 12 Pa, bei AROLA 2 und GARDA 2 13 Pa) bis −20 Pa, ab dem Drooff einen Zugbegrenzer vorschreibt. Für BRUNELLO 2, CATANIA, GARDA 2 und AROLA 2 nennt Drooff bei Teillast nur 6 Pa; mit der experimentellen Option „Teillast berücksichtigen“ (Erweitert, standardmäßig aus) beginnt der optimale Bereich bei diesen Modellen bei Brennstufe 1–3 deshalb schon bei −6 Pa. Dass die Brennstufen 1–3 der Teillast aus den Drooff-Unterlagen entsprechen, ist eine Annahme. Drooff verlangt trotzdem, dass der Schornstein 12 bis 20 Pa Zug liefert. Unter „Erweitert: Kaminzug“ lassen sich die Werte weiter anpassen.
 
-Danach grenzt du deinen Ofen Schritt für Schritt ein (86 Produktbilder von Drooff, für jedes Modell): **Variante** (z. B. APRICA 2, Trend, Plus oder BRUNELLO 2 L Groove), **Ausführung** (z. B. Stahl, Stahl mit Verkleidung, Verkleidung, StilBeton) und **Farbe**. Variante und Ausführung erscheinen nur, wenn es beim Modell mehrere gibt. Die Farben zeigt der Editor als kleine Vorschaubilder mit Namen. Ein Klick lädt das Bild aus dem GitHub-Repository der Integration (`pictures/stoves/`); mit der Integration ausgeliefert werden nur die Vorschaubilder. Die Karte stellt das Bild frei, speichert es in der Kartenkonfiguration und nimmt das dafür vermessene Sichtfenster, mit weichem Rand, damit das animierte Feuer in die Scheibe übergeht. Für die Auswahl braucht es einmal Internet, danach lädt die Karte nichts mehr aus dem Internet. Mit **Bild auswählen …** nimmst du stattdessen ein eigenes Foto.
+Danach grenzt du deinen Ofen Schritt für Schritt ein (83 Produktbilder von Drooff, für jedes Modell): **Variante** (z. B. APRICA 2, Trend, Plus oder BRUNELLO 2 L Groove), **Ausführung** (z. B. Stahl, Stahl mit Verkleidung, Verkleidung, StilBeton) und **Farbe**. Variante und Ausführung erscheinen nur, wenn es beim Modell mehrere gibt. Die Farben zeigt der Editor als kleine Vorschaubilder mit Namen. Ein Klick lädt das Bild aus dem GitHub-Repository der Integration (`pictures/stoves/`); mit der Integration ausgeliefert werden nur die Vorschaubilder. Die Karte stellt das Bild frei, speichert es in der Kartenkonfiguration und nimmt das dafür vermessene Sichtfenster, mit weichem Rand, damit das animierte Feuer in die Scheibe übergeht. Für die Auswahl braucht es einmal Internet, danach lädt die Karte nichts mehr aus dem Internet. Mit **Bild auswählen …** nimmst du stattdessen ein eigenes Foto.
 
 Für ein Modell ohne mitgeliefertes Bild verlinkt die Karte die Produktseite bei Drooff und erklärt, wie das Bild in die Karte kommt:
 

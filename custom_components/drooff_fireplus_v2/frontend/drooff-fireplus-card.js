@@ -260,7 +260,6 @@ const I18N = {
       stove_mat_steel: "Stahl",
       stove_mat_steel_clad: "Stahl mit Verkleidung",
       stove_mat_clad: "Verkleidung",
-      stove_second: " (2. Version)",
       stove_variant_hint: "Wähle Variante, Ausführung und Farbe deines Ofens. Das Bild wird dann aus dem GitHub-Repository der Integration geladen und in der Karte gespeichert. Alternativ lässt sich mit „Bild auswählen …“ ein eigenes Foto verwenden.",
       stove_download_error: "Das Bild konnte nicht von GitHub geladen werden. Ist das Internet erreichbar?",
       stove_handle_left: ", Griff links",
@@ -416,7 +415,6 @@ const I18N = {
       stove_mat_steel: "Steel",
       stove_mat_steel_clad: "Steel with cladding",
       stove_mat_clad: "Cladding",
-      stove_second: " (2nd version)",
       stove_variant_hint: "Choose version, variant and colour of your stove. The picture is then loaded from the GitHub repository of the integration and stored in the card. You can also use your own photo with “Choose picture …”.",
       stove_download_error: "The picture could not be loaded from GitHub. Is the internet reachable?",
       stove_handle_left: ", handle on the left",
@@ -1245,7 +1243,7 @@ const H = 250;
 
 /* look of the combustion chamber */
 const WALL_STYLES = {
-  chamotte: { plate: true, plateHeight: 150, color: [234, 224, 204], vary: 7, joint: 0.45, jointColor: "rgb(150,138,120)" },
+  chamotte: { plate: true, color: [234, 224, 204], vary: 7, joint: 0.45, jointColor: "rgb(150,138,120)" },
   bricks_light: { plate: false, color: [236, 229, 214], vary: 16, joint: 0.6, jointColor: "rgb(110,100,88)" },
   bricks_dark: { plate: false, color: [52, 42, 37], vary: 10, joint: 0.6, jointColor: "rgb(150,112,82)", dark: true },
 };
@@ -1435,19 +1433,10 @@ class FireRenderer {
     };
 
     if (style.plate) {
-      /* upright fire-clay plates (hochkant), three on the back wall, two per side wall */
-      const PH = style.plateHeight;
-      const cols = 3;
-      const pw = (BX1 - BX0) / cols;
-      for (let y = FLOOR; y > top - PH; y -= PH) {
-        for (let c = 0; c < cols; c++) back(BX0 + c * pw, BX0 + (c + 1) * pw, y, y - PH, 1);
-      }
-      for (const side of [-1, 1]) {
-        for (let y = FLOOR; y > ytopSide - 200; y -= PH) {
-          sideP(0, 0.5, y, y - PH, side, 0.88);
-          sideP(0.5, 1, y, y - PH, side, 0.88);
-        }
-      }
+      /* three fire-clay plates like in the Drooff stoves: one on the back wall, one per side wall,
+         each from the floor up to the baffle plate */
+      back(BX0, BX1, FLOOR, top - 10, 1);
+      for (const side of [-1, 1]) sideP(0, 1, FLOOR, ytopSide - 200, side, 0.88);
     } else {
       const RH = 17;
       const BW = 41;
@@ -3203,8 +3192,7 @@ const STOVE_MODELS = [
    The editor offers series, then material, then the colours as previews.
    Material is steel, steel_clad (steel with cladding), clad (cladding) or a product name like StilBeton.
    The window is the fire of the picture plus the soft edge (SOFT_EDGE) on each side.
-   In the colour, {L} / {R} stand for the handle on the left / right, {D} for the wood compartment door,
-   {2} for the second version of Drooff with the same colour. */
+   In the colour, {L} / {R} stand for the handle on the left / right, {D} for the wood compartment door. */
 const STOVES_URL = `/${DOMAIN}/stoves`;
 const PICTURES_URL = "https://raw.githubusercontent.com/steigerbalett/ha-drooff-fireplus-v2/main/pictures/stoves";
 const STOVE_PICTURES = {
@@ -3279,13 +3267,10 @@ const STOVE_PICTURES = {
   ],
   brunello2l: [
     ["brunello-2-l-stahl-schwarz", "BRUNELLO 2 L", "steel", "schwarz", [13.5, 35.4, 70.9, 30.4]],
-    ["brunello-2-l-stilbeton-cream", "BRUNELLO 2 L", "StilBeton", "cream handpoliert", [13.6, 40.8, 71.4, 24.4]],
+    ["brunello-2-l-stilbeton-cream", "BRUNELLO 2 L", "StilBeton", "cream handpoliert", [12.4, 37.4, 70.9, 28.3]],
     ["brunello-2-l-stilbeton-basalt", "BRUNELLO 2 L", "StilBeton", "basalt sandgestrahlt", [13.7, 40.9, 70.4, 24.1]],
-    ["brunello-2-l-stilbeton-cream-2", "BRUNELLO 2 L", "StilBeton", "cream handpoliert{2}", [12.4, 37.4, 70.9, 28.3]],
-    ["brunello-2-l-stilbeton-basalt-2", "BRUNELLO 2 L", "StilBeton", "basalt sandgestrahlt{2}", [12.2, 37.3, 72.0, 28.6]],
-    ["brunello-2-l-groove-stilbeton-cream", "BRUNELLO 2 L Groove", "StilBeton", "cream handpoliert", [3.1, 37.2, 83.7, 28.4]],
+    ["brunello-2-l-groove-stilbeton-cream", "BRUNELLO 2 L Groove", "StilBeton", "cream handpoliert", [1.5, 36.0, 86.3, 29.6]],
     ["brunello-2-l-groove-stilbeton-basalt", "BRUNELLO 2 L Groove", "StilBeton", "basalt", [3.1, 37.1, 83.7, 28.6]],
-    ["brunello-2-l-groove-stilbeton-cream-2", "BRUNELLO 2 L Groove", "StilBeton", "cream handpoliert{2}", [1.5, 36.0, 86.3, 29.6]],
     ["brunello-2-l-groove-stilbeton-basalt-black-edition", "BRUNELLO 2 L Groove", "StilBeton", "basalt, Glas Black Edition", [3.1, 37.1, 83.7, 28.6]],
   ],
   catania: [
@@ -3345,7 +3330,6 @@ const stovePictureLabel = (t, colour) =>
     .replace("{L}", t.stove_handle_left)
     .replace("{R}", t.stove_handle_right)
     .replace("{D}", t.stove_wood_door)
-    .replace("{2}", t.stove_second)
     .replace(/^,\s*/, "");
 
 const stoveMaterialLabel = (t, mat) => t[`stove_mat_${mat}`] || mat;
