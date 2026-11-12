@@ -35,4 +35,4 @@ CARD_URL = f"/{DOMAIN}/{CARD_FILENAME}"
 # product pictures of Drooff for the card, see frontend/stoves/LICENSE.md
 STOVES_URL = f"/{DOMAIN}/stoves"
 
-CARD_VERSION = "1.0.10"
+CARD_VERSION = "1.0.11"

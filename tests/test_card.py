@@ -62,9 +62,13 @@ def test_stove_pictures_match_the_card() -> None:
     assert model_ids
     for model in re.findall(r"^  (\w+): \[", table, re.MULTILINE):
         assert model in model_ids
-    for name, left, top, width, height in re.findall(
-        r'\["([a-z0-9-]+)", "[^"]*", "[^"]*", \[([\d.]+), ([\d.]+), ([\d.]+), ([\d.]+)\]\]', table
-    ):
+    rows = re.findall(
+        r'\["([a-z0-9-]+)", "[^"]*", "(\w+)", "[^"]*", \[([\d.]+), ([\d.]+), ([\d.]+), ([\d.]+)\]\]', table
+    )
+    # every row of the table has the format the editor expects
+    assert len(rows) == table.count("\n    [")
+    for name, material, left, top, width, height in rows:
+        assert material in {"steel", "steel_clad", "clad", "StilBeton", "ArtBeton"}, name
         used.add(name)
         assert (folder / "stoves" / f"{name}.webp").is_file(), name
         assert (pictures / f"{name}.webp").is_file(), name

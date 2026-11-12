@@ -10,7 +10,7 @@ A Lovelace dashboard card for the Home Assistant integration [Drooff fire+ V2](h
 
 ## Features
 
-- **Realistic fire animation** (canvas particle system with flame tongues and sparks) in a combustion chamber lined with **upright white fire-clay plates**, side walls in perspective, soot marks and flickering firelight. Light or dark brick walls can be selected instead.
+- **Realistic fire animation** (canvas particle system with flame tongues and sparks) in a combustion chamber lined with **three white fire-clay plates** like in Drooff stoves (back wall and two side walls), side walls in perspective, soot marks and flickering firelight. Light or dark brick walls can be selected instead.
 - **Split firewood**: 25 cm beech logs with bark, fibres, knots and growth rings. They char and glow while burning. The fire follows the chamber temperature and the operation status:
   - *Off*: cold logs, faint embers while the stove is still warm
   - *Heating up*: the flame grows with the heating progress
@@ -64,7 +64,7 @@ Everything else is detected automatically.
 | `min_temperature` | `80` | Chamber temperature below which no flame is shown (°C) |
 | `max_temperature` | `600` | Temperature for the full flame (°C) |
 | `log_weight` | `0.9` | Weight of one log in kg (converts the wood load into logs) |
-| `wall` | `chamotte` | Chamber background: `chamotte` (upright fire-clay plates), `bricks_light`, `bricks_dark` |
+| `wall` | `chamotte` | Chamber background: `chamotte` (three fire-clay plates like in Drooff stoves), `bricks_light`, `bricks_dark` |
 | `stove_image` | – | Picture of the stove (file picker in the editor, or a URL like `/local/stove.png`). Without it the open fireplace is shown |
 | `stove_model` | – | Drooff model, sets the optimal draught range in the editor: `andalo3s`, `andalo3m`, `andalo3l`, `aprica2`, `arola`, `brunello2s`, `brunello2m`, `brunello2l`, `catania`, `forano`, `garda`, `imola`, `livera2m`, `livera2l`, `liverapm`, `liverapl`, `varese3`, `varese3w` |
 | `stove_window` | `{left: 20, top: 20, width: 60, height: 40}` | Position of the window in the picture, in percent of width/height |
@@ -119,7 +119,7 @@ Please only use pictures you are allowed to use; product photos are usually copy
 
 Under **Stove picture → Stove model (Drooff)** you can choose your Drooff model (all wood stoves that support fire+). The card then applies the optimal draught range of that model: from its minimum draught (12 Pa according to Drooff’s technical information, 13 Pa for AROLA 2 and GARDA 2) to −20 Pa, above which Drooff requires a draught limiter. For BRUNELLO 2, CATANIA, GARDA 2 and AROLA 2 Drooff specifies only 6 Pa at partial load, so with the experimental option “Consider partial load” (Advanced, off by default) the optimal range for these models starts at −6 Pa at burn rate 1–3. That burn rates 1–3 match Drooff’s partial load is an assumption. Drooff still requires the chimney to provide 12 to 20 Pa. You can still change the values under “Advanced: draught”.
 
-Then choose the finish of your stove under **Variant (picture by Drooff)**. The editor shows small previews of all variants (83 product pictures of Drooff, for every model), grouped by series, e.g. APRICA 2, Trend, Plus and Edition. A click loads the picture from the GitHub repository of the integration (`pictures/stoves/`); only the previews are part of the integration. The card cuts the picture out, stores it in the card configuration and uses the window measured for it, with a soft edge so the animated fire blends into the glass. Choosing a picture needs internet access once, the card itself does not load anything from the internet afterwards. **Choose picture …** uses your own photo instead.
+Then narrow down your stove step by step (83 product pictures of Drooff, for every model): **Version** (e.g. APRICA 2, Trend, Plus or BRUNELLO 2 L Groove), **Variant** (e.g. steel, steel with cladding, cladding, StilBeton) and **Colour**. Version and variant only appear when the model has more than one. The colours are shown as small previews with their name. A click loads the picture from the GitHub repository of the integration (`pictures/stoves/`); only the previews are part of the integration. The card cuts the picture out, stores it in the card configuration and uses the window measured for it, with a soft edge so the animated fire blends into the glass. Choosing a picture needs internet access once, the card itself does not load anything from the internet afterwards. **Choose picture …** uses your own photo instead.
 
 For a model without a supplied picture the card links to the product page at Drooff and explains how to get the picture into the card:
 
