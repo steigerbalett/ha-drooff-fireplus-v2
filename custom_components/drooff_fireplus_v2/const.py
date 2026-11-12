@@ -32,4 +32,7 @@ CARD_FILENAME = "drooff-fireplus-card.js"
 
 CARD_URL = f"/{DOMAIN}/{CARD_FILENAME}"
 
-CARD_VERSION = "1.0.9"
+# product pictures of Drooff for the card, see frontend/stoves/LICENSE.md
+STOVES_URL = f"/{DOMAIN}/stoves"
+
+CARD_VERSION = "1.0.10"

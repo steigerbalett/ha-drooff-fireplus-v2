@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.4
+
+- The product pictures of Drooff come with the integration: 81 pictures of all fire+ stoves except ANDALO 3 S and IMOLA, in `frontend/stoves/`, with the kind permission of DROOFF Kaminöfen GmbH & Co. KG. They are not covered by the MIT license, see `frontend/stoves/LICENSE.md` and NOTICE.md.
+- Dashboard card 1.0.10: after the stove model, the editor offers the variant of the stove (e.g. APRICA 2 Trend, NatStone). The picture is loaded from the integration, cut out and gets the window measured for it. New option `stove_window_soft` lets the window fade into the glass of the picture. Pictures that are already transparent keep white parts of the stove.
+
 ## 2.0.3
 
 - The official Drooff logo is the icon of the integration, and the product pictures may be used, with the kind permission of DROOFF Kaminöfen GmbH & Co. KG. Thanks to Drooff! Logo and pictures are not covered by the MIT license, see NOTICE.md.

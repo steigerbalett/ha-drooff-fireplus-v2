@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 from .conftest import mock_fireplus, setup_integration
@@ -26,3 +28,47 @@ async def test_card_is_served(
     response = await client.get("/drooff_fireplus_v2/drooff-fireplus-card.js")
     assert response.status == 200
     assert "customElements.define" in await response.text()
+
+
+async def test_stove_pictures_are_served(
+    hass: HomeAssistant,
+    hass_client: ClientSessionGenerator,
+    aioclient_mock: AiohttpClientMocker,
+    config_entry: MockConfigEntry,
+) -> None:
+    """The product pictures of Drooff are served next to the card."""
+    mock_fireplus(aioclient_mock)
+    await setup_integration(hass, config_entry)
+    client = await hass_client()
+    response = await client.get("/drooff_fireplus_v2/stoves/brunello-2-l-stahl-schwarz.webp")
+    assert response.status == 200
+    assert (await response.read())[8:12] == b"WEBP"
+    response = await client.get("/drooff_fireplus_v2/stoves/LICENSE.md")
+    assert response.status == 200
+    assert "DROOFF Kaminöfen GmbH & Co. KG" in await response.text()
+
+
+def test_stove_pictures_match_the_card() -> None:
+    """Every picture in the card exists, every picture in the folder is used, windows lie in the picture."""
+    folder = Path(__file__).parent.parent / "custom_components" / "drooff_fireplus_v2" / "frontend"
+    card = (folder / "drooff-fireplus-card.js").read_text(encoding="utf-8")
+    table = card[card.index("const STOVE_PICTURES = {") :]
+    table = table[: table.index("};")]
+    models = card[card.index("const STOVE_MODELS = [") : card.index("const STOVES_URL")]
+    model_ids = set(re.findall(r'^  \["(\w+)", ', models, re.MULTILINE))
+    used = set()
+    assert model_ids
+    for model in re.findall(r"^  (\w+): \[", table, re.MULTILINE):
+        assert model in model_ids
+    for name, left, top, width, height in re.findall(
+        r'\["([a-z0-9-]+)", "[^"]*", "[^"]*", \[([\d.]+), ([\d.]+), ([\d.]+), ([\d.]+)\]\]', table
+    ):
+        used.add(name)
+        assert (folder / "stoves" / f"{name}.webp").is_file(), name
+        assert float(left) >= 0, name
+        assert float(top) >= 0, name
+        assert float(left) + float(width) <= 100.5, name
+        assert float(top) + float(height) <= 100.5, name
+    files = {p.stem for p in (folder / "stoves").glob("*.webp")}
+    assert files == used
+    assert (folder / "stoves" / "LICENSE.md").is_file()

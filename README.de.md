@@ -25,7 +25,7 @@ Ein großes Dankeschön an die **DROOFF Kaminöfen GmbH & Co. KG**, die diesem P
 
 ## Neu in Version 2
 
-- **Dashboard-Karte** mit animiertem Feuer, Bedienung, optionalem Bild des eigenen Ofens, Zeigerinstrument für den Kaminzug, Verlaufsgrafiken und einer Alarmanzeige, die nur erscheint, wenn etwas nicht stimmt
+- **Dashboard-Karte** mit animiertem Feuer, Bedienung, Bild deines Ofens (81 Produktbilder von Drooff dabei), Zeigerinstrument für den Kaminzug, Verlaufsgrafiken und einer Alarmanzeige, die nur erscheint, wenn etwas nicht stimmt
 - **Blueprint „Holz nachlegen“** mit Nachrichten (Pushover, Telegram, Companion-App, …), Echo-Ansagen und beliebigen weiteren Aktionen, jeweils mit eigener Verzögerung
 - **Statistik** aus dem Ereignis-Log des fire+: Abbrände, Nachlegevorgänge, geschätzter Holzverbrauch, zuletzt nachgelegt
 - **Bediensperren** wie in der Webapp (Fernbedienung, Raumregler, Panel), bei Öfen mit Blauem Engel nur Eco und Power
@@ -175,7 +175,7 @@ DROOFF Kaminöfen GmbH & Co. KG
 Keffelker Str. 40
 D-59929 Brilon
 
-Sie werden mit freundlicher Genehmigung von Drooff verwendet. Sie fallen **nicht** unter die MIT-Lizenz dieses Projekts und dürfen nicht verändert oder anderweitig genutzt werden. Details stehen in [NOTICE.md](NOTICE.md).
+Sie werden mit freundlicher Genehmigung von Drooff verwendet. Sie fallen **nicht** unter die MIT-Lizenz dieses Projekts. Die Produktbilder werden mit der Integration ausgeliefert (`custom_components/drooff_fireplus_v2/frontend/stoves/`) und dürfen nur in ihr verwendet werden; die Karte darf sie für die Anzeige freistellen. Darüber hinaus dürfen sie nicht verändert oder anderweitig genutzt werden. Details stehen in [NOTICE.md](NOTICE.md) und in der [Lizenz der Bilder](custom_components/drooff_fireplus_v2/frontend/stoves/LICENSE.md).
 
 ## Haftungsausschluss
 
