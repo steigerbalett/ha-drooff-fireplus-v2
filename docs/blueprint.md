@@ -11,6 +11,8 @@ Once Home Assistant has started, the integration installs the blueprint to `conf
 5. Optionally select the *recommended wood load* sensor as **Empfohlene Holzauflage / Recommended wood load**. The message then says how much wood to add, by default as the number of logs, e.g. "Bitte Holz nachlegen. (2 Holzscheite)" (see [Wood load](#wood-load)).
 6. Fill in the channels in the section **Aktion bei Holz nachlegen / Action when wood is required** and save.
 
+By default only **wood urgently required** notifies, with the channels of **Action when wood is required**. To be reminded at *wood required* already, switch on **Notify when wood is required** in that section.
+
 ## Wood load
 
 The fire+ recommends the wood load in kg. With **Holzauflage angeben als / Show wood load as** the message shows it as

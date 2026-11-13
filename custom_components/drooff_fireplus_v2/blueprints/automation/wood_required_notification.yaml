@@ -7,8 +7,10 @@ blueprint:
     Notify-Aktionen), Ansagen auf Amazon-Echo-Geräten und weitere Aktionen.
     Alle Kanäle sind optional und haben eine eigene Verzögerung. Ein Kanal
     meldet sich nur, wenn der Zustand nach der Verzögerung noch besteht.
-    Solange die Aktionen für "Dringend" nicht eingeschaltet sind, gelten dort
-    die Aktionen für "Holz nachlegen". Die Sprache bestimmt die Standardtexte.
+    Standardmäßig meldet sich nur "Dringend Holz nachlegen", "Holz nachlegen"
+    lässt sich dazuschalten. Solange die Aktionen für "Dringend" nicht
+    eingeschaltet sind, gelten dort die Aktionen für "Holz nachlegen". Die
+    Sprache bestimmt die Standardtexte.
 
 
     **English:** Reminds you when the fire+ asks for wood. "Wood required" and
@@ -16,8 +18,9 @@ blueprint:
     Telegram, mobile app and other notify actions), announcements on Amazon
     Echo devices and other actions. Every channel is optional and has its own
     delay. A channel only fires if the status still holds after its delay.
-    Until the urgent actions are switched on, the actions for "wood required"
-    are used. The language selects the default texts.
+    By default only "wood urgently required" notifies, "wood required" can be
+    switched on. Until the urgent actions are switched on, the actions for
+    "wood required" are used. The language selects the default texts.
 
 
     Die Integration installiert und aktualisiert diese Datei. Wird sie
@@ -101,9 +104,20 @@ blueprint:
       name: Aktion bei Holz nachlegen / Action when wood is required
       icon: mdi:fireplace
       description: >-
-        Was passiert bei "Holz nachlegen". / What happens when the fire+ asks for wood.
+        Was passiert bei "Holz nachlegen". Diese Aktionen gelten auch für
+        "Dringend", solange dort keine eigenen eingeschaltet sind.
+        / What happens when the fire+ asks for wood. These actions are also
+        used when urgent, until own urgent actions are switched on.
       collapsed: false
       input:
+        required_enabled:
+          name: Bei "Holz nachlegen" melden / Notify when wood is required
+          description: >-
+            Aus = nur "Dringend Holz nachlegen" meldet sich.
+            / Off = only "wood urgently required" notifies.
+          default: false
+          selector:
+            boolean:
         title:
           name: Titel / Title
           description: >-
@@ -376,6 +390,7 @@ variables:
   wood_load_sensor: !input wood_load_sensor
   wood_load_unit: !input wood_load_unit
   log_weight: !input log_weight
+  required_enabled: !input required_enabled
   urgent_enabled: !input urgent_enabled
   defaults:
     de:
@@ -413,7 +428,7 @@ variables:
 
 actions:
   - condition: template
-    value_template: "{{ trigger.id in ['required', 'urgent'] }}"
+    value_template: "{{ trigger.id == 'urgent' or (trigger.id == 'required' and required_enabled) }}"
   - variables:
       use_urgent: "{{ trigger.id == 'urgent' and urgent_enabled }}"
       c: "{{ urgent if use_urgent else normal }}"

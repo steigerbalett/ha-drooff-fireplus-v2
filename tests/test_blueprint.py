@@ -114,8 +114,10 @@ def notify(action: str, **data: Any) -> list[dict[str, Any]]:
     return [{"action": action, "data": {"title": "{{ title }}", "message": "{{ text }}", **data}}]
 
 
-async def setup_automation(hass: HomeAssistant, inputs: dict[str, Any]) -> None:
-    """Install the blueprint and create an automation from it."""
+async def setup_automation(hass: HomeAssistant, inputs: dict[str, Any], *, required: bool = True) -> None:
+    """Install the blueprint and create an automation from it, by default with "wood required" switched on."""
+    if required:
+        inputs = {"required_enabled": True, **inputs}
     await async_install_blueprints(hass)
     hass.states.async_set(STATUS, "regular")
     assert await async_setup_component(
@@ -155,6 +157,17 @@ async def test_default_is_a_home_assistant_notification(hass: HomeAssistant) -> 
     await setup_automation(hass, {})
     await set_status(hass, "wood_required")
     assert [call.data for call in persistent] == [{"title": "Kaminofen", "message": "Bitte Holz nachlegen."}]
+
+
+async def test_only_urgent_notifies_by_default(hass: HomeAssistant) -> None:
+    """Without switching it on, "wood required" stays silent and "wood urgently required" notifies."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    await setup_automation(hass, {}, required=False)
+    await set_status(hass, "wood_required")
+    await wait(hass, 1)
+    assert persistent == []
+    await set_status(hass, "wood_urgently_required")
+    assert [call.data for call in persistent] == [{"title": "Kaminofen", "message": "Dringend Holz nachlegen!"}]
 
 
 async def test_all_channels_can_be_empty(hass: HomeAssistant, caplog: pytest.LogCaptureFixture) -> None:

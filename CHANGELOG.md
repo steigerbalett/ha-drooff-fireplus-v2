@@ -6,6 +6,7 @@ Beta: HACS offers it once *Show beta versions* is switched on for the repository
 
 - Blueprint *Holz nachlegen / Add wood*: the message gives the recommended wood load as the number of logs by default, e.g. "Bitte Holz nachlegen. (2 Holzscheite)". The number follows from the amount in kg and the new input *Gewicht je Holzscheit / Weight per log* (default 0.7 kg). *Holzauflage angeben als / Show wood load as* switches back to kg or shows both. An unchanged copy of the blueprint is updated automatically.
 - Blueprint: `source_url` points to the release of the installed version instead of `main`. Tools such as *Blueprints Updater* and *Re-import blueprint* in Home Assistant then fetch exactly the version the integration installed, and no longer offer the state of `main` as an update.
+- Blueprint: by default only *Dringend Holz nachlegen / wood urgently required* notifies. The first reminder at *Holz nachlegen / wood required* is off by default and is switched on with the new input *Bei "Holz nachlegen" melden / Notify when wood is required*. **Existing automations from the blueprint no longer remind at *wood required* until this is switched on.**
 - Blueprint: no "Bitte Holz nachlegen." after wood was added during *wood urgently required*. The fire+ passes through *wood required* on its way back to *regular*, this change no longer counts as a new request for wood and drops pending urgent reminders.
 
 ## 2.0.4

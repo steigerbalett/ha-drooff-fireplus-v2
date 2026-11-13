@@ -11,6 +11,8 @@ Die Integration installiert den Blueprint nach dem Start von Home Assistant nach
 5. Optional bei **Empfohlene Holzauflage** den gleichnamigen Sensor eintragen. Dann steht in der Nachricht, wie viel Holz nachgelegt werden soll, standardmäßig als Anzahl der Holzscheite, zum Beispiel „Bitte Holz nachlegen. (2 Holzscheite)“ (siehe [Holzauflage](#holzauflage)).
 6. Im Bereich **Aktion bei Holz nachlegen** die gewünschten Kanäle ausfüllen und speichern.
 
+Standardmäßig meldet sich nur **Dringend Holz nachlegen**, mit den Kanälen aus **Aktion bei Holz nachlegen**. Wer schon bei „Holz nachlegen“ erinnert werden möchte, schaltet dort **Bei „Holz nachlegen“ melden / Notify when wood is required** ein.
+
 ## Holzauflage
 
 Der fire+ empfiehlt die Holzauflage in kg. Mit **Holzauflage angeben als** zeigt die Nachricht sie als
