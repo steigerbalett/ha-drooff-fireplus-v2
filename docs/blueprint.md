@@ -8,8 +8,20 @@ Once Home Assistant has started, the integration installs the blueprint to `conf
 2. Choose **Drooff fire+: Holz nachlegen / Add wood**.
 3. Choose German or English as **Sprache / Language**. It selects the default texts (title, "Please add wood.", "Add wood now!"); own texts replace them.
 4. Select the *operation status* sensor of the fire+ as **Betriebsstatus / Operation status**.
-5. Optionally select the *recommended wood load* sensor as **Empfohlene Holzauflage / Recommended wood load**, the amount in kg is then appended to the message.
+5. Optionally select the *recommended wood load* sensor as **Empfohlene Holzauflage / Recommended wood load**. The message then says how much wood to add, by default as the number of logs, e.g. "Bitte Holz nachlegen. (2 Holzscheite)" (see [Wood load](#wood-load)).
 6. Fill in the channels in the section **Aktion bei Holz nachlegen / Action when wood is required** and save.
+
+## Wood load
+
+The fire+ recommends the wood load in kg. With **Holzauflage angeben als / Show wood load as** the message shows it as
+
+| Setting | Example |
+|---|---|
+| Logs (*Holzscheite*, default) | Please add wood. (2 logs) |
+| kg | Please add wood. (1.4 kg) |
+| Logs and kg | Please add wood. (2 logs, 1.4 kg) |
+
+The number of logs is the amount in kg divided by **Gewicht je Holzscheit / Weight per log**, rounded, at least 1. The default of 0.7 kg follows Drooff's technical information (e.g. 1.4 kg in 2 logs at nominal heat output). Weigh a few of your own logs for a better value.
 
 ## Language
 

@@ -52,14 +52,51 @@ blueprint:
     wood_load_sensor:
       name: Empfohlene Holzauflage / Recommended wood load (optional)
       description: >-
-        Wenn gesetzt, wird die Menge in kg an die Nachricht angehängt.
-        / If set, the amount in kg is appended to the message.
+        Wenn gesetzt, wird die Holzauflage an die Nachricht angehängt,
+        standardmäßig als Anzahl der Holzscheite.
+        / If set, the wood load is appended to the message, by default as the
+        number of logs.
       default: ""
       selector:
         entity:
           filter:
             - integration: drooff_fireplus_v2
               domain: sensor
+    wood_load_unit:
+      name: Holzauflage angeben als / Show wood load as
+      description: >-
+        Die Anzahl der Holzscheite ergibt sich aus der empfohlenen Menge in kg
+        und dem Gewicht je Holzscheit, mindestens 1.
+        / The number of logs follows from the recommended amount in kg and the
+        weight per log, at least 1.
+      default: logs
+      selector:
+        select:
+          options:
+            - label: Holzscheite / Logs
+              value: logs
+            - label: kg
+              value: kg
+            - label: Holzscheite und kg / Logs and kg
+              value: both
+    log_weight:
+      name: Gewicht je Holzscheit / Weight per log
+      description: >-
+        Durchschnittliches Gewicht eines deiner Holzscheite. Drooff nennt in
+        den technischen Informationen z. B. 1,4 kg in 2 Holzscheiten, also
+        etwa 0,7 kg je Scheit. Am genauesten ist es, ein paar eigene Scheite zu
+        wiegen.
+        / Average weight of one of your logs. Drooff's technical information
+        gives e.g. 1.4 kg in 2 logs, about 0.7 kg per log. Weighing a few of
+        your own logs is most accurate.
+      default: 0.7
+      selector:
+        number:
+          min: 0.2
+          max: 3
+          step: 0.1
+          unit_of_measurement: kg
+          mode: box
     section:
       name: Aktion bei Holz nachlegen / Action when wood is required
       icon: mdi:fireplace
@@ -329,16 +366,22 @@ variables:
   language: !input language
   sensor: !input status_sensor
   wood_load_sensor: !input wood_load_sensor
+  wood_load_unit: !input wood_load_unit
+  log_weight: !input log_weight
   urgent_enabled: !input urgent_enabled
   defaults:
     de:
       title: Kaminofen
       required: Bitte Holz nachlegen.
       urgent: Dringend Holz nachlegen!
+      log: Holzscheit
+      logs: Holzscheite
     en:
       title: Fireplace
       required: Please add wood.
       urgent: Add wood now!
+      log: log
+      logs: logs
   normal:
     title: !input title
     message: !input message
@@ -371,9 +414,24 @@ actions:
       title: "{{ c.title if c.title else texts.title }}"
       message: "{{ c.message if c.message else texts[trigger.id] }}"
       wood_load: "{{ states(wood_load_sensor) | float(0) if wood_load_sensor else 0 }}"
+      # number of logs from the amount in kg, at least one
+      logs: >-
+        {%- set weight = log_weight | float(0.7) -%}
+        {%- set weight = weight if weight > 0 else 0.7 -%}
+        {{ [(wood_load / weight) | round(0) | int, 1] | max }}
+      load_text: >-
+        {%- set kg = (wood_load | round(1)) ~ ' kg' -%}
+        {%- set pieces = logs ~ ' ' ~ (texts.log if logs == 1 else texts.logs) -%}
+        {%- if wood_load_unit == 'kg' -%}
+        {{ kg }}
+        {%- elif wood_load_unit == 'both' -%}
+        {{ pieces }}, {{ kg }}
+        {%- else -%}
+        {{ pieces }}
+        {%- endif -%}
       text: >-
         {%- if wood_load > 0 -%}
-        {{ message }} ({{ wood_load | round(1) }} kg)
+        {{ message }} ({{ load_text }})
         {%- else -%}
         {{ message }}
         {%- endif -%}

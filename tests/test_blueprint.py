@@ -351,9 +351,38 @@ async def test_notify_entities_and_wood_load(hass: HomeAssistant) -> None:
     )
     await set_status(hass, "wood_required")
     assert sorted((str(call.data["entity_id"]), call.data["message"]) for call in send_message) == [
-        ("['notify.kitchen_announce']", "Bitte Holz nachlegen. (1.5 kg)"),
-        ("['notify.phone']", "Bitte Holz nachlegen. (1.5 kg)"),
+        ("['notify.kitchen_announce']", "Bitte Holz nachlegen. (2 Holzscheite)"),
+        ("['notify.phone']", "Bitte Holz nachlegen. (2 Holzscheite)"),
     ]
+
+
+@pytest.mark.parametrize(
+    ("load", "inputs", "expected"),
+    [
+        # by default the number of logs, 0.7 kg per log
+        ("1.4", {}, "Bitte Holz nachlegen. (2 Holzscheite)"),
+        ("0.5", {}, "Bitte Holz nachlegen. (1 Holzscheit)"),
+        # at least one log, also for a very small amount
+        ("0.1", {}, "Bitte Holz nachlegen. (1 Holzscheit)"),
+        ("2.6", {"log_weight": 1.3}, "Bitte Holz nachlegen. (2 Holzscheite)"),
+        ("1.5", {"wood_load_unit": "kg"}, "Bitte Holz nachlegen. (1.5 kg)"),
+        ("1.5", {"wood_load_unit": "both"}, "Bitte Holz nachlegen. (2 Holzscheite, 1.5 kg)"),
+        ("2.1", {"language": "en"}, "Please add wood. (3 logs)"),
+        ("0.6", {"language": "en"}, "Please add wood. (1 log)"),
+        # no recommendation from the fire+, no amount
+        ("0", {}, "Bitte Holz nachlegen."),
+    ],
+)
+async def test_wood_load_as_logs_or_kg(hass: HomeAssistant, load: str, inputs: dict[str, Any], expected: str) -> None:
+    """The wood load is shown as logs by default, or in kg, or both."""
+    pushover = async_mock_service(hass, "notify", "pushover")
+    hass.states.async_set("sensor.drooff_fire_wood_load", load)
+    await setup_automation(
+        hass,
+        {"wood_load_sensor": "sensor.drooff_fire_wood_load", "notify_actions": notify("notify.pushover"), **inputs},
+    )
+    await set_status(hass, "wood_required")
+    assert [call.data["message"] for call in pushover] == [expected]
 
 
 async def test_english_and_own_texts(hass: HomeAssistant) -> None:

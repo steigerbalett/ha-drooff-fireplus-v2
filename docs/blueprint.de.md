@@ -8,8 +8,20 @@ Die Integration installiert den Blueprint nach dem Start von Home Assistant nach
 2. **Drooff fire+: Holz nachlegen / Add wood** wählen.
 3. Bei **Sprache** Deutsch oder Englisch wählen. Die Sprache bestimmt die Standardtexte (Titel, „Bitte Holz nachlegen.“, „Dringend Holz nachlegen!“). Eigene Texte ersetzen sie.
 4. Bei **Betriebsstatus** den Sensor „Betriebsstatus“ des fire+ eintragen.
-5. Optional bei **Empfohlene Holzauflage** den gleichnamigen Sensor eintragen. Dann wird die Menge in kg an die Nachricht angehängt, zum Beispiel „Bitte Holz nachlegen. (1.5 kg)“.
+5. Optional bei **Empfohlene Holzauflage** den gleichnamigen Sensor eintragen. Dann steht in der Nachricht, wie viel Holz nachgelegt werden soll, standardmäßig als Anzahl der Holzscheite, zum Beispiel „Bitte Holz nachlegen. (2 Holzscheite)“ (siehe [Holzauflage](#holzauflage)).
 6. Im Bereich **Aktion bei Holz nachlegen** die gewünschten Kanäle ausfüllen und speichern.
+
+## Holzauflage
+
+Der fire+ empfiehlt die Holzauflage in kg. Mit **Holzauflage angeben als** zeigt die Nachricht sie als
+
+| Einstellung | Beispiel |
+|---|---|
+| Holzscheite (Standard) | Bitte Holz nachlegen. (2 Holzscheite) |
+| kg | Bitte Holz nachlegen. (1.4 kg) |
+| Holzscheite und kg | Bitte Holz nachlegen. (2 Holzscheite, 1.4 kg) |
+
+Die Anzahl der Holzscheite ist die Menge in kg geteilt durch das **Gewicht je Holzscheit**, gerundet und mindestens 1. Der Standardwert 0,7 kg folgt den technischen Informationen von Drooff (z. B. 1,4 kg in 2 Holzscheiten bei Nennwärmeleistung). Genauer wird es, wenn du ein paar eigene Scheite wiegst.
 
 ## Sprache
 

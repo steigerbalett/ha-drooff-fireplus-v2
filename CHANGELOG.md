@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.5b1
+
+Beta: HACS offers it once *Show beta versions* is switched on for the repository.
+
+- Blueprint *Holz nachlegen / Add wood*: the message gives the recommended wood load as the number of logs by default, e.g. "Bitte Holz nachlegen. (2 Holzscheite)". The number follows from the amount in kg and the new input *Gewicht je Holzscheit / Weight per log* (default 0.7 kg). *Holzauflage angeben als / Show wood load as* switches back to kg or shows both. An unchanged copy of the blueprint is updated automatically.
+
 ## 2.0.4
 
 - Product pictures of Drooff for every fire+ stove (83 variants), with the kind permission of DROOFF Kaminöfen GmbH & Co. KG. They are not covered by the MIT license, see `pictures/stoves/LICENSE.md` and NOTICE.md.
