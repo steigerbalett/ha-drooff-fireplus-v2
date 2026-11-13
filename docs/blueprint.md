@@ -61,6 +61,8 @@ The section **Aktion bei Dringend Holz nachlegen / Action when wood is urgently 
 
 When the status changes from *wood required* to *urgently required*, pending reminders for *wood required* are dropped and the urgent channels start with their own delays.
 
+After wood was added, the fire+ often goes from *urgently required* to *wood required* for a moment and then to *regular*. This way back sends no reminder, and pending urgent reminders are dropped.
+
 ## Customising
 
 You can change the installed file. The integration remembers which version it installed and does not touch a file that differs from it, neither at a restart nor with an update. To get the current version again, delete the file and restart Home Assistant. If you would rather keep receiving updates, save your copy under another name in the same folder.

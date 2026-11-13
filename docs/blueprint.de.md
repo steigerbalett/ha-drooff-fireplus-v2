@@ -67,6 +67,8 @@ Der Bereich **Aktion bei Dringend Holz nachlegen** ist zugeklappt. Er hat diesel
 
 Wechselt der Status von „Holz nachlegen“ zu „Dringend“, werden noch ausstehende Erinnerungen für „Holz nachlegen“ verworfen und die Kanäle für „Dringend“ starten mit ihren eigenen Verzögerungen.
 
+Nach dem Nachlegen geht der fire+ von „Dringend“ oft erst kurz auf „Holz nachlegen“ und dann auf „Regelbetrieb“. Dieser Rückweg löst keine Erinnerung aus, und noch ausstehende Erinnerungen für „Dringend“ werden verworfen.
+
 ## Anpassen
 
 Die installierte Datei darf geändert werden. Die Integration merkt sich, welche Version sie installiert hat, und lässt eine davon abweichende Datei in Ruhe, beim Neustart wie beim Update. Um wieder die aktuelle Version zu bekommen, die Datei löschen und Home Assistant neu starten. Wer weiter Updates bekommen möchte, speichert seine Anpassung im selben Ordner unter einem anderen Namen.

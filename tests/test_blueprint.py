@@ -332,6 +332,28 @@ async def test_no_reminder_once_wood_was_added(hass: HomeAssistant, new_status: 
     assert phone == []
 
 
+async def test_no_reminder_on_the_way_back_from_urgent(hass: HomeAssistant) -> None:
+    """After wood was added, the fire+ passes from urgent through wood required to regular without a reminder."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    await setup_automation(hass, {})
+    await set_status(hass, "wood_urgently_required")
+    assert [call.data["message"] for call in persistent] == ["Dringend Holz nachlegen!"]
+    await set_status(hass, "wood_required")
+    await set_status(hass, "regular")
+    await wait(hass, 1)
+    assert len(persistent) == 1
+
+
+async def test_urgent_reminder_dropped_on_the_way_back(hass: HomeAssistant) -> None:
+    """A pending urgent reminder is dropped once the status goes back to wood required."""
+    phone = async_mock_service(hass, "notify", "mobile_app_phone")
+    await setup_automation(hass, {"notify_actions": notify("notify.mobile_app_phone"), "notify_delay": {"minutes": 10}})
+    await set_status(hass, "wood_urgently_required")
+    await set_status(hass, "wood_required")
+    await wait(hass, 10)
+    assert phone == []
+
+
 async def test_notify_entities_and_wood_load(hass: HomeAssistant) -> None:
     """Notify entities get the message with the recommended wood load."""
     send_message = async_mock_service(hass, "notify", "send_message")

@@ -340,9 +340,12 @@ triggers:
   - trigger: state
     entity_id: !input status_sensor
     to: wood_required
+    # wood_urgently_required -> wood_required means wood was added, the fire+
+    # passes through it on the way back to regular
     not_from:
       - unavailable
       - unknown
+      - wood_urgently_required
     id: required
   - trigger: state
     entity_id: !input status_sensor
@@ -360,6 +363,11 @@ triggers:
     not_to:
       - wood_required
       - wood_urgently_required
+    id: done
+  - trigger: state
+    entity_id: !input status_sensor
+    from: wood_urgently_required
+    to: wood_required
     id: done
 
 variables:
