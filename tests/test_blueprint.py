@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import json
 from datetime import timedelta
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
@@ -405,3 +406,15 @@ async def test_english_and_own_texts(hass: HomeAssistant) -> None:
         ("Fireplace", "Please add wood."),
         ("Stove", "Wood, quickly!"),
     ]
+
+
+def test_source_url_points_to_the_release() -> None:
+    """The source_url names the tag of this version, so tools fetch exactly the installed blueprint."""
+    manifest = json.loads((BLUEPRINTS.parent / "manifest.json").read_text(encoding="utf-8"))
+    for path in BLUEPRINTS.glob("*/*.yaml"):
+        text = path.read_text(encoding="utf-8")
+        line = next(x for x in text.splitlines() if x.strip().startswith("source_url:"))
+        rel = path.relative_to(BLUEPRINTS.parent.parent.parent).as_posix()
+        assert line.split(":", 1)[1].strip() == (
+            f"https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/v{manifest['version']}/{rel}"
+        )

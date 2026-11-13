@@ -64,3 +64,5 @@ When the status changes from *wood required* to *urgently required*, pending rem
 ## Customising
 
 You can change the installed file. The integration remembers which version it installed and does not touch a file that differs from it, neither at a restart nor with an update. To get the current version again, delete the file and restart Home Assistant. If you would rather keep receiving updates, save your copy under another name in the same folder.
+
+The `source_url` of the blueprint points to the release of the installed version (e.g. `…/blob/v2.0.5/…`), not to `main`. *Re-import blueprint* in Home Assistant and tools like *Blueprints Updater* therefore fetch exactly the installed version and do not offer a newer state of the repository that belongs to another version of the integration. New versions of the blueprint come with updates of the integration.

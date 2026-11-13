@@ -25,7 +25,7 @@ blueprint:
     / The integration installs and updates this file. Once it is changed, the
     changes are kept and it is no longer updated.
   domain: automation
-  source_url: https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/main/custom_components/drooff_fireplus_v2/blueprints/automation/wood_required_notification.yaml
+  source_url: https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/v2.0.5b2/custom_components/drooff_fireplus_v2/blueprints/automation/wood_required_notification.yaml
   author: Drooff fire+ integration
   homeassistant:
     min_version: "2026.3.0"

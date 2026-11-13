@@ -70,3 +70,5 @@ Wechselt der Status von „Holz nachlegen“ zu „Dringend“, werden noch auss
 ## Anpassen
 
 Die installierte Datei darf geändert werden. Die Integration merkt sich, welche Version sie installiert hat, und lässt eine davon abweichende Datei in Ruhe, beim Neustart wie beim Update. Um wieder die aktuelle Version zu bekommen, die Datei löschen und Home Assistant neu starten. Wer weiter Updates bekommen möchte, speichert seine Anpassung im selben Ordner unter einem anderen Namen.
+
+Die `source_url` des Blueprints zeigt auf das Release der installierten Version (z. B. `…/blob/v2.0.5/…`), nicht auf `main`. „Blueprint erneut importieren“ in Home Assistant und Werkzeuge wie *Blueprints Updater* holen deshalb genau die installierte Version und bieten keinen neueren Stand des Repositorys an, der zu einer anderen Version der Integration gehört. Neue Versionen des Blueprints kommen mit den Updates der Integration.

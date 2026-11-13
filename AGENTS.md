@@ -24,6 +24,7 @@ The Drooff logo in `custom_components/drooff_fireplus_v2/brand/` and all product
 - Python checks: `ruff check .` and `ruff format --check .`; tests: `python3 -m pytest` (dependencies in `requirements_test.txt`).
 - Dashboard card: `custom_components/drooff_fireplus_v2/frontend/drooff-fireplus-card.js`, plain JavaScript without a build step. `CARD_VERSION` in the card and in `const.py` must match.
 - A release needs a higher `version` in `manifest.json` and a matching section in `CHANGELOG.md`. A version like `2.0.5b1` becomes a pre-release.
+- The `source_url` of each blueprint points to the tag `v<version>` of `manifest.json` (a test checks it). When a blueprint changes, add the sha256 of its previous released content to `SHIPPED_BLUEPRINTS` in `__init__.py`.
 - Texts of the card are in the card itself (German and English, other languages fall back to English); the templates in `docs/examples/translations-*.yaml` follow them.
 - Documentation exists in English and German (`*.md` and `*.de.md`). Change both.
 
