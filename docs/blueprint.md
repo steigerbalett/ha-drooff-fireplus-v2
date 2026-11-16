@@ -9,7 +9,7 @@ Once Home Assistant has started, the integration installs the blueprint to `conf
 3. Choose German or English as **Sprache / Language**. It selects the default texts (title, "Please add wood.", "Add wood now!"); own texts replace them.
 4. Select the *operation status* sensor of the fire+ as **Betriebsstatus / Operation status**.
 5. Optionally select the *recommended wood load* sensor as **Empfohlene Holzauflage / Recommended wood load**. The message then says how much wood to add, by default as the number of logs, e.g. "Bitte Holz nachlegen. (2 Holzscheite)" (see [Wood load](#wood-load)).
-6. Fill in the channels in the section **Aktion bei Holz nachlegen / Action when wood is required** and save.
+6. Open the collapsed section **Aktion bei Holz nachlegen / Action when wood is required**, fill in the channels and save.
 
 By default only **wood urgently required** notifies, with the channels of **Action when wood is required**. To be reminded at *wood required* already, switch on **Notify when wood is required** in that section.
 
@@ -23,7 +23,7 @@ The fire+ recommends the wood load in kg. With **Holzauflage angeben als / Show 
 | kg | Please add wood. (1.4 kg) |
 | Logs and kg | Please add wood. (2 logs, 1.4 kg) |
 
-The number of logs is the amount in kg divided by **Gewicht je Holzscheit / Weight per log**, rounded, at least 1. The default of 0.7 kg follows Drooff's technical information (e.g. 1.4 kg in 2 logs at nominal heat output). Weigh a few of your own logs for a better value.
+The number of logs is the amount in kg divided by **Gewicht je Holzscheit / Weight per log**, rounded, at least 1. A single log reads "one log". The default of 0.7 kg follows Drooff's technical information (e.g. 1.4 kg in 2 logs at nominal heat output). Weigh a few of your own logs for a better value.
 
 ## Language
 
@@ -59,7 +59,7 @@ Several recipients are several actions. An empty channel sends nothing.
 
 ## Wood urgently required
 
-The section **Aktion bei Dringend Holz nachlegen / Action when wood is urgently required** is collapsed. It has the same channels and texts and is only used once **Use own actions when urgent** is switched on. Until then, *wood urgently required* runs the actions for *wood required*, with their delays but the urgent default text.
+The section **Aktion bei Dringend Holz nachlegen / Action when wood is urgently required** is expanded. It has the same channels and texts and is only used once **Use own actions when urgent** is switched on. Until then, *wood urgently required* runs the actions for *wood required*, with their delays but the urgent default text.
 
 When the status changes from *wood required* to *urgently required*, pending reminders for *wood required* are dropped and the urgent channels start with their own delays.
 

@@ -334,7 +334,25 @@ async def test_urgent_actions(hass: HomeAssistant) -> None:
     assert len(lights) == 1
 
 
-@pytest.mark.parametrize("new_status", ["regular", "unavailable"])
+@pytest.mark.parametrize("required", ["on", "off"])
+@pytest.mark.parametrize("old_status", ["wood_required", "wood_urgently_required"])
+@pytest.mark.parametrize("new_status", ["regular", "heating"])
+async def test_no_new_notification_after_wood_was_added(
+    hass: HomeAssistant, required: str, old_status: str, new_status: str
+) -> None:
+    """Going on to regular or heating after wood was added sends nothing new."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    await setup_automation(hass, {}, required=required == "on")
+    await set_status(hass, old_status)
+    sent = len(persistent)
+    assert sent == (1 if required == "on" or old_status == "wood_urgently_required" else 0)
+    await set_status(hass, new_status)
+    await set_status(hass, "regular")
+    await wait(hass, 30)
+    assert len(persistent) == sent
+
+
+@pytest.mark.parametrize("new_status", ["regular", "heating", "unavailable"])
 async def test_no_reminder_once_wood_was_added(hass: HomeAssistant, new_status: str) -> None:
     """A pending reminder is dropped when wood is no longer required."""
     phone = async_mock_service(hass, "notify", "mobile_app_phone")
@@ -397,14 +415,14 @@ async def test_notify_entities_and_wood_load(hass: HomeAssistant) -> None:
     [
         # by default the number of logs, 0.7 kg per log
         ("1.4", {}, "Bitte Holz nachlegen. (2 Holzscheite)"),
-        ("0.5", {}, "Bitte Holz nachlegen. (1 Holzscheit)"),
+        ("0.5", {}, "Bitte Holz nachlegen. (Ein Holzscheit)"),
         # at least one log, also for a very small amount
-        ("0.1", {}, "Bitte Holz nachlegen. (1 Holzscheit)"),
+        ("0.1", {}, "Bitte Holz nachlegen. (Ein Holzscheit)"),
         ("2.6", {"log_weight": 1.3}, "Bitte Holz nachlegen. (2 Holzscheite)"),
         ("1.5", {"wood_load_unit": "kg"}, "Bitte Holz nachlegen. (1.5 kg)"),
         ("1.5", {"wood_load_unit": "both"}, "Bitte Holz nachlegen. (2 Holzscheite, 1.5 kg)"),
         ("2.1", {"language": "en"}, "Please add wood. (3 logs)"),
-        ("0.6", {"language": "en"}, "Please add wood. (1 log)"),
+        ("0.6", {"language": "en"}, "Please add wood. (one log)"),
         # no recommendation from the fire+, no amount
         ("0", {}, "Bitte Holz nachlegen."),
     ],

@@ -96,6 +96,7 @@ SHIPPED_BLUEPRINTS = {
         "ee42f4128e9e72f4ef61b938034012e9748d7c5dabe1c6495af18d3fa35e05bc",
         "05883a459d72809ec019b4853ff53d0f0590353bc372e48d67ed74c90f521b65",
         "bb9f84a98eb1add5bca05d68dae4f1fc8cbaaf28e4b76eb0f6bbf04fc474cf73",
+        "f15d0a95a134f4feca1442814a570134b09ff814929eb4565ef31319c4d42d78",
     },
 }
 

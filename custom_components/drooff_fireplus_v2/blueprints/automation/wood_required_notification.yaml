@@ -28,7 +28,7 @@ blueprint:
     / The integration installs and updates this file. Once it is changed, the
     changes are kept and it is no longer updated.
   domain: automation
-  source_url: https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/v2.0.5b2/custom_components/drooff_fireplus_v2/blueprints/automation/wood_required_notification.yaml
+  source_url: https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/v2.0.5b3/custom_components/drooff_fireplus_v2/blueprints/automation/wood_required_notification.yaml
   author: Drooff fire+ integration
   homeassistant:
     min_version: "2026.3.0"
@@ -108,7 +108,7 @@ blueprint:
         "Dringend", solange dort keine eigenen eingeschaltet sind.
         / What happens when the fire+ asks for wood. These actions are also
         used when urgent, until own urgent actions are switched on.
-      collapsed: false
+      collapsed: true
       input:
         required_enabled:
           name: Bei "Holz nachlegen" melden / Notify when wood is required
@@ -230,7 +230,7 @@ blueprint:
       icon: mdi:fire-alert
       description: >-
         Was passiert bei "Dringend Holz nachlegen". / What happens when the fire+ urgently asks for wood.
-      collapsed: true
+      collapsed: false
       input:
         urgent_enabled:
           name: Eigene Aktionen bei "Dringend" verwenden / Use own actions when urgent
@@ -397,13 +397,13 @@ variables:
       title: Kaminofen
       required: Bitte Holz nachlegen.
       urgent: Dringend Holz nachlegen!
-      log: Holzscheit
+      one_log: Ein Holzscheit
       logs: Holzscheite
     en:
       title: Fireplace
       required: Please add wood.
       urgent: Add wood now!
-      log: log
+      one_log: one log
       logs: logs
   normal:
     title: !input title
@@ -444,7 +444,7 @@ actions:
         {{ [(wood_load / weight) | round(0) | int, 1] | max }}
       load_text: >-
         {%- set kg = (wood_load | round(1)) ~ ' kg' -%}
-        {%- set pieces = logs ~ ' ' ~ (texts.log if logs == 1 else texts.logs) -%}
+        {%- set pieces = texts.one_log if logs == 1 else logs ~ ' ' ~ texts.logs -%}
         {%- if wood_load_unit == 'kg' -%}
         {{ kg }}
         {%- elif wood_load_unit == 'both' -%}

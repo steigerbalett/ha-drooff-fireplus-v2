@@ -9,7 +9,7 @@ Die Integration installiert den Blueprint nach dem Start von Home Assistant nach
 3. Bei **Sprache** Deutsch oder Englisch wählen. Die Sprache bestimmt die Standardtexte (Titel, „Bitte Holz nachlegen.“, „Dringend Holz nachlegen!“). Eigene Texte ersetzen sie.
 4. Bei **Betriebsstatus** den Sensor „Betriebsstatus“ des fire+ eintragen.
 5. Optional bei **Empfohlene Holzauflage** den gleichnamigen Sensor eintragen. Dann steht in der Nachricht, wie viel Holz nachgelegt werden soll, standardmäßig als Anzahl der Holzscheite, zum Beispiel „Bitte Holz nachlegen. (2 Holzscheite)“ (siehe [Holzauflage](#holzauflage)).
-6. Im Bereich **Aktion bei Holz nachlegen** die gewünschten Kanäle ausfüllen und speichern.
+6. Den zugeklappten Bereich **Aktion bei Holz nachlegen** öffnen, die gewünschten Kanäle ausfüllen und speichern.
 
 Standardmäßig meldet sich nur **Dringend Holz nachlegen**, mit den Kanälen aus **Aktion bei Holz nachlegen**. Wer schon bei „Holz nachlegen“ erinnert werden möchte, schaltet dort **Bei „Holz nachlegen“ melden / Notify when wood is required** ein.
 
@@ -23,7 +23,7 @@ Der fire+ empfiehlt die Holzauflage in kg. Mit **Holzauflage angeben als** zeigt
 | kg | Bitte Holz nachlegen. (1.4 kg) |
 | Holzscheite und kg | Bitte Holz nachlegen. (2 Holzscheite, 1.4 kg) |
 
-Die Anzahl der Holzscheite ist die Menge in kg geteilt durch das **Gewicht je Holzscheit**, gerundet und mindestens 1. Der Standardwert 0,7 kg folgt den technischen Informationen von Drooff (z. B. 1,4 kg in 2 Holzscheiten bei Nennwärmeleistung). Genauer wird es, wenn du ein paar eigene Scheite wiegst.
+Die Anzahl der Holzscheite ist die Menge in kg geteilt durch das **Gewicht je Holzscheit**, gerundet und mindestens 1. Bei einem Scheit heißt es „Ein Holzscheit“. Der Standardwert 0,7 kg folgt den technischen Informationen von Drooff (z. B. 1,4 kg in 2 Holzscheiten bei Nennwärmeleistung). Genauer wird es, wenn du ein paar eigene Scheite wiegst.
 
 ## Sprache
 
@@ -65,7 +65,7 @@ Mehrere Empfänger sind einfach mehrere Aktionen. Ein leerer Kanal (alle Aktione
 
 ## Dringend Holz nachlegen
 
-Der Bereich **Aktion bei Dringend Holz nachlegen** ist zugeklappt. Er hat dieselben Kanäle und Texte wie „Holz nachlegen“ und gilt erst, wenn dort **Eigene Aktionen bei „Dringend“ verwenden / Use own actions when urgent** eingeschaltet ist. Solange der Schalter aus ist, löst auch „Dringend Holz nachlegen“ die Aktionen für „Holz nachlegen“ aus, mit deren Verzögerung, aber mit dem Standardtext für „Dringend“.
+Der Bereich **Aktion bei Dringend Holz nachlegen** ist aufgeklappt. Er hat dieselben Kanäle und Texte wie „Holz nachlegen“ und gilt erst, wenn dort **Eigene Aktionen bei „Dringend“ verwenden / Use own actions when urgent** eingeschaltet ist. Solange der Schalter aus ist, löst auch „Dringend Holz nachlegen“ die Aktionen für „Holz nachlegen“ aus, mit deren Verzögerung, aber mit dem Standardtext für „Dringend“.
 
 Wechselt der Status von „Holz nachlegen“ zu „Dringend“, werden noch ausstehende Erinnerungen für „Holz nachlegen“ verworfen und die Kanäle für „Dringend“ starten mit ihren eigenen Verzögerungen.
 
