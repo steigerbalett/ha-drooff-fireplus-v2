@@ -1,8 +1,6 @@
 # Changelog
 
-## 2.0.5b3
-
-Beta: HACS offers it once *Show beta versions* is switched on for the repository.
+## 2.0.5
 
 - Blueprint *Holz nachlegen / Add wood*: the message gives the recommended wood load as the number of logs by default, e.g. "Bitte Holz nachlegen. (2 Holzscheite)". The number follows from the amount in kg and the new input *Gewicht je Holzscheit / Weight per log* (default 0.7 kg). *Holzauflage angeben als / Show wood load as* switches back to kg or shows both. An unchanged copy of the blueprint is updated automatically.
 - Blueprint: `source_url` points to the release of the installed version instead of `main`. Tools such as *Blueprints Updater* and *Re-import blueprint* in Home Assistant then fetch exactly the version the integration installed, and no longer offer the state of `main` as an update.
@@ -10,6 +8,8 @@ Beta: HACS offers it once *Show beta versions* is switched on for the repository
 - Blueprint: no "Bitte Holz nachlegen." after wood was added during *wood urgently required*. The fire+ passes through *wood required* on its way back to *regular*, this change no longer counts as a new request for wood and drops pending urgent reminders.
 - Blueprint: the section *Aktion bei Dringend Holz nachlegen / Action when wood is urgently required* is expanded and *Aktion bei Holz nachlegen / Action when wood is required* is collapsed, since only the urgent reminder is on by default.
 - Blueprint: a single log is written as a word, "Bitte Holz nachlegen. (Ein Holzscheit)" or "Please add wood. (one log)".
+- HACS: minimum Home Assistant version 2026.3.1 (was 2026.3.2), the tests pass on it.
+- README: the overview shows the current card with two supplied Drooff pictures and the drawn fire chamber.
 
 ## 2.0.4
 
