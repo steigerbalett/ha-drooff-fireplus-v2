@@ -1,6 +1,6 @@
 # Drooff fire+ V2 for Home Assistant
 
-[![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/docs/faq/custom_repositories/)
+[![Marketplace / HACS Default](https://img.shields.io/badge/Marketplace%20%7C%20HACS-Default-41BDF5.svg)](https://www.home-assistant.io/integrations/marketplace/)
 [![Home Assistant 2026.3.1+](https://img.shields.io/badge/Home%20Assistant-2026.3.1%2B-41BDF5?logo=homeassistant&logoColor=white)](https://www.home-assistant.io/)
 [![Release](https://img.shields.io/github/v/release/steigerbalett/ha-drooff-fireplus-v2)](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases)
 [![Downloads](https://img.shields.io/github/downloads/steigerbalett/ha-drooff-fireplus-v2/total?label=downloads)](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases)
@@ -39,12 +39,20 @@ The full list of changes is in the [changelog](CHANGELOG.md).
 
 ## Installation
 
-### HACS
+### Marketplace (Home Assistant 2026.11 and newer)
+
+Since Home Assistant 2026.11, HACS is part of Home Assistant as the [Marketplace](https://www.home-assistant.io/integrations/marketplace/). Drooff fire+ V2 is in its community catalog (the former HACS default repositories), so no custom repository is needed.
+
+1. Open *Settings*, *Marketplace* as an administrator.
+2. Search for "Drooff fire+ V2" and select *Install*. The setup starts right away (see *Configuration*).
+
+### HACS (Home Assistant 2026.3.1 to 2026.10)
 
 1. Ensure that [HACS](https://hacs.xyz) is installed.
-2. In HACS, open the menu (three dots), choose *Custom repositories* and add `https://github.com/steigerbalett/ha-drooff-fireplus-v2` with the type *Integration*.
-3. Search for "Drooff fire+ V2" in HACS and download it.
-4. Restart Home Assistant.
+2. Search for "Drooff fire+ V2" in HACS and download it.
+3. Restart Home Assistant.
+
+The button opens the integration in the Marketplace or in HACS:
 
 [![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=steigerbalett&repository=ha-drooff-fireplus-v2&category=integration)
 
@@ -54,19 +62,19 @@ The full list of changes is in the [changelog](CHANGELOG.md).
 2. Unpack it into `custom_components/drooff_fireplus_v2` in the `config` directory of your Home Assistant.
 3. Restart Home Assistant.
 
-### Switching from the original integration
+### Upgrading from V1
 
-V2 has its own domain `drooff_fireplus_v2`. It can be installed next to the original integration *Drooff fire+* (`drooff_fireplus`), but both would then poll the same fire+. To switch:
+V1 is the integration *Drooff fire+* (`drooff_fireplus`) from [tehlers/ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus). V2 has its own domain `drooff_fireplus_v2`. It can be installed next to V1, but both would then poll the same fire+. To switch:
 
-1. Under *Settings*, *Devices & services*, delete the original integration *Drooff fire+*. Do this **first**, so the new entities get the same entity IDs as before.
-2. In HACS, remove the original repository *Drooff fire+*.
-3. Install V2 as described above, restart Home Assistant and set it up (see *Configuration*).
+1. Under *Settings*, *Devices & services*, delete the V1 integration *Drooff fire+*. Do this **first**, so the new entities get the same entity IDs as before.
+2. Uninstall V1 (*Drooff fire+*) in the Marketplace or in HACS.
+3. Install V2 as described above and set it up (see *Configuration*). With HACS, restart Home Assistant before the setup.
 
 What carries over: Home Assistant keeps history and long-term statistics by entity ID, so with the same entity IDs your graphs continue. Dashboards and automations that use these entity IDs keep working. Check the entity IDs after the setup; an ID ending in `_2` means that an old entity still existed.
 
 What does not carry over: settings changed in the options of the integration (polling interval, IPv4), entities you enabled, disabled or renamed by hand, and the device ID used by device triggers. Statistics of the integration (fires, reloads, wood) start again from the events the fire+ still has stored.
 
-**Breaking change:** the operation status now has lower-case states (`wood_required` instead of `WOOD_REQUIRED`, …). Adapt your own automations, scripts and templates. Automations created from the blueprint of the original integration should be created again from the V2 blueprint *Drooff fire+: Holz nachlegen / Add wood*.
+**Breaking change:** the operation status now has lower-case states (`wood_required` instead of `WOOD_REQUIRED`, …). Adapt your own automations, scripts and templates. Automations created from the V1 blueprint should be created again from the V2 blueprint *Drooff fire+: Holz nachlegen / Add wood*.
 
 ## Configuration
 
