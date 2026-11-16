@@ -14,6 +14,8 @@ A custom integration for [Home Assistant](https://www.home-assistant.io/) for th
 
 ![Dashboard card](docs/images/overview.png)
 
+<sub>Left and right with the supplied pictures of BRUNELLO 2 L Groove (StilBeton cream) and VARESE 3 (PremiumWhite), in the middle the drawn fire chamber. Pictures © DROOFF Kaminöfen GmbH & Co. KG, see [NOTICE.md](NOTICE.md).</sub>
+
 ## Origin and thanks
 
 The idea and the foundation of this integration come from **Thorsten Ehlers ([@tehlers](https://github.com/tehlers))** and his [ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus). He worked out how the fire+ web application talks to the stove, built the integration and maintained it with the help of its contributors. Without all this preparatory work, this fork and version 2 would not exist. Thank you very much!

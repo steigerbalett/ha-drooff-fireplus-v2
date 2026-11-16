@@ -14,6 +14,8 @@ Eine benutzerdefinierte Integration für [Home Assistant](https://www.home-assis
 
 ![Dashboard-Karte](docs/images/overview-de.png)
 
+<sub>Links und rechts mit den mitgelieferten Bildern von BRUNELLO 2 L Groove (StilBeton cream) und VARESE 3 (PremiumWhite), in der Mitte der gezeichnete Brennraum. Bilder © DROOFF Kaminöfen GmbH & Co. KG, siehe [NOTICE.md](NOTICE.md).</sub>
+
 ## Ursprung und Dank
 
 Die Idee und das Fundament dieser Integration stammen von **Thorsten Ehlers ([@tehlers](https://github.com/tehlers))** und seiner Integration [ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus). Er hat herausgefunden, wie die Webapp des fire+ mit dem Ofen spricht, die Integration aufgebaut und sie zusammen mit ihren Mitwirkenden gepflegt. Erst all diese Vorarbeit hat diesen Fork und diese Version 2 möglich gemacht. Vielen Dank dafür!

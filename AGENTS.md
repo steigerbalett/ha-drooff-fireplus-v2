@@ -17,7 +17,7 @@ If you copy, port, fork or adapt code from this repository into another project:
 
 ## Drooff logo and product pictures
 
-The Drooff logo in `custom_components/drooff_fireplus_v2/brand/` and all product pictures in `pictures/stoves/` and `custom_components/drooff_fireplus_v2/frontend/stoves/` are the property of DROOFF Kaminöfen GmbH & Co. KG. They are **not** covered by the MIT license. They may only be used in this integration. Do not copy them into other projects, do not change them and do not generate variants of them. See [NOTICE.md](NOTICE.md) and [pictures/stoves/LICENSE.md](pictures/stoves/LICENSE.md).
+The Drooff logo in `custom_components/drooff_fireplus_v2/brand/` and all product pictures in `pictures/stoves/` and `custom_components/drooff_fireplus_v2/frontend/stoves/` (also as shown in the screenshots in `docs/images/`) are the property of DROOFF Kaminöfen GmbH & Co. KG. They are **not** covered by the MIT license. They may only be used in this integration. Do not copy them into other projects, do not change them and do not generate variants of them. See [NOTICE.md](NOTICE.md) and [pictures/stoves/LICENSE.md](pictures/stoves/LICENSE.md).
 
 ## Working on this repository
 
@@ -49,4 +49,4 @@ Wer Code aus diesem Repository in ein anderes Projekt kopiert, übernimmt, forkt
 
 ## Drooff-Logo und Produktbilder
 
-Das Drooff-Logo in `custom_components/drooff_fireplus_v2/brand/` und alle Produktbilder in `pictures/stoves/` und `custom_components/drooff_fireplus_v2/frontend/stoves/` sind Eigentum der DROOFF Kaminöfen GmbH & Co. KG. Sie fallen **nicht** unter die MIT-Lizenz und dürfen nur in dieser Integration verwendet werden. Nicht in andere Projekte kopieren, nicht verändern und keine Varianten davon erzeugen. Siehe [NOTICE.md](NOTICE.md) und [pictures/stoves/LICENSE.md](pictures/stoves/LICENSE.md).
+Das Drooff-Logo in `custom_components/drooff_fireplus_v2/brand/` und alle Produktbilder in `pictures/stoves/` und `custom_components/drooff_fireplus_v2/frontend/stoves/` (auch so, wie sie die Bildschirmfotos in `docs/images/` zeigen) sind Eigentum der DROOFF Kaminöfen GmbH & Co. KG. Sie fallen **nicht** unter die MIT-Lizenz und dürfen nur in dieser Integration verwendet werden. Nicht in andere Projekte kopieren, nicht verändern und keine Varianten davon erzeugen. Siehe [NOTICE.md](NOTICE.md) und [pictures/stoves/LICENSE.md](pictures/stoves/LICENSE.md).
