@@ -84,7 +84,7 @@ Was nicht erhalten bleibt: in den Optionen geänderte Einstellungen (Abfrageinte
 
 [![Home Assistant öffnen und die Einrichtung von Drooff fire+ V2 starten.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=drooff_fireplus_v2)
 
-Behält der fire+ seinen Standard-Hostnamen „fire“, findet Home Assistant ihn meist automatisch (DHCP) und bietet unter *Geräte & Dienste* die Einrichtung an. Wurde der fire+ mit seiner IP-Adresse eingerichtet, wird eine geänderte IP-Adresse automatisch übernommen.
+Behält der fire+ seinen Standard-Hostnamen „fire“, findet Home Assistant ihn meist automatisch (DHCP) und bietet unter *Geräte & Dienste* die Einrichtung an. Groß- und Kleinschreibung spielen keine Rolle, ein fire+, der sich als „FIRE“ meldet, wird ebenso gefunden. Ist der fire+ schon eingerichtet, erscheint kein neuer Fund. Wurde der fire+ mit seiner IP-Adresse eingerichtet, wird eine geänderte IP-Adresse automatisch übernommen.
 
 Die Diagnose (ausgewertete Werte und die Rohantworten des fire+, ohne Host und Seriennummer) lässt sich für Fehlerberichte auf der Geräteseite herunterladen.
 
@@ -157,7 +157,7 @@ Selten gebrauchte Entitäten und solche, die viele Werte in die Datenbank schrei
 
 ## Dashboard-Karte
 
-Die Integration bringt eine Lovelace-Karte mit. Sie zeigt ein animiertes Feuer, das dem aktuellen Abbrandzustand folgt, neben den Werten und der Bedienung des fire+. Die Karte wird automatisch registriert, eine Ressource muss nicht angelegt werden. Dashboard bearbeiten, *Karte hinzufügen* wählen und **Drooff fire+ Card** auswählen, oder per YAML:
+Die Integration bringt eine Lovelace-Karte mit. Sie zeigt ein animiertes Feuer, das dem aktuellen Abbrandzustand folgt, neben den Werten und der Bedienung des fire+. Die Karte wird automatisch registriert, eine Ressource muss nicht angelegt werden. Direkt nach der Einrichtung die Seite einmal neu laden (F5), damit die Karte in der Kartenauswahl erscheint. Dashboard bearbeiten, *Karte hinzufügen* wählen und **Drooff fire+ Card** auswählen, oder per YAML:
 
 ```yaml
 type: custom:drooff-fireplus-card

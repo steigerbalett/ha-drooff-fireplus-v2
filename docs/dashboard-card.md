@@ -43,7 +43,7 @@ A Lovelace dashboard card for the Home Assistant integration [Drooff fire+ V2](h
 
 ## Installation
 
-The card is part of the Drooff fire+ integration and is loaded automatically once the integration is installed. No resource has to be added and HACS does not need a separate entry.
+The card is part of the Drooff fire+ integration and is loaded automatically once the integration is set up. The browser loads it when the page loads, so after setting up the integration (for example from the Marketplace without a restart) reload the page once (F5); in the Companion app close and open the app. No resource has to be added and HACS does not need a separate entry.
 
 Then edit a dashboard → *Add card* → **Drooff fire+ Card**, or in YAML:
 

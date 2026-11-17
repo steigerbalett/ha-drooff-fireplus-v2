@@ -43,7 +43,7 @@ Eine Dashboard-Card für die Home-Assistant-Integration [Drooff fire+ V2](https:
 
 ## Installation
 
-Die Karte gehört zur Integration Drooff fire+ und wird automatisch geladen, sobald die Integration installiert ist. Es muss keine Ressource eingetragen und kein eigener HACS-Eintrag angelegt werden.
+Die Karte gehört zur Integration Drooff fire+ und wird automatisch geladen, sobald die Integration eingerichtet ist. Der Browser lädt sie beim Laden der Seite. Nach dem Einrichten der Integration (z. B. aus dem Marketplace ohne Neustart) die Seite deshalb einmal neu laden (F5), in der Companion-App die App schließen und wieder öffnen. Es muss keine Ressource eingetragen und kein eigener HACS-Eintrag angelegt werden.
 
 Danach Dashboard bearbeiten → *Karte hinzufügen* → **Drooff fire+ Card**, oder per YAML:
 

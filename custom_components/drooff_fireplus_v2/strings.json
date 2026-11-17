@@ -27,6 +27,9 @@
             "unique_id_mismatch": "Reconfiguration aborted. A device with a different serial number was detected.",
             "cannot_connect": "Unable to connect to the discovered Drooff fire+."
         },
+        "create_entry": {
+            "default": "Drooff fire+ is set up. Reload this page once (F5, in the Companion app: close and open the app), then the dashboard card **Drooff fire+ Card** appears under *Add card*."
+        },
         "flow_title": "{host}"
     },
     "entity": {

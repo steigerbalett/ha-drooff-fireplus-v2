@@ -84,7 +84,7 @@ What does not carry over: settings changed in the options of the integration (po
 
 [![Open your Home Assistant instance and start setting up Drooff fire+ V2.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=drooff_fireplus_v2)
 
-If the fire+ keeps its default hostname "fire", Home Assistant usually discovers it automatically (DHCP) and offers to set it up under *Devices & services*. When the fire+ was set up with its IP address, a changed IP address is picked up automatically.
+If the fire+ keeps its default hostname "fire", Home Assistant usually discovers it automatically (DHCP) and offers to set it up under *Devices & services*. Upper and lower case do not matter, a fire+ that reports itself as "FIRE" is found as well. A fire+ that is already set up is not offered again. When the fire+ was set up with its IP address, a changed IP address is picked up automatically.
 
 Diagnostics (parsed values and the raw responses of the fire+, host and serial number removed) can be downloaded on the device page for bug reports.
 
@@ -157,7 +157,7 @@ Entities that are rarely needed or that write many values to the database are di
 
 ## Dashboard card
 
-The integration ships a Lovelace card with an animated fire that follows the current combustion state, next to the values and controls of the fire+. The card is registered automatically, no resource has to be added. Edit a dashboard, choose *Add card* and pick **Drooff fire+ Card**, or use YAML:
+The integration ships a Lovelace card with an animated fire that follows the current combustion state, next to the values and controls of the fire+. The card is registered automatically, no resource has to be added. Right after the setup, reload the page once (F5) so that the card shows up in the card picker. Edit a dashboard, choose *Add card* and pick **Drooff fire+ Card**, or use YAML:
 
 ```yaml
 type: custom:drooff-fireplus-card

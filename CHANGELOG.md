@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.6
+
+- Drooff fire+ V2 is in the community catalog of the Marketplace (Home Assistant 2026.11 and newer) and in the HACS default repositories. The README describes the installation from there, without a custom repository, and calls the original integration V1. The Marketplace and HACS show the README of the latest release, so it needs this release.
+- Dashboard card: Home Assistant loads the card when the page loads. After setting up the integration without a restart (e.g. from the Marketplace), the card was missing in the card picker until the page was reloaded. The message at the end of the setup and the documentation now say to reload the page once.
+- DHCP discovery: README notes that the host name is matched without regard to case, so a fire+ reporting "FIRE" is found too (Home Assistant compares host names in lower case, the matcher `fire` stays).
+- Blueprint: only `source_url` points to the new release, nothing else changed.
+
 ## 2.0.5
 
 - Blueprint *Holz nachlegen / Add wood*: the message gives the recommended wood load as the number of logs by default, e.g. "Bitte Holz nachlegen. (2 Holzscheite)". The number follows from the amount in kg and the new input *Gewicht je Holzscheit / Weight per log* (default 0.7 kg). *Holzauflage angeben als / Show wood load as* switches back to kg or shows both. An unchanged copy of the blueprint is updated automatically.
