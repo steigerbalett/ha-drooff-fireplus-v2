@@ -6,7 +6,7 @@ Die Integration installiert den Blueprint nach dem Start von Home Assistant nach
 
 1. *Einstellungen*, *Automationen & Szenen*, *Blueprints* öffnen.
 2. **Drooff fire+: Holz nachlegen / Add wood** wählen.
-3. Bei **Sprache** Deutsch oder Englisch wählen. Die Sprache bestimmt die Standardtexte (Titel, „Bitte Holz nachlegen.“, „Dringend Holz nachlegen!“). Eigene Texte ersetzen sie.
+3. Bei **Sprache** Deutsch, Englisch oder Französisch wählen. Die Sprache bestimmt die Standardtexte (Titel, „Bitte Holz nachlegen.“, „Dringend Holz nachlegen!“). Eigene Texte ersetzen sie.
 4. Bei **Betriebsstatus** den Sensor „Betriebsstatus“ des fire+ eintragen.
 5. Optional bei **Empfohlene Holzauflage** den gleichnamigen Sensor eintragen. Dann steht in der Nachricht, wie viel Holz nachgelegt werden soll, standardmäßig als Anzahl der Holzscheite, zum Beispiel „Bitte Holz nachlegen. (2 Holzscheite)“ (siehe [Holzauflage](#holzauflage)).
 6. Den zugeklappten Bereich **Aktion bei Holz nachlegen** öffnen, die gewünschten Kanäle ausfüllen und speichern.
@@ -27,7 +27,7 @@ Die Anzahl der Holzscheite ist die Menge in kg geteilt durch das **Gewicht je Ho
 
 ## Sprache
 
-Die Beschriftungen im Blueprint sind zweisprachig (Deutsch / Englisch), weil Home Assistant Blueprints nicht übersetzen kann. Die Auswahl **Sprache** schaltet die Standardtexte der Nachrichten um.
+Die Beschriftungen im Blueprint sind zweisprachig (Deutsch / Englisch), weil Home Assistant Blueprints nicht übersetzen kann. Die Auswahl **Sprache** schaltet die Standardtexte der Nachrichten um (Deutsch, Englisch, Französisch). Für Französisch heißt die Nachricht z. B. „Veuillez recharger du bois. (2 bûches)“. Weitere Sprachen gehen über eigene Texte bei **Titel** und **Nachricht**.
 
 ## Kanäle
 

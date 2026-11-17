@@ -6,7 +6,7 @@
  * next to the values of the fire+ combustion control. Every value can be hidden.
  */
 
-const CARD_VERSION = "1.0.12";
+const CARD_VERSION = "1.0.13";
 const DOMAIN = "drooff_fireplus_v2";
 /* share of the window on each side that fades into the picture (stove_window_soft) */
 const SOFT_EDGE = 0.15;
@@ -572,6 +572,8 @@ const I18N = {
   },
   fr: {
     title: "Poêle",
+    eco: "Eco",
+    power: "Power",
     status: {
       STANDBY: "Arrêt",
       REGULAR: "Fonctionnement normal",
@@ -650,6 +652,52 @@ const I18N = {
       stove_pick: "Choisir une photo …",
       stove_remove: "Supprimer",
       entities: "Entités (détectées automatiquement)",
+      graphics: "Graphiques supplémentaires",
+      history_hours: "Historique/chronologie : heures",
+      wood_days: "Consommation de bois : jours",
+      wood_per_load: "Bois par charge sans capteur (kg)",
+      draught_min: "Échelle à partir de (Pa)",
+      draught_max: "Échelle jusqu'à (Pa)",
+      draught_optimal_from: "Optimal à partir de (Pa)",
+      draught_optimal_to: "Optimal jusqu'à (Pa)",
+      draught_show_optimal: "Afficher la plage optimale en texte",
+      draught_partial_load: "Tenir compte de la charge partielle (expérimental)",
+      draught_optimal_from_partial: "Optimal à partir de, en charge partielle (Pa)",
+      advanced_language: "Avancé : langue / traduction personnalisée",
+      translations: "Traductions personnalisées (remplacent des textes isolés, voir README)",
+      sim_hint: "Joue une fois toutes les phases dans l'aperçu : allumage, fonctionnement normal, recharger du bois, combustion des braises, maintien des braises.",
+      stove_model: "Modèle de poêle (Drooff)",
+      stove_model_none: "– aucun modèle –",
+      stove_model_info: "{kw} kW · tirage minimal {pa} Pa. Le tirage optimal −{pa} … −{max} Pa a été appliqué (modifiable sous « Avancé : tirage »).",
+      stove_model_partial: " En charge partielle (puissance fire+ « 4 », puissance 1–3, ou 1–4 avec le firmware 1.x), Drooff indique un tirage minimal de {pp} Pa. Expérimental : avec « Tenir compte de la charge partielle » sous « Avancé : tirage », le cadran commence alors à −{pp} Pa.",
+      stove_model_link: "Ouvrir la page produit chez Drooff",
+      stove_model_steps: "Pour mettre la photo du poêle dans la carte : 1. Ouvrez la page produit et choisissez votre variante. 2. Clic droit sur la photo détourée du produit (poêle sans fond) → « Enregistrer l'image sous … » et enregistrez-la sur votre appareil. 3. Cliquez ici sur « Choisir une photo … » et sélectionnez le fichier. La carte supprime le fond et détecte la vitre automatiquement.",
+      stove_model_copyright: "© DROOFF Kaminöfen GmbH & Co. KG\nKeffelker Str. 40\nD-59929 Brilon\nwww.drooff-kaminofen.de\nContact : www.drooff-kaminofen.de/de/service/kontakt/\n\nLes photos des produits sont utilisées avec l'aimable autorisation de Drooff. Elles ne peuvent être utilisées que dans cette intégration et ne doivent pas être modifiées, hormis le détourage par la carte, ni utilisées d'une autre manière.",
+      stove_series: "Version",
+      stove_variant: "Variante",
+      stove_color: "Couleur (photo de Drooff)",
+      stove_mat_steel: "Acier",
+      stove_mat_steel_clad: "Acier avec habillage",
+      stove_mat_clad: "Habillage",
+      stove_variant_hint: "Choisissez la version, la variante et la couleur de votre poêle. La photo est alors chargée depuis le dépôt GitHub de l'intégration et enregistrée dans la carte. Vous pouvez aussi utiliser votre propre photo avec « Choisir une photo … ».",
+      stove_download_error: "La photo n'a pas pu être chargée depuis GitHub. Internet est-il accessible ?",
+      stove_handle_left: ", poignée à gauche",
+      stove_handle_right: ", poignée à droite",
+      stove_wood_door: ", avec porte de compartiment à bois",
+      stove_window_soft: "Bord doux (pour les photos fournies)",
+      stove_loading: "Traitement de la photo …",
+      stove_error: "La photo n'a pas pu être lue.",
+      stove_none: "Sans photo, une cheminée ouverte est affichée. Choisissez plus haut le modèle, la version, la variante et la couleur du poêle, ou une photo de face de votre poêle (un fond blanc convient le mieux) – la vitre est détectée automatiquement.",
+      stove_hint: "Zone rouge : c'est ici que le feu apparaît. Ajustez si besoin sous « Vitre ».",
+      stove_not_found: "Aucune vitre détectée – veuillez la régler sous « Vitre ».",
+      stove_window: "Vitre (pourcentage de la photo)",
+      left: "Gauche",
+      top: "Haut",
+      width: "Largeur",
+      height: "Hauteur",
+      stove_window_radius: "Rayon des coins",
+      stove_window_debug: "Marquer la vitre pour l'alignement",
+      hide: "Masquer",
     },
     hide_labels: {
       flame: "Animation des flammes",

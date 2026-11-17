@@ -8,7 +8,7 @@
 [![Validate](https://github.com/steigerbalett/ha-drooff-fireplus-v2/actions/workflows/validate.yml/badge.svg)](https://github.com/steigerbalett/ha-drooff-fireplus-v2/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/github/license/steigerbalett/ha-drooff-fireplus-v2)](LICENSE)
 
-**English** | [Deutsch](README.de.md)
+**English** | [Deutsch](README.de.md) | [Français](README.fr.md)
 
 A custom integration for [Home Assistant](https://www.home-assistant.io/) for the [Drooff fire+](https://www.drooff-kaminofen.de/en/nature/electronic-combustion-control-fire/) combustion control system, with its own dashboard card, a wood reminder blueprint and statistics of every fire.
 
@@ -33,6 +33,7 @@ A big thank you to **DROOFF Kaminöfen GmbH & Co. KG** for kindly allowing this 
 - **Statistics** from the event log of the fire+: fires, reloads, estimated wood consumption, last reload
 - **Control locks** like the web app (remote control, room controller, panel), Blue Angel stoves with Eco and Power only
 - New sensors: door open too long, particle filter (Blue Angel), control, update status, web app settings
+- In German, English and French: integration, blueprint texts and dashboard card (the card also in Dutch, Italian, Polish, Czech and Danish)
 - Discovery via DHCP, translated operation states, diagnostics download, tests for all functions
 
 The full list of changes is in the [changelog](CHANGELOG.md).
@@ -171,7 +172,7 @@ The integration installs the automation blueprint **Drooff fire+: Holz nachlegen
 
 It reminds you when the fire+ asks for wood. *Wood required* and *wood urgently required* get separate actions, the urgent ones are optional and have their own section. By default only *wood urgently required* notifies, *wood required* can be switched on. Each kind of reminder can be sent as a message (Pushover, Telegram, mobile app or any other notify action or entity), as an announcement on Amazon Echo devices (Alexa Media Player or Alexa Devices) and as any other actions. Every channel is optional and has its own delay, and nothing is sent once the wood has been added. Details are in the [blueprint documentation](docs/blueprint.md) ([Deutsch](docs/blueprint.de.md)).
 
-The blueprint is labelled in German and English, its default texts follow the selected language (German or English). If you change the installed file, your changes are kept and the integration no longer updates it. Delete the file to get the current version again at the next start.
+The blueprint is labelled in German and English, its default texts follow the selected language (German, English or French). If you change the installed file, your changes are kept and the integration no longer updates it. Delete the file to get the current version again at the next start.
 
 ## Credits
 

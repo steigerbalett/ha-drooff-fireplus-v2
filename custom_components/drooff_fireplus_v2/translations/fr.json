@@ -1,0 +1,201 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "Veuillez saisir le nom d'hôte de l'application web de votre Drooff fire+.",
+                "data": {
+                    "host": "Hôte",
+                    "force_ipv4": "Forcer IPv4",
+                    "polling_interval": "Intervalle d'interrogation"
+                },
+                "data_description": {
+                    "host": "Le nom d'hôte ou l'adresse IP de l'application web du Drooff fire+. Dans certains cas, il faut ajouter un domaine comme « .local » au nom d'hôte.",
+                    "force_ipv4": "Dans les réseaux double pile, il peut être nécessaire de limiter la communication à IPv4."
+                }
+            },
+            "discovery_confirm": {
+                "description": "Drooff fire+ trouvé à l'adresse {host}. Voulez-vous le configurer ?"
+            }
+        },
+        "error": {
+            "connection": "Impossible de se connecter à l'application web du Drooff fire+.",
+            "unknown": "Une erreur inconnue s'est produite."
+        },
+        "abort": {
+            "already_configured": "Cette entrée est déjà configurée.",
+            "reconfigure_successful": "Reconfiguration réussie.",
+            "unique_id_mismatch": "Reconfiguration annulée. Un appareil avec un autre numéro de série a été détecté.",
+            "cannot_connect": "Impossible de se connecter au Drooff fire+ découvert."
+        },
+        "create_entry": {
+            "default": "Drooff fire+ est configuré. Rechargez cette page une fois (F5, dans l'application Companion : fermez puis rouvrez l'application), la carte de tableau de bord **Drooff fire+ Card** apparaît alors sous *Ajouter une carte*."
+        },
+        "flow_title": "{host}"
+    },
+    "entity": {
+        "binary_sensor": {
+            "error": {
+                "name": "Erreur"
+            },
+            "ethernet_link": {
+                "name": "Liaison Ethernet"
+            },
+            "door_open": {
+                "name": "Porte"
+            },
+            "online_support": {
+                "name": "Assistance en ligne"
+            },
+            "auto_update": {
+                "name": "Mises à jour automatiques"
+            },
+            "draught_warning": {
+                "name": "Alerte de tirage"
+            },
+            "door_open_too_long": {
+                "name": "Porte ouverte trop longtemps"
+            },
+            "filter_problem": {
+                "name": "Problème de filtre"
+            }
+        },
+        "number": {
+            "brightness": {
+                "name": "Luminosité"
+            },
+            "burn_rate": {
+                "name": "Puissance de combustion"
+            },
+            "volume": {
+                "name": "Volume"
+            }
+        },
+        "sensor": {
+            "air_slider_position": {
+                "name": "Position du registre d'air"
+            },
+            "draught": {
+                "name": "Tirage"
+            },
+            "error_message": {
+                "name": "Message d'erreur",
+                "state": {
+                    "none": "Aucune erreur",
+                    "temperature_sensor_defective": "Capteur de température défectueux",
+                    "pressure_measurement_defective": "Mesure de pression défectueuse",
+                    "air_slider_defective": "Registre d'air défectueux",
+                    "service_mode_enabled": "Mode service activé",
+                    "chimney_draught_too_low": "Tirage de la cheminée trop faible",
+                    "air_slider_stuck": "Registre d'air bloqué",
+                    "no_chimney_draught": "Pas de tirage de la cheminée",
+                    "wrong_motor_direction": "Mauvais sens du moteur",
+                    "unknown": "Erreur inconnue"
+                }
+            },
+            "heating_progress": {
+                "name": "Progression de l'allumage"
+            },
+            "operation_status": {
+                "name": "État de fonctionnement",
+                "state": {
+                    "standby": "Veille",
+                    "regular": "Fonctionnement normal",
+                    "heating": "Allumage",
+                    "wood_required": "Recharger du bois",
+                    "wood_urgently_required": "Recharger du bois d'urgence",
+                    "ember_preservation": "Maintien des braises",
+                    "ember_burndown": "Combustion des braises",
+                    "error": "Erreur",
+                    "unknown": "Inconnu"
+                }
+            },
+            "operating_time": {
+                "name": "Durée de fonctionnement"
+            },
+            "target_temperature": {
+                "name": "Température cible"
+            },
+            "temperature": {
+                "name": "Température"
+            },
+            "weight": {
+                "name": "Charge de bois recommandée"
+            },
+            "wifi_signal_strength": {
+                "name": "Puissance du signal Wi-Fi"
+            },
+            "control_mode": {
+                "name": "Commande",
+                "state": {
+                    "web": "Web",
+                    "panel": "Panneau du poêle",
+                    "remote_control": "Télécommande",
+                    "remote_control_automatic": "Télécommande (automatique)",
+                    "room_controller": "Thermostat d'ambiance"
+                }
+            },
+            "web_app_version": {
+                "name": "Version de l'application web"
+            },
+            "fires": {
+                "name": "Feux"
+            },
+            "reloads": {
+                "name": "Rechargements"
+            },
+            "wood_consumption": {
+                "name": "Consommation de bois (estimée)"
+            },
+            "last_reload": {
+                "name": "Dernier rechargement"
+            },
+            "filter_status": {
+                "name": "État du filtre",
+                "state": {
+                    "driver_error": "Erreur du pilote",
+                    "not_found": "Filtre introuvable",
+                    "present": "Filtre présent",
+                    "inactive": "Inactif",
+                    "active": "Actif",
+                    "cleaning_required": "Nettoyage nécessaire",
+                    "error": "Erreur"
+                }
+            },
+            "update_result": {
+                "name": "Dernière mise à jour",
+                "state": {
+                    "not_started": "Pas démarrée",
+                    "started": "Démarrée",
+                    "no_updates": "Aucune mise à jour disponible",
+                    "running": "En cours",
+                    "successful": "Réussie",
+                    "failed": "Échouée",
+                    "postponed": "Reportée jusqu'à l'arrêt du poêle",
+                    "unknown": "Inconnu"
+                }
+            },
+            "update_schedule": {
+                "name": "Recherche de mises à jour"
+            }
+        },
+        "switch": {
+            "ember_burndown": {
+                "name": "Combustion des braises"
+            },
+            "led": {
+                "name": "LED"
+            }
+        }
+    },
+    "exceptions": {
+        "update_settings_failed": {
+            "message": "La mise à jour des réglages du Drooff fire+ a échoué : {error}"
+        },
+        "control_locked": {
+            "message": "Ce réglage est verrouillé : le fire+ n'est pas commandé par le web en ce moment ({control_mode}). Modifiez-le sur la télécommande, le thermostat d'ambiance ou le panneau, ou passez l'application web en commande web."
+        },
+        "burn_rate_blue_angel": {
+            "message": "Les poêles labellisés Ange bleu ne proposent que les puissances 1 (Eco) et 6 (Power), pas {value}."
+        }
+    }
+}

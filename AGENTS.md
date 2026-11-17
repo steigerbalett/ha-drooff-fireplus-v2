@@ -26,7 +26,7 @@ The Drooff logo in `custom_components/drooff_fireplus_v2/brand/` and all product
 - A release needs a higher `version` in `manifest.json` and a matching section in `CHANGELOG.md`. A version like `2.0.5b1` becomes a pre-release.
 - The `source_url` of each blueprint points to the tag `v<version>` of `manifest.json` (a test checks it). When a blueprint changes, add the sha256 of its previous released content to `SHIPPED_BLUEPRINTS` in `__init__.py`.
 - Texts of the card are in the card itself (German and English, other languages fall back to English); the templates in `docs/examples/translations-*.yaml` follow them.
-- Documentation exists in English and German (`*.md` and `*.de.md`). Change both.
+- Documentation exists in English and German (`*.md` and `*.de.md`). Change both. The README also exists in French (`README.fr.md`), keep it in line with `README.md`.
 
 ---
 

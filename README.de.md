@@ -8,7 +8,7 @@
 [![Validate](https://github.com/steigerbalett/ha-drooff-fireplus-v2/actions/workflows/validate.yml/badge.svg)](https://github.com/steigerbalett/ha-drooff-fireplus-v2/actions/workflows/validate.yml)
 [![Lizenz: MIT](https://img.shields.io/github/license/steigerbalett/ha-drooff-fireplus-v2)](LICENSE)
 
-[English](README.md) | **Deutsch**
+[English](README.md) | **Deutsch** | [Français](README.fr.md)
 
 Eine benutzerdefinierte Integration für [Home Assistant](https://www.home-assistant.io/) für die Abbrandsteuerung [Drooff fire+](https://www.drooff-kaminofen.de/). Dazu gehören eine eigene Dashboard-Karte, ein Blueprint zum Holznachlegen und eine Statistik über jeden Abbrand.
 
@@ -33,6 +33,7 @@ Ein großes Dankeschön an die **DROOFF Kaminöfen GmbH & Co. KG**, die diesem P
 - **Statistik** aus dem Ereignis-Log des fire+: Abbrände, Nachlegevorgänge, geschätzter Holzverbrauch, zuletzt nachgelegt
 - **Bediensperren** wie in der Webapp (Fernbedienung, Raumregler, Panel), bei Öfen mit Blauem Engel nur Eco und Power
 - Neue Sensoren: Tür zu lange offen, Feinstaubfilter (Blauer Engel), Bedienung, Update-Status, Einstellungen der Webapp
+- Auf Deutsch, Englisch und Französisch: Integration, Blueprint-Texte und Dashboard-Karte (die Karte zusätzlich auf Niederländisch, Italienisch, Polnisch, Tschechisch und Dänisch)
 - Erkennung per DHCP, übersetzter Betriebsstatus, Diagnose-Download, Tests für alle Funktionen
 
 Alle Änderungen stehen im [Changelog](CHANGELOG.md) (englisch).
@@ -171,7 +172,7 @@ Die Integration installiert den Automations-Blueprint **Drooff fire+: Holz nachl
 
 Er erinnert, wenn der fire+ nach Holz verlangt. *Holz nachlegen* und *Dringend Holz nachlegen* bekommen eigene Aktionen, die dringenden sind optional und stecken in einem eigenen Abschnitt. Standardmäßig meldet sich nur *Dringend Holz nachlegen*, *Holz nachlegen* lässt sich dazuschalten. Jede Art der Erinnerung kann als Nachricht (Pushover, Telegram, Companion-App oder jede andere Notify-Aktion oder -Entität), als Ansage auf Amazon-Echo-Geräten (Alexa Media Player oder Alexa Devices) und als beliebige andere Aktionen gesendet werden. Jeder Kanal ist optional und hat eine eigene Verzögerung, und sobald Holz nachgelegt wurde, wird nichts mehr gesendet. Details stehen in der [Blueprint-Dokumentation](docs/blueprint.de.md) ([English](docs/blueprint.md)).
 
-Der Blueprint ist deutsch und englisch beschriftet, seine Standardtexte folgen der gewählten Sprache. Änderst du die installierte Datei, bleiben deine Änderungen erhalten und die Integration aktualisiert sie nicht mehr. Wer die Datei löscht, bekommt beim nächsten Start wieder die aktuelle Version.
+Der Blueprint ist deutsch und englisch beschriftet, seine Standardtexte folgen der gewählten Sprache (Deutsch, Englisch oder Französisch). Änderst du die installierte Datei, bleiben deine Änderungen erhalten und die Integration aktualisiert sie nicht mehr. Wer die Datei löscht, bekommt beim nächsten Start wieder die aktuelle Version.
 
 ## Mitwirkende und Dank
 
