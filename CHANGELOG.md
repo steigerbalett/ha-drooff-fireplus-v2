@@ -8,6 +8,7 @@ Beta: HACS offers it once *Show beta versions* is switched on for the repository
 - Blueprint *Holz nachlegen / Add wood*: **Sprache / Language** offers French, e.g. "Veuillez recharger du bois. (2 bûches)". The labels of the blueprint stay German / English, because Home Assistant can not translate blueprints.
 - Dashboard card 1.0.13: the French texts are complete, also in the card editor (stove pictures, draught, graphics).
 - Test: every translation of the integration has the same texts and placeholders as `strings.json`.
+- README in French (`README.fr.md`) with a picture of the card in French. The READMEs show the card in their own language.
 
 ## 2.0.6
 
