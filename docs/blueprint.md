@@ -6,7 +6,7 @@ Once Home Assistant has started, the integration installs the blueprint to `conf
 
 1. Open *Settings*, *Automations & scenes*, *Blueprints*.
 2. Choose **Drooff fire+: Holz nachlegen / Add wood**.
-3. Choose German or English as **Sprache / Language**. It selects the default texts (title, "Please add wood.", "Add wood now!"); own texts replace them.
+3. Choose German, English or French as **Sprache / Language**. It selects the default texts (title, "Please add wood.", "Add wood now!"); own texts replace them.
 4. Select the *operation status* sensor of the fire+ as **Betriebsstatus / Operation status**.
 5. Optionally select the *recommended wood load* sensor as **Empfohlene Holzauflage / Recommended wood load**. The message then says how much wood to add, by default as the number of logs, e.g. "Bitte Holz nachlegen. (2 Holzscheite)" (see [Wood load](#wood-load)).
 6. Open the collapsed section **Aktion bei Holz nachlegen / Action when wood is required**, fill in the channels and save.
@@ -27,7 +27,7 @@ The number of logs is the amount in kg divided by **Gewicht je Holzscheit / Weig
 
 ## Language
 
-The labels of the blueprint are bilingual (German / English), because Home Assistant can not translate blueprints. **Sprache / Language** switches the default texts of the messages.
+The labels of the blueprint are bilingual (German / English), because Home Assistant can not translate blueprints. **Sprache / Language** switches the default texts of the messages (German, English, French). In French the message reads e.g. "Veuillez recharger du bois. (2 bûches)". For other languages, enter your own **Title** and **Message**.
 
 ## Channels
 

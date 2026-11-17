@@ -423,6 +423,8 @@ async def test_notify_entities_and_wood_load(hass: HomeAssistant) -> None:
         ("1.5", {"wood_load_unit": "both"}, "Bitte Holz nachlegen. (2 Holzscheite, 1.5 kg)"),
         ("2.1", {"language": "en"}, "Please add wood. (3 logs)"),
         ("0.6", {"language": "en"}, "Please add wood. (one log)"),
+        ("1.4", {"language": "fr"}, "Veuillez recharger du bois. (2 bûches)"),
+        ("0.6", {"language": "fr"}, "Veuillez recharger du bois. (une bûche)"),
         # no recommendation from the fire+, no amount
         ("0", {}, "Bitte Holz nachlegen."),
     ],
@@ -458,6 +460,18 @@ async def test_english_and_own_texts(hass: HomeAssistant) -> None:
     assert [(call.data["title"], call.data["message"]) for call in pushover] == [
         ("Fireplace", "Please add wood."),
         ("Stove", "Wood, quickly!"),
+    ]
+
+
+async def test_french_default_texts(hass: HomeAssistant) -> None:
+    """French has its own title and texts for both reminders."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    await setup_automation(hass, {"language": "fr"})
+    await set_status(hass, "wood_required")
+    await set_status(hass, "wood_urgently_required")
+    assert [(call.data["title"], call.data["message"]) for call in persistent] == [
+        ("Poêle", "Veuillez recharger du bois."),
+        ("Poêle", "Rechargez du bois maintenant !"),
     ]
 
 

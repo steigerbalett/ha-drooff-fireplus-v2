@@ -28,7 +28,7 @@ blueprint:
     / The integration installs and updates this file. Once it is changed, the
     changes are kept and it is no longer updated.
   domain: automation
-  source_url: https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/v2.0.6/custom_components/drooff_fireplus_v2/blueprints/automation/wood_required_notification.yaml
+  source_url: https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/v2.0.7b1/custom_components/drooff_fireplus_v2/blueprints/automation/wood_required_notification.yaml
   author: Drooff fire+ integration
   homeassistant:
     min_version: "2026.3.0"
@@ -44,6 +44,8 @@ blueprint:
               value: de
             - label: English
               value: en
+            - label: Français
+              value: fr
     status_sensor:
       name: Betriebsstatus / Operation status
       description: Der Sensor "Betriebsstatus" des fire+. / The "Operation status" sensor of the fire+.
@@ -405,6 +407,12 @@ variables:
       urgent: Add wood now!
       one_log: one log
       logs: logs
+    fr:
+      title: Poêle
+      required: Veuillez recharger du bois.
+      urgent: Rechargez du bois maintenant !
+      one_log: une bûche
+      logs: bûches
   normal:
     title: !input title
     message: !input message

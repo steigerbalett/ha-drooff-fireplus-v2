@@ -33,6 +33,7 @@ Ein großes Dankeschön an die **DROOFF Kaminöfen GmbH & Co. KG**, die diesem P
 - **Statistik** aus dem Ereignis-Log des fire+: Abbrände, Nachlegevorgänge, geschätzter Holzverbrauch, zuletzt nachgelegt
 - **Bediensperren** wie in der Webapp (Fernbedienung, Raumregler, Panel), bei Öfen mit Blauem Engel nur Eco und Power
 - Neue Sensoren: Tür zu lange offen, Feinstaubfilter (Blauer Engel), Bedienung, Update-Status, Einstellungen der Webapp
+- Auf Deutsch, Englisch und Französisch: Integration, Blueprint-Texte und Dashboard-Karte (die Karte zusätzlich auf Niederländisch, Italienisch, Polnisch, Tschechisch und Dänisch)
 - Erkennung per DHCP, übersetzter Betriebsstatus, Diagnose-Download, Tests für alle Funktionen
 
 Alle Änderungen stehen im [Changelog](CHANGELOG.md) (englisch).

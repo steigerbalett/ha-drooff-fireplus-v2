@@ -33,6 +33,7 @@ A big thank you to **DROOFF Kaminöfen GmbH & Co. KG** for kindly allowing this 
 - **Statistics** from the event log of the fire+: fires, reloads, estimated wood consumption, last reload
 - **Control locks** like the web app (remote control, room controller, panel), Blue Angel stoves with Eco and Power only
 - New sensors: door open too long, particle filter (Blue Angel), control, update status, web app settings
+- In German, English and French: integration, blueprint texts and dashboard card (the card also in Dutch, Italian, Polish, Czech and Danish)
 - Discovery via DHCP, translated operation states, diagnostics download, tests for all functions
 
 The full list of changes is in the [changelog](CHANGELOG.md).
