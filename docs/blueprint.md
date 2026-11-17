@@ -6,16 +6,16 @@ Once Home Assistant has started, the integration installs the blueprint to `conf
 
 1. Open *Settings*, *Automations & scenes*, *Blueprints*.
 2. Choose **Drooff fire+: Holz nachlegen / Add wood**.
-3. Choose German, English or French as **Sprache / Language**. It selects the default texts (title, "Please add wood.", "Add wood now!"); own texts replace them.
-4. Select the *operation status* sensor of the fire+ as **Betriebsstatus / Operation status**.
-5. Optionally select the *recommended wood load* sensor as **Empfohlene Holzauflage / Recommended wood load**. The message then says how much wood to add, by default as the number of logs, e.g. "Bitte Holz nachlegen. (2 Holzscheite)" (see [Wood load](#wood-load)).
-6. Open the collapsed section **Aktion bei Holz nachlegen / Action when wood is required**, fill in the channels and save.
+3. Choose German, English or French as **Sprache** (*Language*). It selects the default texts (title, "Please add wood.", "Add wood now!"); own texts replace them.
+4. Select the *operation status* sensor of the fire+ as **Betriebsstatus** (*Operation status*).
+5. Optionally select the *recommended wood load* sensor as **Empfohlene Holzauflage** (*Recommended wood load*). The message then says how much wood to add, by default as the number of logs, e.g. "Bitte Holz nachlegen. (2 Holzscheite)" (see [Wood load](#wood-load)).
+6. Open the collapsed section **Aktion bei Holz nachlegen** (*Action when wood is required*), fill in the channels and save.
 
-By default only **wood urgently required** notifies, with the channels of **Action when wood is required**. To be reminded at *wood required* already, switch on **Notify when wood is required** in that section.
+By default only **wood urgently required** notifies, with the channels of **Aktion bei Holz nachlegen** (*Action when wood is required*). To be reminded at *wood required* already, switch on **Bei "Holz nachlegen" melden** (*Notify when wood is required*) in that section.
 
 ## Wood load
 
-The fire+ recommends the wood load in kg. With **Holzauflage angeben als / Show wood load as** the message shows it as
+The fire+ recommends the wood load in kg. With **Holzauflage angeben als** (*Show wood load as*) the message shows it as
 
 | Setting | Example |
 |---|---|
@@ -23,11 +23,11 @@ The fire+ recommends the wood load in kg. With **Holzauflage angeben als / Show 
 | kg | Please add wood. (1.4 kg) |
 | Logs and kg | Please add wood. (2 logs, 1.4 kg) |
 
-The number of logs is the amount in kg divided by **Gewicht je Holzscheit / Weight per log**, rounded, at least 1. A single log reads "one log". The default of 0.7 kg follows Drooff's technical information (e.g. 1.4 kg in 2 logs at nominal heat output). Weigh a few of your own logs for a better value.
+The number of logs is the amount in kg divided by **Gewicht je Holzscheit** (*Weight per log*), rounded, at least 1. A single log reads "one log". The default of 0.7 kg follows Drooff's technical information (e.g. 1.4 kg in 2 logs at nominal heat output). Weigh a few of your own logs for a better value.
 
 ## Language
 
-The labels of the blueprint are bilingual (German / English), because Home Assistant can not translate blueprints. **Sprache / Language** switches the default texts of the messages (German, English, French). In French the message reads e.g. "Veuillez recharger du bois. (2 bûches)". For other languages, enter your own **Title** and **Message**.
+Home Assistant can not translate blueprints, so the blueprint shows all languages at once: every label is German, with English and French below it in smaller print. Options name all three languages, e.g. "Holzscheite / Logs / Bûches". **Sprache** (*Language*) switches the default texts of the messages (German, English, French). In French the message reads e.g. "Veuillez recharger du bois. (2 bûches)". For other languages, enter your own **Titel** (*Title*) and **Nachricht** (*Message*).
 
 ## Channels
 
@@ -41,7 +41,7 @@ Every channel is optional, a single one is enough (e.g. Echo only or Pushover on
 
 ### Message via Pushover (or mobile app, Telegram, …)
 
-Pushover is already prepared in **Message: actions**, but switched off. Choose **Enable** in the three-dot menu of the *Pushover* action. Priority and sound are under data, preset with `priority: 0` and `sound: pushover` (urgent: `priority: 1`, `sound: siren`). Switch off or delete the Home Assistant notification if you do not want it. For the mobile app or Telegram add an action such as *notify.mobile_app_…* with message `{{ text }}` and title `{{ title }}`.
+Pushover is already prepared in **Nachricht: Aktionen** (*Message: actions*), but switched off. Choose **Enable** in the three-dot menu of the *Pushover* action. Priority and sound are under data, preset with `priority: 0` and `sound: pushover` (urgent: `priority: 1`, `sound: siren`). Switch off or delete the Home Assistant notification if you do not want it. For the mobile app or Telegram add an action such as *notify.mobile_app_…* with message `{{ text }}` and title `{{ title }}`.
 
 **Echo only:** switch off or delete both preset message actions and choose devices or notify entities under Echo.
 
@@ -59,7 +59,7 @@ Several recipients are several actions. An empty channel sends nothing.
 
 ## Wood urgently required
 
-The section **Aktion bei Dringend Holz nachlegen / Action when wood is urgently required** is expanded. It has the same channels and texts and is only used once **Use own actions when urgent** is switched on. Until then, *wood urgently required* runs the actions for *wood required*, with their delays but the urgent default text.
+The section **Aktion bei Dringend Holz nachlegen** (*Action when wood is urgently required*) is expanded. It has the same channels and texts and is only used once **Eigene Aktionen bei "Dringend" verwenden** (*Use own actions when urgent*) is switched on. Until then, *wood urgently required* runs the actions for *wood required*, with their delays but the urgent default text.
 
 When the status changes from *wood required* to *urgently required*, pending reminders for *wood required* are dropped and the urgent channels start with their own delays.
 

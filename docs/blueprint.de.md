@@ -11,7 +11,7 @@ Die Integration installiert den Blueprint nach dem Start von Home Assistant nach
 5. Optional bei **Empfohlene Holzauflage** den gleichnamigen Sensor eintragen. Dann steht in der Nachricht, wie viel Holz nachgelegt werden soll, standardmäßig als Anzahl der Holzscheite, zum Beispiel „Bitte Holz nachlegen. (2 Holzscheite)“ (siehe [Holzauflage](#holzauflage)).
 6. Den zugeklappten Bereich **Aktion bei Holz nachlegen** öffnen, die gewünschten Kanäle ausfüllen und speichern.
 
-Standardmäßig meldet sich nur **Dringend Holz nachlegen**, mit den Kanälen aus **Aktion bei Holz nachlegen**. Wer schon bei „Holz nachlegen“ erinnert werden möchte, schaltet dort **Bei „Holz nachlegen“ melden / Notify when wood is required** ein.
+Standardmäßig meldet sich nur **Dringend Holz nachlegen**, mit den Kanälen aus **Aktion bei Holz nachlegen**. Wer schon bei „Holz nachlegen“ erinnert werden möchte, schaltet dort **Bei „Holz nachlegen“ melden** ein.
 
 ## Holzauflage
 
@@ -27,7 +27,7 @@ Die Anzahl der Holzscheite ist die Menge in kg geteilt durch das **Gewicht je Ho
 
 ## Sprache
 
-Die Beschriftungen im Blueprint sind zweisprachig (Deutsch / Englisch), weil Home Assistant Blueprints nicht übersetzen kann. Die Auswahl **Sprache** schaltet die Standardtexte der Nachrichten um (Deutsch, Englisch, Französisch). Für Französisch heißt die Nachricht z. B. „Veuillez recharger du bois. (2 bûches)“. Weitere Sprachen gehen über eigene Texte bei **Titel** und **Nachricht**.
+Home Assistant kann Blueprints nicht übersetzen, deshalb zeigt der Blueprint alle Sprachen auf einmal: Jede Beschriftung ist deutsch, darunter stehen Englisch und Französisch in kleinerer Schrift. Auswahlfelder nennen alle drei Sprachen, z. B. „Holzscheite / Logs / Bûches“. Die Auswahl **Sprache** schaltet die Standardtexte der Nachrichten um (Deutsch, Englisch, Französisch). Für Französisch heißt die Nachricht z. B. „Veuillez recharger du bois. (2 bûches)“. Weitere Sprachen gehen über eigene Texte bei **Titel** und **Nachricht**.
 
 ## Kanäle
 
@@ -65,7 +65,7 @@ Mehrere Empfänger sind einfach mehrere Aktionen. Ein leerer Kanal (alle Aktione
 
 ## Dringend Holz nachlegen
 
-Der Bereich **Aktion bei Dringend Holz nachlegen** ist aufgeklappt. Er hat dieselben Kanäle und Texte wie „Holz nachlegen“ und gilt erst, wenn dort **Eigene Aktionen bei „Dringend“ verwenden / Use own actions when urgent** eingeschaltet ist. Solange der Schalter aus ist, löst auch „Dringend Holz nachlegen“ die Aktionen für „Holz nachlegen“ aus, mit deren Verzögerung, aber mit dem Standardtext für „Dringend“.
+Der Bereich **Aktion bei Dringend Holz nachlegen** ist aufgeklappt. Er hat dieselben Kanäle und Texte wie „Holz nachlegen“ und gilt erst, wenn dort **Eigene Aktionen bei „Dringend“ verwenden** eingeschaltet ist. Solange der Schalter aus ist, löst auch „Dringend Holz nachlegen“ die Aktionen für „Holz nachlegen“ aus, mit deren Verzögerung, aber mit dem Standardtext für „Dringend“.
 
 Wechselt der Status von „Holz nachlegen“ zu „Dringend“, werden noch ausstehende Erinnerungen für „Holz nachlegen“ verworfen und die Kanäle für „Dringend“ starten mit ihren eigenen Verzögerungen.
 

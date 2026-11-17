@@ -1,41 +1,27 @@
 blueprint:
   name: "Drooff fire+: Holz nachlegen / Add wood"
-  description: >-
-    **Deutsch:** Erinnert, wenn der fire+ nach Holz verlangt. Für "Holz
-    nachlegen" und "Dringend Holz nachlegen" lassen sich getrennte Aktionen
-    einstellen: Nachrichten (Pushover, Telegram, Handy-App und andere
-    Notify-Aktionen), Ansagen auf Amazon-Echo-Geräten und weitere Aktionen.
-    Alle Kanäle sind optional und haben eine eigene Verzögerung. Ein Kanal
-    meldet sich nur, wenn der Zustand nach der Verzögerung noch besteht.
-    Standardmäßig meldet sich nur "Dringend Holz nachlegen", "Holz nachlegen"
-    lässt sich dazuschalten. Solange die Aktionen für "Dringend" nicht
-    eingeschaltet sind, gelten dort die Aktionen für "Holz nachlegen". Die
-    Sprache bestimmt die Standardtexte.
+  description: |-
+    Erinnert, wenn der fire+ nach Holz verlangt. Für "Holz nachlegen" und "Dringend Holz nachlegen" lassen sich getrennte Aktionen einstellen: Nachrichten (Pushover, Telegram, Handy-App und andere Notify-Aktionen), Ansagen auf Amazon-Echo-Geräten und weitere Aktionen. Alle Kanäle sind optional und haben eine eigene Verzögerung. Ein Kanal meldet sich nur, wenn der Zustand nach der Verzögerung noch besteht. Standardmäßig meldet sich nur "Dringend Holz nachlegen", "Holz nachlegen" lässt sich dazuschalten. Solange die Aktionen für "Dringend" nicht eingeschaltet sind, gelten dort die Aktionen für "Holz nachlegen". Die Sprache bestimmt die Standardtexte.
 
+    <small>**English:** Reminds you when the fire+ asks for wood. "Wood required" and "wood urgently required" can have separate actions: messages (Pushover, Telegram, mobile app and other notify actions), announcements on Amazon Echo devices and other actions. Every channel is optional and has its own delay. A channel only fires if the status still holds after its delay. By default only "wood urgently required" notifies, "wood required" can be switched on. Until the urgent actions are switched on, the actions for "wood required" are used. The language selects the default texts.</small>
 
-    **English:** Reminds you when the fire+ asks for wood. "Wood required" and
-    "wood urgently required" can have separate actions: messages (Pushover,
-    Telegram, mobile app and other notify actions), announcements on Amazon
-    Echo devices and other actions. Every channel is optional and has its own
-    delay. A channel only fires if the status still holds after its delay.
-    By default only "wood urgently required" notifies, "wood required" can be
-    switched on. Until the urgent actions are switched on, the actions for
-    "wood required" are used. The language selects the default texts.
+    <small>**Français :** Vous rappelle quand le fire+ demande du bois. « Recharger du bois » et « Recharger du bois d'urgence » peuvent avoir des actions séparées : messages (Pushover, Telegram, application mobile et autres actions de notification), annonces sur les appareils Amazon Echo et autres actions. Chaque canal est facultatif et a son propre délai. Un canal ne se déclenche que si l'état persiste après son délai. Par défaut, seul « Recharger du bois d'urgence » notifie, « Recharger du bois » peut être activé. Tant que les actions d'urgence ne sont pas activées, les actions de « Recharger du bois » s'appliquent. La langue détermine les textes par défaut.</small>
 
-
-    Die Integration installiert und aktualisiert diese Datei. Wird sie
-    geändert, bleibt die Änderung erhalten und es gibt keine Updates mehr.
-    / The integration installs and updates this file. Once it is changed, the
-    changes are kept and it is no longer updated.
+    Die Integration installiert und aktualisiert diese Datei. Wird sie geändert, bleibt die Änderung erhalten und es gibt keine Updates mehr.
+    <small>The integration installs and updates this file. Once it is changed, the changes are kept and it is no longer updated.</small>
+    <small>L'intégration installe et met à jour ce fichier. S'il est modifié, les modifications sont conservées et il n'est plus mis à jour.</small>
   domain: automation
-  source_url: https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/v2.0.7b1/custom_components/drooff_fireplus_v2/blueprints/automation/wood_required_notification.yaml
+  source_url: https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/v2.0.7b2/custom_components/drooff_fireplus_v2/blueprints/automation/wood_required_notification.yaml
   author: Drooff fire+ integration
   homeassistant:
     min_version: "2026.3.0"
   input:
     language:
-      name: Sprache / Language
-      description: Sprache der Standardtexte. / Language of the default texts.
+      name: Sprache
+      description: |-
+        Sprache der Standardtexte.
+        <small>**Language** – Language of the default texts.</small>
+        <small>**Langue** – Langue des textes par défaut.</small>
       default: de
       selector:
         select:
@@ -47,20 +33,22 @@ blueprint:
             - label: Français
               value: fr
     status_sensor:
-      name: Betriebsstatus / Operation status
-      description: Der Sensor "Betriebsstatus" des fire+. / The "Operation status" sensor of the fire+.
+      name: Betriebsstatus
+      description: |-
+        Der Sensor "Betriebsstatus" des fire+.
+        <small>**Operation status** – The "Operation status" sensor of the fire+.</small>
+        <small>**État de fonctionnement** – Le capteur « État de fonctionnement » du fire+.</small>
       selector:
         entity:
           filter:
             - integration: drooff_fireplus_v2
               domain: sensor
     wood_load_sensor:
-      name: Empfohlene Holzauflage / Recommended wood load (optional)
-      description: >-
-        Wenn gesetzt, wird die Holzauflage an die Nachricht angehängt,
-        standardmäßig als Anzahl der Holzscheite.
-        / If set, the wood load is appended to the message, by default as the
-        number of logs.
+      name: Empfohlene Holzauflage (optional)
+      description: |-
+        Wenn gesetzt, wird die Holzauflage an die Nachricht angehängt, standardmäßig als Anzahl der Holzscheite.
+        <small>**Recommended wood load (optional)** – If set, the wood load is appended to the message, by default as the number of logs.</small>
+        <small>**Charge de bois recommandée (facultatif)** – Si renseigné, la charge de bois est ajoutée au message, par défaut en nombre de bûches.</small>
       default: ""
       selector:
         entity:
@@ -68,32 +56,27 @@ blueprint:
             - integration: drooff_fireplus_v2
               domain: sensor
     wood_load_unit:
-      name: Holzauflage angeben als / Show wood load as
-      description: >-
-        Die Anzahl der Holzscheite ergibt sich aus der empfohlenen Menge in kg
-        und dem Gewicht je Holzscheit, mindestens 1.
-        / The number of logs follows from the recommended amount in kg and the
-        weight per log, at least 1.
+      name: Holzauflage angeben als
+      description: |-
+        Die Anzahl der Holzscheite ergibt sich aus der empfohlenen Menge in kg und dem Gewicht je Holzscheit, mindestens 1.
+        <small>**Show wood load as** – The number of logs follows from the recommended amount in kg and the weight per log, at least 1.</small>
+        <small>**Afficher la charge de bois en** – Le nombre de bûches découle de la quantité recommandée en kg et du poids par bûche, au moins 1.</small>
       default: logs
       selector:
         select:
           options:
-            - label: Holzscheite / Logs
+            - label: Holzscheite / Logs / Bûches
               value: logs
             - label: kg
               value: kg
-            - label: Holzscheite und kg / Logs and kg
+            - label: Holzscheite und kg / Logs and kg / Bûches et kg
               value: both
     log_weight:
-      name: Gewicht je Holzscheit / Weight per log
-      description: >-
-        Durchschnittliches Gewicht eines deiner Holzscheite. Drooff nennt in
-        den technischen Informationen z. B. 1,4 kg in 2 Holzscheiten, also
-        etwa 0,7 kg je Scheit. Am genauesten ist es, ein paar eigene Scheite zu
-        wiegen.
-        / Average weight of one of your logs. Drooff's technical information
-        gives e.g. 1.4 kg in 2 logs, about 0.7 kg per log. Weighing a few of
-        your own logs is most accurate.
+      name: Gewicht je Holzscheit
+      description: |-
+        Durchschnittliches Gewicht eines deiner Holzscheite. Drooff nennt in den technischen Informationen z. B. 1,4 kg in 2 Holzscheiten, also etwa 0,7 kg je Scheit. Am genauesten ist es, ein paar eigene Scheite zu wiegen.
+        <small>**Weight per log** – Average weight of one of your logs. Drooff's technical information gives e.g. 1.4 kg in 2 logs, about 0.7 kg per log. Weighing a few of your own logs is most accurate.</small>
+        <small>**Poids par bûche** – Poids moyen d'une de vos bûches. Les informations techniques de Drooff indiquent par ex. 1,4 kg en 2 bûches, soit environ 0,7 kg par bûche. Le plus précis est de peser quelques-unes de vos bûches.</small>
       default: 0.7
       selector:
         number:
@@ -103,52 +86,48 @@ blueprint:
           unit_of_measurement: kg
           mode: box
     section:
-      name: Aktion bei Holz nachlegen / Action when wood is required
+      name: Aktion bei Holz nachlegen
       icon: mdi:fireplace
-      description: >-
-        Was passiert bei "Holz nachlegen". Diese Aktionen gelten auch für
-        "Dringend", solange dort keine eigenen eingeschaltet sind.
-        / What happens when the fire+ asks for wood. These actions are also
-        used when urgent, until own urgent actions are switched on.
+      description: |-
+        Was passiert bei "Holz nachlegen". Diese Aktionen gelten auch für "Dringend", solange dort keine eigenen eingeschaltet sind.<br>
+        <small>**Action when wood is required** – What happens when the fire+ asks for wood. These actions are also used when urgent, until own urgent actions are switched on.</small><br>
+        <small>**Action quand il faut recharger du bois** – Ce qui se passe quand le fire+ demande du bois. Ces actions servent aussi en cas d'urgence, tant qu'aucune action propre à l'urgence n'est activée.</small>
       collapsed: true
       input:
         required_enabled:
-          name: Bei "Holz nachlegen" melden / Notify when wood is required
-          description: >-
+          name: 'Bei "Holz nachlegen" melden'
+          description: |-
             Aus = nur "Dringend Holz nachlegen" meldet sich.
-            / Off = only "wood urgently required" notifies.
+            <small>**Notify when wood is required** – Off = only "wood urgently required" notifies.</small>
+            <small>**Notifier pour « Recharger du bois »** – Désactivé = seul « Recharger du bois d'urgence » notifie.</small>
           default: false
           selector:
             boolean:
         title:
-          name: Titel / Title
-          description: >-
+          name: Titel
+          description: |-
             Leer = Standardtext der gewählten Sprache. Nicht für Echo-Ansagen.
-            / Empty = default text of the selected language. Not used for Echo announcements.
+            <small>**Title** – Empty = default text of the selected language. Not used for Echo announcements.</small>
+            <small>**Titre** – Vide = texte par défaut de la langue choisie. Non utilisé pour les annonces Echo.</small>
           default: ""
           selector:
             text:
         message:
-          name: Nachricht / Message
-          description: Leer = Standardtext der gewählten Sprache. / Empty = default text of the selected language.
+          name: Nachricht
+          description: |-
+            Leer = Standardtext der gewählten Sprache.
+            <small>**Message** – Empty = default text of the selected language.</small>
+            <small>**Message** – Vide = texte par défaut de la langue choisie.</small>
           default: ""
           selector:
             text:
               multiline: true
         notify_actions:
-          name: "Nachricht: Aktionen / Message: actions"
-          description: >-
-            Vorbelegt sind zwei Aktionen: eine Benachrichtigung in Home Assistant
-            (eingeschaltet) und Pushover (notify.pushover, ausgeschaltet).
-            Pushover einschalten: im Menü der Aktion "Aktivieren" wählen, Priorität
-            und Ton stehen unter data. Ohne Nachricht, z. B. nur mit Echo: beide
-            Aktionen ausschalten oder löschen. Weitere Dienste wie
-            notify.mobile_app_… lassen sich ergänzen, title "{{ title }}" und
-            message "{{ text }}" enthalten Titel und Nachricht.
-            / Preset are a Home Assistant notification (on) and Pushover
-            (notify.pushover, off). Turn Pushover on with "Enable" in the menu of
-            the action, priority and sound are under data. Without a message, e.g.
-            Echo only: turn off or delete both actions.
+          name: "Nachricht: Aktionen"
+          description: |-
+            Vorbelegt sind zwei Aktionen: eine Benachrichtigung in Home Assistant (eingeschaltet) und Pushover (notify.pushover, ausgeschaltet). Pushover einschalten: im Menü der Aktion "Aktivieren" wählen, Priorität und Ton stehen unter data. Ohne Nachricht, z. B. nur mit Echo: beide Aktionen ausschalten oder löschen. Weitere Dienste wie notify.mobile_app_… lassen sich ergänzen, title "{{ title }}" und message "{{ text }}" enthalten Titel und Nachricht.
+            <small>**Message: actions** – Preset are a Home Assistant notification (on) and Pushover (notify.pushover, off). Turn Pushover on with "Enable" in the menu of the action, priority and sound are under data. Without a message, e.g. Echo only: turn off or delete both actions. Other services such as notify.mobile_app_… can be added, title "{{ title }}" and message "{{ text }}" hold title and message.</small>
+            <small>**Message : actions** – Deux actions sont prédéfinies : une notification Home Assistant (activée) et Pushover (notify.pushover, désactivée). Pour activer Pushover, choisir « Activer » dans le menu de l'action, la priorité et le son se trouvent sous data. Sans message, par ex. Echo seul : désactiver ou supprimer les deux actions. D'autres services comme notify.mobile_app_… peuvent être ajoutés, title "{{ title }}" et message "{{ text }}" contiennent le titre et le message.</small>
           default:
             - action: notify.persistent_notification
               data:
@@ -166,13 +145,17 @@ blueprint:
           selector:
             action: {}
         notify_delay:
-          name: "Nachricht: Verzögerung / Message: delay"
+          name: "Nachricht: Verzögerung"
+          description: |-
+            <small>Message: delay · Message : délai</small>
           default:
             minutes: 0
           selector:
             duration:
         alexa_media_players:
-          name: "Echo: Geräte (Alexa Media Player) / devices (Alexa Media Player)"
+          name: "Echo: Geräte (Alexa Media Player)"
+          description: |-
+            <small>Echo: devices · Echo : appareils</small>
           default: []
           selector:
             entity:
@@ -181,19 +164,24 @@ blueprint:
                   domain: media_player
               multiple: true
         alexa_media_type:
-          name: "Echo: Art (Alexa Media Player) / type (Alexa Media Player)"
-          description: Ansage mit Gong oder nur TTS. / Announcement with chime or TTS only.
+          name: "Echo: Art (Alexa Media Player)"
+          description: |-
+            Ansage mit Gong oder nur TTS.
+            <small>**Echo: type** – Announcement with chime or TTS only.</small>
+            <small>**Echo : type** – Annonce avec carillon ou TTS seul.</small>
           default: announce
           selector:
             select:
               options:
-                - label: Ansage / Announce
+                - label: Ansage / Announce / Annonce
                   value: announce
                 - label: TTS
                   value: tts
         alexa_notify_entities:
-          name: "Echo: Notify-Entitäten (Alexa Devices) / notify entities (Alexa Devices)"
-          description: z. B. / e.g. notify.kitchen_announce, notify.kitchen_speak
+          name: "Echo: Notify-Entitäten (Alexa Devices)"
+          description: |-
+            z. B. notify.kitchen_announce, notify.kitchen_speak
+            <small>Echo: notify entities · Echo : entités de notification</small>
           default: []
           selector:
             entity:
@@ -202,75 +190,82 @@ blueprint:
                   domain: notify
               multiple: true
         echo_message:
-          name: "Echo: Ansagetext / announcement"
-          description: Leer = Nachricht. / Empty = message.
+          name: "Echo: Ansagetext"
+          description: |-
+            Leer = Nachricht.
+            <small>**Echo: announcement** – Empty = message.</small>
+            <small>**Echo : texte de l'annonce** – Vide = message.</small>
           default: ""
           selector:
             text:
         echo_delay:
-          name: "Echo: Verzögerung / delay"
+          name: "Echo: Verzögerung"
+          description: |-
+            <small>Echo: delay · Echo : délai</small>
           default:
             minutes: 0
           selector:
             duration:
         custom_actions:
-          name: Weitere Aktionen / Other actions
-          description: >-
+          name: Weitere Aktionen
+          description: |-
             Beliebige Aktionen, die Variablen "title" und "text" enthalten Titel und Nachricht.
-            / Any actions, the variables "title" and "text" hold title and message.
+            <small>**Other actions** – Any actions, the variables "title" and "text" hold title and message.</small>
+            <small>**Autres actions** – Actions au choix, les variables « title » et « text » contiennent le titre et le message.</small>
           default: []
           selector:
             action:
         custom_delay:
-          name: "Weitere Aktionen: Verzögerung / Other actions: delay"
+          name: "Weitere Aktionen: Verzögerung"
+          description: |-
+            <small>Other actions: delay · Autres actions : délai</small>
           default:
             minutes: 0
           selector:
             duration:
     urgent_section:
-      name: Aktion bei Dringend Holz nachlegen / Action when wood is urgently required
+      name: Aktion bei Dringend Holz nachlegen
       icon: mdi:fire-alert
-      description: >-
-        Was passiert bei "Dringend Holz nachlegen". / What happens when the fire+ urgently asks for wood.
+      description: |-
+        Was passiert bei "Dringend Holz nachlegen".<br>
+        <small>**Action when wood is urgently required** – What happens when the fire+ urgently asks for wood.</small><br>
+        <small>**Action quand il faut recharger du bois d'urgence** – Ce qui se passe quand le fire+ demande du bois d'urgence.</small>
       collapsed: false
       input:
         urgent_enabled:
-          name: Eigene Aktionen bei "Dringend" verwenden / Use own actions when urgent
-          description: >-
+          name: 'Eigene Aktionen bei "Dringend" verwenden'
+          description: |-
             Aus = es gelten die Aktionen für "Holz nachlegen".
-            / Off = the actions for "wood required" are used.
+            <small>**Use own actions when urgent** – Off = the actions for "wood required" are used.</small>
+            <small>**Actions propres en cas d'urgence** – Désactivé = les actions de « Recharger du bois » s'appliquent.</small>
           default: false
           selector:
             boolean:
         urgent_title:
-          name: Titel / Title
-          description: >-
+          name: Titel
+          description: |-
             Leer = Standardtext der gewählten Sprache. Nicht für Echo-Ansagen.
-            / Empty = default text of the selected language. Not used for Echo announcements.
+            <small>**Title** – Empty = default text of the selected language. Not used for Echo announcements.</small>
+            <small>**Titre** – Vide = texte par défaut de la langue choisie. Non utilisé pour les annonces Echo.</small>
           default: ""
           selector:
             text:
         urgent_message:
-          name: Nachricht / Message
-          description: Leer = Standardtext der gewählten Sprache. / Empty = default text of the selected language.
+          name: Nachricht
+          description: |-
+            Leer = Standardtext der gewählten Sprache.
+            <small>**Message** – Empty = default text of the selected language.</small>
+            <small>**Message** – Vide = texte par défaut de la langue choisie.</small>
           default: ""
           selector:
             text:
               multiline: true
         urgent_notify_actions:
-          name: "Nachricht: Aktionen / Message: actions"
-          description: >-
-            Vorbelegt sind zwei Aktionen: eine Benachrichtigung in Home Assistant
-            (eingeschaltet) und Pushover (notify.pushover, ausgeschaltet).
-            Pushover einschalten: im Menü der Aktion "Aktivieren" wählen, Priorität
-            und Ton stehen unter data. Ohne Nachricht, z. B. nur mit Echo: beide
-            Aktionen ausschalten oder löschen. Weitere Dienste wie
-            notify.mobile_app_… lassen sich ergänzen, title "{{ title }}" und
-            message "{{ text }}" enthalten Titel und Nachricht.
-            / Preset are a Home Assistant notification (on) and Pushover
-            (notify.pushover, off). Turn Pushover on with "Enable" in the menu of
-            the action, priority and sound are under data. Without a message, e.g.
-            Echo only: turn off or delete both actions.
+          name: "Nachricht: Aktionen"
+          description: |-
+            Vorbelegt sind zwei Aktionen: eine Benachrichtigung in Home Assistant (eingeschaltet) und Pushover (notify.pushover, ausgeschaltet). Pushover einschalten: im Menü der Aktion "Aktivieren" wählen, Priorität und Ton stehen unter data. Ohne Nachricht, z. B. nur mit Echo: beide Aktionen ausschalten oder löschen. Weitere Dienste wie notify.mobile_app_… lassen sich ergänzen, title "{{ title }}" und message "{{ text }}" enthalten Titel und Nachricht.
+            <small>**Message: actions** – Preset are a Home Assistant notification (on) and Pushover (notify.pushover, off). Turn Pushover on with "Enable" in the menu of the action, priority and sound are under data. Without a message, e.g. Echo only: turn off or delete both actions. Other services such as notify.mobile_app_… can be added, title "{{ title }}" and message "{{ text }}" hold title and message.</small>
+            <small>**Message : actions** – Deux actions sont prédéfinies : une notification Home Assistant (activée) et Pushover (notify.pushover, désactivée). Pour activer Pushover, choisir « Activer » dans le menu de l'action, la priorité et le son se trouvent sous data. Sans message, par ex. Echo seul : désactiver ou supprimer les deux actions. D'autres services comme notify.mobile_app_… peuvent être ajoutés, title "{{ title }}" et message "{{ text }}" contiennent le titre et le message.</small>
           default:
             - action: notify.persistent_notification
               data:
@@ -288,13 +283,17 @@ blueprint:
           selector:
             action: {}
         urgent_notify_delay:
-          name: "Nachricht: Verzögerung / Message: delay"
+          name: "Nachricht: Verzögerung"
+          description: |-
+            <small>Message: delay · Message : délai</small>
           default:
             minutes: 0
           selector:
             duration:
         urgent_alexa_media_players:
-          name: "Echo: Geräte (Alexa Media Player) / devices (Alexa Media Player)"
+          name: "Echo: Geräte (Alexa Media Player)"
+          description: |-
+            <small>Echo: devices · Echo : appareils</small>
           default: []
           selector:
             entity:
@@ -303,19 +302,24 @@ blueprint:
                   domain: media_player
               multiple: true
         urgent_alexa_media_type:
-          name: "Echo: Art (Alexa Media Player) / type (Alexa Media Player)"
-          description: Ansage mit Gong oder nur TTS. / Announcement with chime or TTS only.
+          name: "Echo: Art (Alexa Media Player)"
+          description: |-
+            Ansage mit Gong oder nur TTS.
+            <small>**Echo: type** – Announcement with chime or TTS only.</small>
+            <small>**Echo : type** – Annonce avec carillon ou TTS seul.</small>
           default: announce
           selector:
             select:
               options:
-                - label: Ansage / Announce
+                - label: Ansage / Announce / Annonce
                   value: announce
                 - label: TTS
                   value: tts
         urgent_alexa_notify_entities:
-          name: "Echo: Notify-Entitäten (Alexa Devices) / notify entities (Alexa Devices)"
-          description: z. B. / e.g. notify.kitchen_announce, notify.kitchen_speak
+          name: "Echo: Notify-Entitäten (Alexa Devices)"
+          description: |-
+            z. B. notify.kitchen_announce, notify.kitchen_speak
+            <small>Echo: notify entities · Echo : entités de notification</small>
           default: []
           selector:
             entity:
@@ -324,27 +328,35 @@ blueprint:
                   domain: notify
               multiple: true
         urgent_echo_message:
-          name: "Echo: Ansagetext / announcement"
-          description: Leer = Nachricht. / Empty = message.
+          name: "Echo: Ansagetext"
+          description: |-
+            Leer = Nachricht.
+            <small>**Echo: announcement** – Empty = message.</small>
+            <small>**Echo : texte de l'annonce** – Vide = message.</small>
           default: ""
           selector:
             text:
         urgent_echo_delay:
-          name: "Echo: Verzögerung / delay"
+          name: "Echo: Verzögerung"
+          description: |-
+            <small>Echo: delay · Echo : délai</small>
           default:
             minutes: 0
           selector:
             duration:
         urgent_custom_actions:
-          name: Weitere Aktionen / Other actions
-          description: >-
+          name: Weitere Aktionen
+          description: |-
             Beliebige Aktionen, die Variablen "title" und "text" enthalten Titel und Nachricht.
-            / Any actions, the variables "title" and "text" hold title and message.
+            <small>**Other actions** – Any actions, the variables "title" and "text" hold title and message.</small>
+            <small>**Autres actions** – Actions au choix, les variables « title » et « text » contiennent le titre et le message.</small>
           default: []
           selector:
             action:
         urgent_custom_delay:
-          name: "Weitere Aktionen: Verzögerung / Other actions: delay"
+          name: "Weitere Aktionen: Verzögerung"
+          description: |-
+            <small>Other actions: delay · Autres actions : délai</small>
           default:
             minutes: 0
           selector:

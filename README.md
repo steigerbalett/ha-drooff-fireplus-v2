@@ -172,7 +172,7 @@ The integration installs the automation blueprint **Drooff fire+: Holz nachlegen
 
 It reminds you when the fire+ asks for wood. *Wood required* and *wood urgently required* get separate actions, the urgent ones are optional and have their own section. By default only *wood urgently required* notifies, *wood required* can be switched on. Each kind of reminder can be sent as a message (Pushover, Telegram, mobile app or any other notify action or entity), as an announcement on Amazon Echo devices (Alexa Media Player or Alexa Devices) and as any other actions. Every channel is optional and has its own delay, and nothing is sent once the wood has been added. Details are in the [blueprint documentation](docs/blueprint.md) ([Deutsch](docs/blueprint.de.md)).
 
-The blueprint is labelled in German and English, its default texts follow the selected language (German, English or French). If you change the installed file, your changes are kept and the integration no longer updates it. Delete the file to get the current version again at the next start.
+The blueprint is labelled in German, with English and French in smaller print below. Its default texts follow the selected language (German, English or French). If you change the installed file, your changes are kept and the integration no longer updates it. Delete the file to get the current version again at the next start.
 
 ## Credits
 

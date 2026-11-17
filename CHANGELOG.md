@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.7b2
+
+Beta: HACS offers it once *Show beta versions* is switched on for the repository.
+
+- Blueprint *Holz nachlegen / Add wood*: the labels are German as before, English and French follow below each label in smaller print, so they take less space and stand apart. The French texts are new. Names of inputs and options are plain text in Home Assistant and can not be made smaller, so the input names are German only and the options name all three languages (e.g. "Holzscheite / Logs / Bûches"). Existing automations keep their settings.
+
 ## 2.0.7b1
 
 Beta: HACS offers it once *Show beta versions* is switched on for the repository.
