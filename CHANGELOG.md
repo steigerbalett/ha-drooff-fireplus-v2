@@ -1,20 +1,13 @@
 # Changelog
 
-## 2.0.7b2
-
-Beta: HACS offers it once *Show beta versions* is switched on for the repository.
-
-- Blueprint *Holz nachlegen / Add wood*: the labels are German as before, English and French follow below each label in smaller print, so they take less space and stand apart. The French texts are new. Names of inputs and options are plain text in Home Assistant and can not be made smaller, so the input names are German only and the options name all three languages (e.g. "Holzscheite / Logs / Bûches"). Existing automations keep their settings.
-
-## 2.0.7b1
-
-Beta: HACS offers it once *Show beta versions* is switched on for the repository.
+## 2.0.7
 
 - French: the integration (setup, entities, states, error messages) is translated into French.
-- Blueprint *Holz nachlegen / Add wood*: **Sprache / Language** offers French, e.g. "Veuillez recharger du bois. (2 bûches)". The labels of the blueprint stay German / English, because Home Assistant can not translate blueprints.
+- Blueprint *Holz nachlegen / Add wood*: **Sprache** (*Language*) offers French, e.g. "Veuillez recharger du bois. (2 bûches)".
+- Blueprint: the labels are German as before, English and French follow below each label in smaller print, so they take less space and stand apart. Names of inputs and options are plain text in Home Assistant and can not be made smaller, so the input names are German only and the options name all three languages (e.g. "Holzscheite / Logs / Bûches"). Existing automations keep their settings, an unchanged copy of the blueprint is updated automatically.
 - Dashboard card 1.0.13: the French texts are complete, also in the card editor (stove pictures, draught, graphics).
-- Test: every translation of the integration has the same texts and placeholders as `strings.json`.
 - README in French (`README.fr.md`) with a picture of the card in French. The READMEs show the card in their own language.
+- Test: every translation of the integration has the same texts and placeholders as `strings.json`.
 
 ## 2.0.6
 
