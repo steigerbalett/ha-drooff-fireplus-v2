@@ -16,13 +16,7 @@ Une intégration personnalisée pour [Home Assistant](https://www.home-assistant
 
 <sub>À gauche et à droite avec les images fournies du BRUNELLO 2 L Groove (StilBeton cream) et du VARESE 3 (PremiumWhite), au milieu le foyer dessiné. Images © DROOFF Kaminöfen GmbH & Co. KG, voir [NOTICE.md](NOTICE.md).</sub>
 
-## Origine et remerciements
-
-L'idée et la base de cette intégration viennent de **Thorsten Ehlers ([@tehlers](https://github.com/tehlers))** et de son projet [ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus). Il a découvert comment l'application web du fire+ communique avec le poêle, a créé l'intégration et l'a maintenue avec l'aide de ses contributeurs. Sans tout ce travail préparatoire, ce fork et la version 2 n'existeraient pas. Un grand merci !
-
-Drooff fire+ V2 poursuit ce travail en tant que projet indépendant, car les extensions sont devenues trop importantes pour le dépôt d'origine. Merci de signaler les problèmes de la V2 [ici](https://github.com/steigerbalett/ha-drooff-fireplus-v2/issues) et non au projet d'origine.
-
-### Merci à Drooff
+## Merci à Drooff
 
 Un grand merci à **DROOFF Kaminöfen GmbH & Co. KG**, qui autorise aimablement ce projet à utiliser le logo Drooff et les photos des poêles. Ainsi, l'intégration s'intègre parfaitement à Home Assistant et à la carte de tableau de bord.
 
@@ -56,26 +50,6 @@ Depuis Home Assistant 2026.11, HACS fait partie de Home Assistant sous le nom de
 Le bouton ouvre l'intégration dans le Marketplace ou dans HACS :
 
 [![Ouvrez votre instance Home Assistant et ouvrez ce dépôt dans le Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=steigerbalett&repository=ha-drooff-fireplus-v2&category=integration)
-
-### Installation manuelle
-
-1. Téléchargez `drooff_fireplus_v2.zip` depuis la [dernière version](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases/latest).
-2. Décompressez-le dans `custom_components/drooff_fireplus_v2` du répertoire `config` de votre Home Assistant.
-3. Redémarrez Home Assistant.
-
-### Passer de la V1 à la V2
-
-La V1 est l'intégration *Drooff fire+* (`drooff_fireplus`) de [tehlers/ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus). La V2 a son propre domaine `drooff_fireplus_v2`. Elle peut être installée à côté de la V1, mais les deux interrogeraient alors le même fire+. Pour changer :
-
-1. Sous *Paramètres*, *Appareils et services*, supprimez l'intégration V1 *Drooff fire+*. Faites-le **en premier**, afin que les nouvelles entités reçoivent les mêmes identifiants d'entité qu'avant.
-2. Désinstallez la V1 (*Drooff fire+*) dans le Marketplace ou dans HACS.
-3. Installez la V2 comme décrit ci-dessus et configurez-la (voir *Configuration*). Avec HACS, redémarrez Home Assistant avant la configuration.
-
-Ce qui est conservé : Home Assistant conserve l'historique et les statistiques à long terme par identifiant d'entité ; avec les mêmes identifiants, vos graphiques continuent donc. Les tableaux de bord et automatisations qui utilisent ces identifiants continuent de fonctionner. Vérifiez les identifiants d'entité après la configuration ; un identifiant qui se termine par `_2` signifie qu'une ancienne entité existait encore.
-
-Ce qui n'est pas conservé : les réglages modifiés dans les options de l'intégration (intervalle d'interrogation, IPv4), les entités activées, désactivées ou renommées à la main, et l'identifiant d'appareil utilisé par les déclencheurs d'appareil. Les statistiques de l'intégration (feux, rechargements, bois) repartent des événements encore enregistrés sur le fire+.
-
-**Changement incompatible :** l'état de fonctionnement a désormais des états en minuscules (`wood_required` au lieu de `WOOD_REQUIRED`, …). Adaptez vos propres automatisations, scripts et modèles. Les automatisations créées à partir du blueprint de la V1 doivent être recréées à partir du blueprint de la V2 *Drooff fire+: Holz nachlegen / Add wood*.
 
 ## Configuration
 
@@ -187,6 +161,32 @@ L'intégration installe le blueprint d'automatisation **Drooff fire+: Holz nachl
 Il vous rappelle quand le fire+ demande du bois. *Recharger du bois* et *Recharger du bois d'urgence* ont des actions séparées ; les actions urgentes sont optionnelles et ont leur propre section. Par défaut, seul *Recharger du bois d'urgence* envoie une notification, *Recharger du bois* peut être activé. Chaque type de rappel peut être envoyé sous forme de message (Pushover, Telegram, application mobile ou toute autre action ou entité de notification), sous forme d'annonce sur les appareils Amazon Echo (Alexa Media Player ou Alexa Devices) et sous forme de toute autre action. Chaque canal est optionnel et a son propre délai, et rien n'est envoyé une fois le bois ajouté. Il avertit aussi lorsque la porte reste ouverte trop longtemps ou que la cheminée n'a pas assez de tirage. Avec un seul fire+, les champs de capteur peuvent rester vides, le blueprint trouve les capteurs lui-même. Les détails se trouvent dans la [documentation du blueprint](docs/blueprint.md) (en anglais, [Deutsch](docs/blueprint.de.md)).
 
 Home Assistant ne sait pas traduire les blueprints : chaque libellé est en allemand, avec l'anglais et le français en plus petit en dessous. Choisissez *Français* sous **Sprache** (*Langue*) : les textes par défaut sont alors en français, par ex. « Veuillez recharger du bois. (2 bûches) ». Si vous modifiez le fichier installé, vos modifications sont conservées et l'intégration ne le met plus à jour. Supprimez le fichier pour obtenir à nouveau la version actuelle au prochain démarrage.
+
+## Origine et remerciements
+
+L'idée et la base de cette intégration viennent de **Thorsten Ehlers ([@tehlers](https://github.com/tehlers))** et de son projet [ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus). Il a découvert comment l'application web du fire+ communique avec le poêle, a créé l'intégration et l'a maintenue avec l'aide de ses contributeurs. Sans tout ce travail préparatoire, ce fork et la version 2 n'existeraient pas. Un grand merci !
+
+Drooff fire+ V2 poursuit ce travail en tant que projet indépendant, car les extensions sont devenues trop importantes pour le dépôt d'origine. Merci de signaler les problèmes de la V2 [ici](https://github.com/steigerbalett/ha-drooff-fireplus-v2/issues) et non au projet d'origine.
+
+## Installation manuelle
+
+1. Téléchargez `drooff_fireplus_v2.zip` depuis la [dernière version](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases/latest).
+2. Décompressez-le dans `custom_components/drooff_fireplus_v2` du répertoire `config` de votre Home Assistant.
+3. Redémarrez Home Assistant.
+
+## Passer de la V1 à la V2
+
+La V1 est l'intégration *Drooff fire+* (`drooff_fireplus`) de [tehlers/ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus). La V2 a son propre domaine `drooff_fireplus_v2`. Elle peut être installée à côté de la V1, mais les deux interrogeraient alors le même fire+. Pour changer :
+
+1. Sous *Paramètres*, *Appareils et services*, supprimez l'intégration V1 *Drooff fire+*. Faites-le **en premier**, afin que les nouvelles entités reçoivent les mêmes identifiants d'entité qu'avant.
+2. Désinstallez la V1 (*Drooff fire+*) dans le Marketplace ou dans HACS.
+3. Installez la V2 comme décrit sous [Installation](#installation) et configurez-la (voir *Configuration*). Avec HACS, redémarrez Home Assistant avant la configuration.
+
+Ce qui est conservé : Home Assistant conserve l'historique et les statistiques à long terme par identifiant d'entité ; avec les mêmes identifiants, vos graphiques continuent donc. Les tableaux de bord et automatisations qui utilisent ces identifiants continuent de fonctionner. Vérifiez les identifiants d'entité après la configuration ; un identifiant qui se termine par `_2` signifie qu'une ancienne entité existait encore.
+
+Ce qui n'est pas conservé : les réglages modifiés dans les options de l'intégration (intervalle d'interrogation, IPv4), les entités activées, désactivées ou renommées à la main, et l'identifiant d'appareil utilisé par les déclencheurs d'appareil. Les statistiques de l'intégration (feux, rechargements, bois) repartent des événements encore enregistrés sur le fire+.
+
+**Changement incompatible :** l'état de fonctionnement a désormais des états en minuscules (`wood_required` au lieu de `WOOD_REQUIRED`, …). Adaptez vos propres automatisations, scripts et modèles. Les automatisations créées à partir du blueprint de la V1 doivent être recréées à partir du blueprint de la V2 *Drooff fire+: Holz nachlegen / Add wood*.
 
 ## Crédits
 

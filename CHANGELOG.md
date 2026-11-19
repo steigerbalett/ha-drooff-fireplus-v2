@@ -1,30 +1,17 @@
 # Changelog
 
-## 2.0.8b3
+## 2.0.8
 
-Beta: HACS offers it once *Show beta versions* is switched on for the repository.
-
-- Blueprint *Holz nachlegen / Add wood*: with exactly one fire+ the sensors can stay empty (#9). **Betriebsstatus** (*Operation status*) is no longer required: left empty, the blueprint uses the only sensor of the integration with the state *wood urgently required*. With two or more fire+ it guesses nothing and stays silent until the sensor is selected. Empty fields for the wood load, the door and the error message use the sensors of the same fire+ as the operation status, also when that one was selected. A selected sensor always wins.
-- **Changed behaviour:** the wood load is now added to the message also in automations whose field **Empfohlene Holzauflage** (*Recommended wood load*) was empty. To leave it out, choose the new option **Nicht angeben** (*Do not show*) under **Holzauflage angeben als** (*Show wood load as*).
-- Blueprint: the two warnings of 2.0.8b2 have their own switches **Bei zu lange offener Tür warnen** (*Warn when the door is open too long*) and **Bei zu wenig Kaminzug warnen** (*Warn when the chimney draught is too low*). Their sensors are optional.
-- **Changed behaviour:** both warnings are on by default, also in existing automations. Their sensors are found at the fire+ of the operation status sensor, so existing automations warn after the update when the door is open too long or the chimney has too little draught. Switch them off in the section **Weitere Warnungen** (*Other warnings*) if you do not want this.
-- Binary sensor *Door open too long*: new attribute `open_since` with the time the door was opened (empty while it is closed). The blueprint finds the sensor by it.
-- Existing automations keep their settings, an unchanged copy of the blueprint is updated automatically.
-
-## 2.0.8b2
-
-Beta: HACS offers it once *Show beta versions* is switched on for the repository.
-
-- Blueprint *Holz nachlegen / Add wood*: new collapsed section *Weitere Warnungen / Other warnings* with two optional warnings, each active once its sensor is selected: the door is open too long (sensor *Door open too long*) and the chimney has too little or no draught (sensor *Error message*, states *Chimney draught too low* and *No chimney draught*). Own messages, default texts in German, English and French. They run the actions of *wood urgently required* (default) or *wood required*, right away and without wood load. Existing automations keep working without them.
-
-## 2.0.8b1
-
-Beta: HACS offers it once *Show beta versions* is switched on for the repository.
-
-- Notices under *Settings*, *Repairs* about the software of the fire+: new software installed (old and new version, also when it was installed while Home Assistant was not running), update waiting until the stove is in standby, update failed. The fire+ can not be asked whether an update is available without installing it; a waiting update is the only hint before an update. For these notices the update result is read every 10 minutes, also when its sensor is disabled.
+- Notices under *Settings*, *Repairs* about the software of the fire+ (#7): new software installed (old and new version, also when it was installed while Home Assistant was not running), update waiting until the stove is in standby, update failed. The fire+ can not be asked whether an update is available without installing it; a waiting update is the only hint before an update. For these notices the update result is read every 10 minutes, also when its sensor is disabled.
 - New button *Shut down* (configuration, disabled by default): shuts down the fire+ like *fire+ ausschalten* in its web app, only in standby. Afterwards the fire+ may be disconnected from the power supply after 2 minutes, it only starts again when its power supply is switched off and on. A notice shows this until the fire+ answers again.
 - The device page shows the new firmware version right after an update, without a reload.
-- Blueprint: only `source_url` points to the new release, nothing else changed.
+- Blueprint *Holz nachlegen / Add wood*: new collapsed section *Weitere Warnungen / Other warnings* with two warnings (#10): the door is open too long (sensor *Door open too long*) and the chimney has too little or no draught (sensor *Error message*, states *Chimney draught too low* and *No chimney draught*). Each has its own switch **Bei zu lange offener Tür warnen** (*Warn when the door is open too long*) and **Bei zu wenig Kaminzug warnen** (*Warn when the chimney draught is too low*) and its own message, default texts in German, English and French. They run the actions of *wood urgently required* (default) or *wood required*, right away and without wood load.
+- Blueprint: with exactly one fire+ the sensors can stay empty (#9). **Betriebsstatus** (*Operation status*) is no longer required: left empty, the blueprint uses the only sensor of the integration with the state *wood urgently required*. With two or more fire+ it guesses nothing and stays silent until the sensor is selected. Empty fields for the wood load, the door and the error message use the sensors of the same fire+ as the operation status, also when that one was selected. A selected sensor always wins.
+- **Changed behaviour:** both warnings are on by default, also in existing automations. Their sensors are found at the fire+ of the operation status sensor, so existing automations warn after the update when the door is open too long or the chimney has too little draught. Switch them off in the section **Weitere Warnungen** (*Other warnings*) if you do not want this.
+- **Changed behaviour:** the wood load is now added to the message also in automations whose field **Empfohlene Holzauflage** (*Recommended wood load*) was empty. To leave it out, choose the new option **Nicht angeben** (*Do not show*) under **Holzauflage angeben als** (*Show wood load as*).
+- Binary sensor *Door open too long*: new attribute `open_since` with the time the door was opened (empty while it is closed). The blueprint finds the sensor by it.
+- Existing automations keep their settings, an unchanged copy of the blueprint is updated automatically.
+- README (English, German, French): origin, manual installation and upgrading from V1 moved to the end, before the credits. The thanks to Drooff stay at the top.
 
 ## 2.0.7
 

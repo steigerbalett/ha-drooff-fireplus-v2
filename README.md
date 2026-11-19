@@ -16,13 +16,7 @@ A custom integration for [Home Assistant](https://www.home-assistant.io/) for th
 
 <sub>Left and right with the supplied pictures of BRUNELLO 2 L Groove (StilBeton cream) and VARESE 3 (PremiumWhite), in the middle the drawn fire chamber. Pictures © DROOFF Kaminöfen GmbH & Co. KG, see [NOTICE.md](NOTICE.md).</sub>
 
-## Origin and thanks
-
-The idea and the foundation of this integration come from **Thorsten Ehlers ([@tehlers](https://github.com/tehlers))** and his [ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus). He worked out how the fire+ web application talks to the stove, built the integration and maintained it with the help of its contributors. Without all this preparatory work, this fork and version 2 would not exist. Thank you very much!
-
-Drooff fire+ V2 continues this work as an independent project, because the extensions became too large for the original repository. Please report problems with V2 [here](https://github.com/steigerbalett/ha-drooff-fireplus-v2/issues), not to the original project.
-
-### Thanks to Drooff
+## Thanks to Drooff
 
 A big thank you to **DROOFF Kaminöfen GmbH & Co. KG** for kindly allowing this project to use the Drooff logo and the product pictures of the stoves. This makes the integration look right at home in Home Assistant and in the dashboard card.
 
@@ -56,26 +50,6 @@ Since Home Assistant 2026.11, HACS is part of Home Assistant as the [Marketplace
 The button opens the integration in the Marketplace or in HACS:
 
 [![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=steigerbalett&repository=ha-drooff-fireplus-v2&category=integration)
-
-### Manual installation
-
-1. Download `drooff_fireplus_v2.zip` from the [latest release](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases/latest).
-2. Unpack it into `custom_components/drooff_fireplus_v2` in the `config` directory of your Home Assistant.
-3. Restart Home Assistant.
-
-### Upgrading from V1
-
-V1 is the integration *Drooff fire+* (`drooff_fireplus`) from [tehlers/ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus). V2 has its own domain `drooff_fireplus_v2`. It can be installed next to V1, but both would then poll the same fire+. To switch:
-
-1. Under *Settings*, *Devices & services*, delete the V1 integration *Drooff fire+*. Do this **first**, so the new entities get the same entity IDs as before.
-2. Uninstall V1 (*Drooff fire+*) in the Marketplace or in HACS.
-3. Install V2 as described above and set it up (see *Configuration*). With HACS, restart Home Assistant before the setup.
-
-What carries over: Home Assistant keeps history and long-term statistics by entity ID, so with the same entity IDs your graphs continue. Dashboards and automations that use these entity IDs keep working. Check the entity IDs after the setup; an ID ending in `_2` means that an old entity still existed.
-
-What does not carry over: settings changed in the options of the integration (polling interval, IPv4), entities you enabled, disabled or renamed by hand, and the device ID used by device triggers. Statistics of the integration (fires, reloads, wood) start again from the events the fire+ still has stored.
-
-**Breaking change:** the operation status now has lower-case states (`wood_required` instead of `WOOD_REQUIRED`, …). Adapt your own automations, scripts and templates. Automations created from the V1 blueprint should be created again from the V2 blueprint *Drooff fire+: Holz nachlegen / Add wood*.
 
 ## Configuration
 
@@ -185,6 +159,32 @@ The integration installs the automation blueprint **Drooff fire+: Holz nachlegen
 It reminds you when the fire+ asks for wood. *Wood required* and *wood urgently required* get separate actions, the urgent ones are optional and have their own section. By default only *wood urgently required* notifies, *wood required* can be switched on. Each kind of reminder can be sent as a message (Pushover, Telegram, mobile app or any other notify action or entity), as an announcement on Amazon Echo devices (Alexa Media Player or Alexa Devices) and as any other actions. Every channel is optional and has its own delay, and nothing is sent once the wood has been added. It also warns when the door is open too long or the chimney has too little draught. With one fire+ the sensors can stay empty, the blueprint finds them itself. Details are in the [blueprint documentation](docs/blueprint.md) ([Deutsch](docs/blueprint.de.md)).
 
 The blueprint is labelled in German, with English and French in smaller print below. Its default texts follow the selected language (German, English or French). If you change the installed file, your changes are kept and the integration no longer updates it. Delete the file to get the current version again at the next start.
+
+## Origin and thanks
+
+The idea and the foundation of this integration come from **Thorsten Ehlers ([@tehlers](https://github.com/tehlers))** and his [ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus). He worked out how the fire+ web application talks to the stove, built the integration and maintained it with the help of its contributors. Without all this preparatory work, this fork and version 2 would not exist. Thank you very much!
+
+Drooff fire+ V2 continues this work as an independent project, because the extensions became too large for the original repository. Please report problems with V2 [here](https://github.com/steigerbalett/ha-drooff-fireplus-v2/issues), not to the original project.
+
+## Manual installation
+
+1. Download `drooff_fireplus_v2.zip` from the [latest release](https://github.com/steigerbalett/ha-drooff-fireplus-v2/releases/latest).
+2. Unpack it into `custom_components/drooff_fireplus_v2` in the `config` directory of your Home Assistant.
+3. Restart Home Assistant.
+
+## Upgrading from V1
+
+V1 is the integration *Drooff fire+* (`drooff_fireplus`) from [tehlers/ha-drooff-fireplus](https://github.com/tehlers/ha-drooff-fireplus). V2 has its own domain `drooff_fireplus_v2`. It can be installed next to V1, but both would then poll the same fire+. To switch:
+
+1. Under *Settings*, *Devices & services*, delete the V1 integration *Drooff fire+*. Do this **first**, so the new entities get the same entity IDs as before.
+2. Uninstall V1 (*Drooff fire+*) in the Marketplace or in HACS.
+3. Install V2 as described under [Installation](#installation) and set it up (see *Configuration*). With HACS, restart Home Assistant before the setup.
+
+What carries over: Home Assistant keeps history and long-term statistics by entity ID, so with the same entity IDs your graphs continue. Dashboards and automations that use these entity IDs keep working. Check the entity IDs after the setup; an ID ending in `_2` means that an old entity still existed.
+
+What does not carry over: settings changed in the options of the integration (polling interval, IPv4), entities you enabled, disabled or renamed by hand, and the device ID used by device triggers. Statistics of the integration (fires, reloads, wood) start again from the events the fire+ still has stored.
+
+**Breaking change:** the operation status now has lower-case states (`wood_required` instead of `WOOD_REQUIRED`, …). Adapt your own automations, scripts and templates. Automations created from the V1 blueprint should be created again from the V2 blueprint *Drooff fire+: Holz nachlegen / Add wood*.
 
 ## Credits
 
