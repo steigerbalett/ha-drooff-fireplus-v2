@@ -7,11 +7,20 @@ Die Integration installiert den Blueprint nach dem Start von Home Assistant nach
 1. *Einstellungen*, *Automationen & Szenen*, *Blueprints* öffnen.
 2. **Drooff fire+: Holz nachlegen / Add wood** wählen.
 3. Bei **Sprache** Deutsch, Englisch oder Französisch wählen. Die Sprache bestimmt die Standardtexte (Titel, „Bitte Holz nachlegen.“, „Dringend Holz nachlegen!“). Eigene Texte ersetzen sie.
-4. Bei **Betriebsstatus** den Sensor „Betriebsstatus“ des fire+ eintragen.
-5. Optional bei **Empfohlene Holzauflage** den gleichnamigen Sensor eintragen. Dann steht in der Nachricht, wie viel Holz nachgelegt werden soll, standardmäßig als Anzahl der Holzscheite, zum Beispiel „Bitte Holz nachlegen. (2 Holzscheite)“ (siehe [Holzauflage](#holzauflage)).
+4. **Betriebsstatus** bei einem fire+ leer lassen, der Blueprint findet den Sensor selbst (siehe [Automatisch gefundene Sensoren](#automatisch-gefundene-sensoren)). Bei mehreren fire+ den Sensor „Betriebsstatus“ des fire+ eintragen, für den die Automation gedacht ist.
+5. **Empfohlene Holzauflage** ebenfalls leer lassen. Dann steht in der Nachricht, wie viel Holz nachgelegt werden soll, standardmäßig als Anzahl der Holzscheite, zum Beispiel „Bitte Holz nachlegen. (2 Holzscheite)“ (siehe [Holzauflage](#holzauflage)).
 6. Den zugeklappten Bereich **Aktion bei Holz nachlegen** öffnen, die gewünschten Kanäle ausfüllen und speichern.
 
 Standardmäßig meldet sich nur **Dringend Holz nachlegen**, mit den Kanälen aus **Aktion bei Holz nachlegen**. Wer schon bei „Holz nachlegen“ erinnert werden möchte, schaltet dort **Bei „Holz nachlegen“ melden** ein.
+
+## Automatisch gefundene Sensoren
+
+Die Sensorfelder dürfen leer bleiben:
+
+- **Betriebsstatus**: Der Blueprint nimmt den einzigen Sensor der Integration, der den Zustand „Dringend Holz nachlegen“ kennt, aber nur, wenn es genau einen gibt. Bei zwei oder mehr fire+ wird nichts gesendet, bis der Sensor eingetragen ist.
+- **Empfohlene Holzauflage**, **Tür zu lange offen** und **Fehlermeldung**: die Sensoren desselben fire+ wie der Betriebsstatus, auch wenn dieser eingetragen ist.
+
+Ein eingetragener Sensor hat immer Vorrang. Deaktivierte Entitäten werden nicht gefunden.
 
 ## Holzauflage
 
@@ -22,6 +31,7 @@ Der fire+ empfiehlt die Holzauflage in kg. Mit **Holzauflage angeben als** zeigt
 | Holzscheite (Standard) | Bitte Holz nachlegen. (2 Holzscheite) |
 | kg | Bitte Holz nachlegen. (1.4 kg) |
 | Holzscheite und kg | Bitte Holz nachlegen. (2 Holzscheite, 1.4 kg) |
+| Nicht angeben | Bitte Holz nachlegen. |
 
 Die Anzahl der Holzscheite ist die Menge in kg geteilt durch das **Gewicht je Holzscheit**, gerundet und mindestens 1. Bei einem Scheit heißt es „Ein Holzscheit“. Der Standardwert 0,7 kg folgt den technischen Informationen von Drooff (z. B. 1,4 kg in 2 Holzscheiten bei Nennwärmeleistung). Genauer wird es, wenn du ein paar eigene Scheite wiegst.
 
@@ -73,10 +83,10 @@ Nach dem Nachlegen geht der fire+ von „Dringend“ oft erst kurz auf „Holz n
 
 ## Weitere Warnungen
 
-Der zugeklappte Bereich **Weitere Warnungen** enthält zwei optionale Warnungen. Jede ist erst aktiv, wenn ihr Sensor eingetragen ist:
+Der zugeklappte Bereich **Weitere Warnungen** enthält zwei Warnungen. Beide sind standardmäßig eingeschaltet, jede lässt sich mit ihrem eigenen Schalter ausschalten. Ihre Sensoren dürfen leer bleiben:
 
-- **Tür zu lange offen**: der gleichnamige Binärsensor. Die Tür der fire+ ist länger als 5 Minuten offen, während der Ofen über 40 °C heiß ist, wie die Warnung der Webapp (nur neuere Geräte). Standardtext „Die Ofentür ist zu lange offen!“.
-- **Fehlermeldung (Kaminzug)**: der Sensor „Fehlermeldung“. Er warnt bei „Kaminzug zu gering“ („Der Schornstein hat zu wenig Zug!“) und „Kein Kaminzug“ („Der Schornstein hat keinen Zug!“), andere Fehler lösen keine Warnung aus.
+- **Bei zu lange offener Tür warnen**, Sensor **Tür zu lange offen**: der gleichnamige Binärsensor. Die Tür der fire+ ist länger als 5 Minuten offen, während der Ofen über 40 °C heiß ist, wie die Warnung der Webapp (nur neuere Geräte). Standardtext „Die Ofentür ist zu lange offen!“.
+- **Bei zu wenig Kaminzug warnen**, Sensor **Fehlermeldung**: der Sensor „Fehlermeldung“. Er warnt bei „Kaminzug zu gering“ („Der Schornstein hat zu wenig Zug!“) und „Kein Kaminzug“ („Der Schornstein hat keinen Zug!“), andere Fehler lösen keine Warnung aus.
 
 Beide haben eine eigene Nachricht (leer = Standardtext der gewählten Sprache). **Aktionen der Warnungen** legt fest, ob sie die Aktionen von „Dringend Holz nachlegen“ (Standard; nur wenn **Eigene Aktionen bei „Dringend“ verwenden** an ist, sonst die von „Holz nachlegen“) oder von „Holz nachlegen“ auslösen. Eine Warnung geht sofort raus, die Verzögerungen der Kanäle gelten nicht, und die Nachricht enthält keine Holzauflage. Die Automation läuft im Modus „restart“: Eine Warnung beendet eine Holz-Erinnerung, die noch auf ihre Verzögerung wartet.
 

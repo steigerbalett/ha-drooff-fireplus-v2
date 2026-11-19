@@ -7,11 +7,20 @@ Once Home Assistant has started, the integration installs the blueprint to `conf
 1. Open *Settings*, *Automations & scenes*, *Blueprints*.
 2. Choose **Drooff fire+: Holz nachlegen / Add wood**.
 3. Choose German, English or French as **Sprache** (*Language*). It selects the default texts (title, "Please add wood.", "Add wood now!"); own texts replace them.
-4. Select the *operation status* sensor of the fire+ as **Betriebsstatus** (*Operation status*).
-5. Optionally select the *recommended wood load* sensor as **Empfohlene Holzauflage** (*Recommended wood load*). The message then says how much wood to add, by default as the number of logs, e.g. "Bitte Holz nachlegen. (2 Holzscheite)" (see [Wood load](#wood-load)).
+4. Leave **Betriebsstatus** (*Operation status*) empty if you have one fire+, the blueprint finds the sensor itself (see [Sensors found automatically](#sensors-found-automatically)). With several fire+, select the *operation status* sensor of the fire+ this automation is for.
+5. Leave **Empfohlene Holzauflage** (*Recommended wood load*) empty as well. The message then says how much wood to add, by default as the number of logs, e.g. "Bitte Holz nachlegen. (2 Holzscheite)" (see [Wood load](#wood-load)).
 6. Open the collapsed section **Aktion bei Holz nachlegen** (*Action when wood is required*), fill in the channels and save.
 
 By default only **wood urgently required** notifies, with the channels of **Aktion bei Holz nachlegen** (*Action when wood is required*). To be reminded at *wood required* already, switch on **Bei "Holz nachlegen" melden** (*Notify when wood is required*) in that section.
+
+## Sensors found automatically
+
+The sensor fields can stay empty:
+
+- **Betriebsstatus** (*Operation status*): the blueprint uses the only sensor of the integration that knows the state *wood urgently required*. It does so only when there is exactly one. With two or more fire+ nothing is sent until you select the sensor.
+- **Empfohlene Holzauflage** (*Recommended wood load*), **Tür zu lange offen** (*Door open too long*) and **Fehlermeldung** (*Error message*): the sensors of the same fire+ as the operation status, also when you selected that one.
+
+A selected sensor is always used instead. Disabled entities are not found.
 
 ## Wood load
 
@@ -22,6 +31,7 @@ The fire+ recommends the wood load in kg. With **Holzauflage angeben als** (*Sho
 | Logs (*Holzscheite*, default) | Please add wood. (2 logs) |
 | kg | Please add wood. (1.4 kg) |
 | Logs and kg | Please add wood. (2 logs, 1.4 kg) |
+| Do not show (*Nicht angeben*) | Please add wood. |
 
 The number of logs is the amount in kg divided by **Gewicht je Holzscheit** (*Weight per log*), rounded, at least 1. A single log reads "one log". The default of 0.7 kg follows Drooff's technical information (e.g. 1.4 kg in 2 logs at nominal heat output). Weigh a few of your own logs for a better value.
 
@@ -67,10 +77,10 @@ After wood was added, the fire+ often goes from *urgently required* to *wood req
 
 ## Other warnings
 
-The collapsed section **Weitere Warnungen** (*Other warnings*) adds two optional warnings. Each is only active once its sensor is selected:
+The collapsed section **Weitere Warnungen** (*Other warnings*) adds two warnings. Both are on by default, each can be switched off with its own switch. Their sensors can stay empty:
 
-- **Tür zu lange offen** (*Door open too long*): the binary sensor of the same name. The fire+ door is open for more than 5 minutes while the stove is hotter than 40 °C, like the warning of the web app (only recent devices). Default text "The stove door has been open too long!".
-- **Fehlermeldung (Kaminzug)** (*Error message (chimney draught)*): the *error message* sensor. It warns at *Chimney draught too low* ("The chimney has too little draught!") and *No chimney draught* ("The chimney has no draught!"), other errors do not warn.
+- **Bei zu lange offener Tür warnen** (*Warn when the door is open too long*), sensor **Tür zu lange offen** (*Door open too long*): the binary sensor of the same name. The fire+ door is open for more than 5 minutes while the stove is hotter than 40 °C, like the warning of the web app (only recent devices). Default text "The stove door has been open too long!".
+- **Bei zu wenig Kaminzug warnen** (*Warn when the chimney draught is too low*), sensor **Fehlermeldung** (*Error message*): the *error message* sensor. It warns at *Chimney draught too low* ("The chimney has too little draught!") and *No chimney draught* ("The chimney has no draught!"), other errors do not warn.
 
 Both have their own message (empty = default text of the selected language). **Aktionen der Warnungen** (*Actions of the warnings*) selects whether they run the actions of *wood urgently required* (default; only when **Eigene Aktionen bei "Dringend" verwenden** is on, otherwise those of *wood required*) or of *wood required*. A warning is sent right away, the delays of the channels do not apply, and the message has no wood load. The automation runs in restart mode: a warning stops a wood reminder that is still waiting for its delay.
 

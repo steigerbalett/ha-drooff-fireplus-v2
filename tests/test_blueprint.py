@@ -12,9 +12,10 @@ from unittest.mock import patch
 
 import pytest
 import yaml
+from homeassistant.const import CONF_HOST
 from homeassistant.setup import async_setup_component
 from homeassistant.util import dt as dt_util
-from pytest_homeassistant_custom_component.common import async_fire_time_changed, async_mock_service
+from pytest_homeassistant_custom_component.common import MockConfigEntry, async_fire_time_changed, async_mock_service
 
 from custom_components.drooff_fireplus_v2 import (
     BLUEPRINTS,
@@ -22,12 +23,13 @@ from custom_components.drooff_fireplus_v2 import (
     async_install_blueprints,
     blueprint_store,
 )
+from custom_components.drooff_fireplus_v2.const import DOMAIN
 
 from .conftest import mock_fireplus, setup_integration
+from .test_entities import entity_id
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
-    from pytest_homeassistant_custom_component.common import MockConfigEntry
     from pytest_homeassistant_custom_component.test_util.aiohttp import AiohttpClientMocker
 
 BLUEPRINT = "drooff_fireplus_v2/wood_required_notification.yaml"
@@ -492,7 +494,7 @@ ERROR = "sensor.drooff_fire_error_message"
 
 
 async def setup_warnings(hass: HomeAssistant, inputs: dict[str, Any]) -> None:
-    """Create an automation with both warnings and their sensors in the normal state."""
+    """Create an automation with both warnings (on by default) and their sensors in the normal state."""
     hass.states.async_set(DOOR, "off")
     hass.states.async_set(ERROR, "none")
     await setup_automation(hass, {"door_sensor": DOOR, "draught_sensor": ERROR, **inputs}, required=False)
@@ -530,9 +532,21 @@ async def test_too_little_draught(hass: HomeAssistant, error: str, expected: str
     assert [call.data for call in persistent] == [{"title": "Fireplace", "message": expected}]
 
 
-async def test_warnings_without_sensors(hass: HomeAssistant, caplog: pytest.LogCaptureFixture) -> None:
-    """Without sensors there are no warnings and no errors."""
+async def test_warnings_switched_off(hass: HomeAssistant, caplog: pytest.LogCaptureFixture) -> None:
+    """Switched off, there are no warnings, also with sensors, and no errors."""
     persistent = async_mock_service(hass, "notify", "persistent_notification")
+    await setup_warnings(hass, {"door_enabled": False, "draught_enabled": False})
+    hass.states.async_set(DOOR, "on")
+    hass.states.async_set(ERROR, "chimney_draught_too_low")
+    await settle()
+    assert persistent == []
+    assert "Error" not in caplog.text
+
+
+async def test_warning_without_sensor_of_the_fire_plus(hass: HomeAssistant, caplog: pytest.LogCaptureFixture) -> None:
+    """A warning switched on finds no sensor when the status sensor belongs to no fire+, without errors."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    hass.states.async_set(DOOR, "off")
     await setup_automation(hass, {}, required=False)
     hass.states.async_set(DOOR, "on")
     hass.states.async_set(ERROR, "chimney_draught_too_low")
@@ -572,3 +586,127 @@ async def test_french_warning_texts(hass: HomeAssistant) -> None:
         "La porte du poêle est ouverte depuis trop longtemps !",
         "La cheminée n'a pas assez de tirage !",
     ]
+
+
+async def setup_found_automatically(hass: HomeAssistant, inputs: dict[str, Any]) -> None:
+    """Create an automation without sensors, it finds them at the fire+."""
+    await async_install_blueprints(hass)
+    assert await async_setup_component(
+        hass,
+        "automation",
+        {"automation": {"id": "wood", "use_blueprint": {"path": BLUEPRINT, "input": inputs}}},
+    )
+    await hass.async_block_till_done()
+
+
+def change(hass: HomeAssistant, entity: str, state: str) -> None:
+    """Change the state of an entity of the integration, its attributes stay."""
+    hass.states.async_set(entity, state, hass.states.get(entity).attributes)
+
+
+async def test_sensors_found_automatically(
+    hass: HomeAssistant, aioclient_mock: AiohttpClientMocker, config_entry: MockConfigEntry
+) -> None:
+    """With one fire+ the sensors can stay empty: status, wood load and both warnings are found."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    mock_fireplus(aioclient_mock)
+    await setup_integration(hass, config_entry)
+    # both warnings are on by default
+    await setup_found_automatically(hass, {"required_enabled": True})
+    status = entity_id(hass, config_entry, "sensor.operation_status")
+    door = entity_id(hass, config_entry, "binary_sensor.door_open_too_long")
+    error = entity_id(hass, config_entry, "sensor.error_message")
+
+    change(hass, status, "wood_required")
+    await settle()
+    change(hass, door, "on")
+    await settle()
+    change(hass, error, "no_chimney_draught")
+    await settle()
+    # the other problem sensors are no door warning
+    change(hass, entity_id(hass, config_entry, "binary_sensor.error"), "on")
+    await settle()
+    assert [call.data["message"] for call in persistent] == [
+        # 1.5 kg recommended by the fire+
+        "Bitte Holz nachlegen. (2 Holzscheite)",
+        "Die Ofentür ist zu lange offen!",
+        "Der Schornstein hat keinen Zug!",
+    ]
+
+
+async def test_found_status_ignores_unavailable(
+    hass: HomeAssistant, aioclient_mock: AiohttpClientMocker, config_entry: MockConfigEntry
+) -> None:
+    """Like a set status sensor, the one found reports nothing when it comes back or wood was added."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    mock_fireplus(aioclient_mock)
+    await setup_integration(hass, config_entry)
+    await setup_found_automatically(hass, {"required_enabled": True})
+    status = entity_id(hass, config_entry, "sensor.operation_status")
+    for state in ("unavailable", "wood_required", "wood_urgently_required", "wood_required"):
+        change(hass, status, state)
+        await settle()
+    assert [call.data["message"] for call in persistent] == ["Dringend Holz nachlegen! (2 Holzscheite)"]
+
+
+@pytest.mark.parametrize(
+    ("inputs", "expected"),
+    [
+        ({"wood_load_unit": "none"}, "Bitte Holz nachlegen."),
+        ({"wood_load_unit": "kg"}, "Bitte Holz nachlegen. (1.5 kg)"),
+        ({"wood_load_sensor": "sensor.wood"}, "Bitte Holz nachlegen. (3 Holzscheite)"),
+    ],
+)
+async def test_found_wood_load(
+    hass: HomeAssistant,
+    aioclient_mock: AiohttpClientMocker,
+    config_entry: MockConfigEntry,
+    inputs: dict[str, Any],
+    expected: str,
+) -> None:
+    """The wood load found can be left out of the message or replaced by another sensor."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    hass.states.async_set("sensor.wood", "2.1")
+    mock_fireplus(aioclient_mock)
+    await setup_integration(hass, config_entry)
+    await setup_found_automatically(hass, {"required_enabled": True, **inputs})
+    change(hass, entity_id(hass, config_entry, "sensor.operation_status"), "wood_required")
+    await settle()
+    assert [call.data["message"] for call in persistent] == [expected]
+
+
+async def test_two_fire_plus(
+    hass: HomeAssistant, aioclient_mock: AiohttpClientMocker, config_entry: MockConfigEntry
+) -> None:
+    """With two fire+ nothing is guessed, a chosen status sensor brings the other sensors of its fire+."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    mock_fireplus(aioclient_mock)
+    mock_fireplus(aioclient_mock, host="fire2")
+    await setup_integration(hass, config_entry)
+    second = MockConfigEntry(domain=DOMAIN, title="Drooff fire+ 2", unique_id=f"{DOMAIN}_2", data={CONF_HOST: "fire2"})
+    await setup_integration(hass, second)
+    await async_install_blueprints(hass)
+    found = {"message": "found", "door_message": "found"}
+    chosen = {
+        "status_sensor": entity_id(hass, second, "sensor.operation_status"),
+        "message": "chosen",
+        "door_message": "chosen",
+    }
+    assert await async_setup_component(
+        hass,
+        "automation",
+        {
+            "automation": [
+                {"id": "found", "use_blueprint": {"path": BLUEPRINT, "input": found}},
+                {"id": "chosen", "use_blueprint": {"path": BLUEPRINT, "input": chosen}},
+            ]
+        },
+    )
+    await hass.async_block_till_done()
+
+    for entry in (config_entry, second):
+        change(hass, entity_id(hass, entry, "sensor.operation_status"), "wood_urgently_required")
+        await settle()
+        change(hass, entity_id(hass, entry, "binary_sensor.door_open_too_long"), "on")
+        await settle()
+    assert [call.data["message"] for call in persistent] == ["chosen (2 Holzscheite)", "chosen"]

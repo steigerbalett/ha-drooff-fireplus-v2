@@ -6,6 +6,7 @@ from datetime import timedelta
 from typing import TYPE_CHECKING
 
 import pytest
+from homeassistant.util import dt as dt_util
 
 from .conftest import mock_fireplus, setup_integration
 from .test_controls import panel
@@ -60,9 +61,12 @@ async def test_door_open_too_long(
     freezer.tick(timedelta(seconds=10))
     await refresh(hass, aioclient_mock, config_entry, open_door)
     assert hass.states.get(warning).state == "on"
+    # the blueprint finds the sensor by this attribute
+    assert hass.states.get(warning).attributes["open_since"] == dt_util.utcnow() - timedelta(minutes=5, seconds=10)
 
     await refresh(hass, aioclient_mock, config_entry, panel(i19="zu"))
     assert hass.states.get(warning).state == "off"
+    assert hass.states.get(warning).attributes["open_since"] is None
 
 
 async def test_door_open_on_cold_stove(

@@ -43,6 +43,7 @@ class FireplusBinarySensorEntityDescription(BinarySensorEntityDescription):
     available_fn: Callable[[FireplusResponse], bool] = _always
     supported_fn: Callable[[FireplusResponse], bool] = _always
     attributes_fn: Callable[[FireplusResponse], dict[str, Any]] | None = None
+    coordinator_attributes_fn: Callable[[FireplusDataUpdateCoordinator], dict[str, Any]] | None = None
 
 
 BINARY_SENSORS: tuple[FireplusBinarySensorEntityDescription, ...] = (
@@ -68,6 +69,8 @@ BINARY_SENSORS: tuple[FireplusBinarySensorEntityDescription, ...] = (
         device_class=BinarySensorDeviceClass.PROBLEM,
         is_on_fn=lambda _: None,
         coordinator_is_on_fn=lambda coordinator: coordinator.door_open_too_long,
+        # also lets the blueprint tell this sensor apart from the other problem sensors
+        coordinator_attributes_fn=lambda coordinator: {"open_since": coordinator.door_open_since},
         available_fn=lambda data: data.door_open is not None,
         supported_fn=lambda data: data.door_open is not None,
     ),
@@ -159,6 +162,8 @@ class FireplusBinarySensor(FireplusEntity, BinarySensorEntity):
     @property
     def extra_state_attributes(self) -> dict[str, Any] | None:
         """Return additional attributes."""
+        if self.entity_description.coordinator_attributes_fn is not None:
+            return self.entity_description.coordinator_attributes_fn(self.coordinator)
         if self.entity_description.attributes_fn is None:
             return None
         return self.entity_description.attributes_fn(self.coordinator.data)

@@ -1,17 +1,17 @@
 blueprint:
   name: "Drooff fire+: Holz nachlegen / Add wood"
   description: |-
-    Erinnert, wenn der fire+ nach Holz verlangt. Für "Holz nachlegen" und "Dringend Holz nachlegen" lassen sich getrennte Aktionen einstellen: Nachrichten (Pushover, Telegram, Handy-App und andere Notify-Aktionen), Ansagen auf Amazon-Echo-Geräten und weitere Aktionen. Alle Kanäle sind optional und haben eine eigene Verzögerung. Ein Kanal meldet sich nur, wenn der Zustand nach der Verzögerung noch besteht. Standardmäßig meldet sich nur "Dringend Holz nachlegen", "Holz nachlegen" lässt sich dazuschalten. Solange die Aktionen für "Dringend" nicht eingeschaltet sind, gelten dort die Aktionen für "Holz nachlegen". Optional warnt er, wenn die Tür zu lange offen ist oder der Schornstein zu wenig Zug hat. Die Sprache bestimmt die Standardtexte.
+    Erinnert, wenn der fire+ nach Holz verlangt. Für "Holz nachlegen" und "Dringend Holz nachlegen" lassen sich getrennte Aktionen einstellen: Nachrichten (Pushover, Telegram, Handy-App und andere Notify-Aktionen), Ansagen auf Amazon-Echo-Geräten und weitere Aktionen. Alle Kanäle sind optional und haben eine eigene Verzögerung. Ein Kanal meldet sich nur, wenn der Zustand nach der Verzögerung noch besteht. Standardmäßig meldet sich nur "Dringend Holz nachlegen", "Holz nachlegen" lässt sich dazuschalten. Solange die Aktionen für "Dringend" nicht eingeschaltet sind, gelten dort die Aktionen für "Holz nachlegen". Außerdem warnt er, wenn die Tür zu lange offen ist oder der Schornstein zu wenig Zug hat. Die Sprache bestimmt die Standardtexte.
 
-    <small>**English:** Reminds you when the fire+ asks for wood. "Wood required" and "wood urgently required" can have separate actions: messages (Pushover, Telegram, mobile app and other notify actions), announcements on Amazon Echo devices and other actions. Every channel is optional and has its own delay. A channel only fires if the status still holds after its delay. By default only "wood urgently required" notifies, "wood required" can be switched on. Until the urgent actions are switched on, the actions for "wood required" are used. Optionally it warns when the door is open too long or the chimney has too little draught. The language selects the default texts.</small>
+    <small>**English:** Reminds you when the fire+ asks for wood. "Wood required" and "wood urgently required" can have separate actions: messages (Pushover, Telegram, mobile app and other notify actions), announcements on Amazon Echo devices and other actions. Every channel is optional and has its own delay. A channel only fires if the status still holds after its delay. By default only "wood urgently required" notifies, "wood required" can be switched on. Until the urgent actions are switched on, the actions for "wood required" are used. It also warns when the door is open too long or the chimney has too little draught. The language selects the default texts.</small>
 
-    <small>**Français :** Vous rappelle quand le fire+ demande du bois. « Recharger du bois » et « Recharger du bois d'urgence » peuvent avoir des actions séparées : messages (Pushover, Telegram, application mobile et autres actions de notification), annonces sur les appareils Amazon Echo et autres actions. Chaque canal est facultatif et a son propre délai. Un canal ne se déclenche que si l'état persiste après son délai. Par défaut, seul « Recharger du bois d'urgence » notifie, « Recharger du bois » peut être activé. Tant que les actions d'urgence ne sont pas activées, les actions de « Recharger du bois » s'appliquent. En option, il avertit lorsque la porte reste ouverte trop longtemps ou que la cheminée n'a pas assez de tirage. La langue détermine les textes par défaut.</small>
+    <small>**Français :** Vous rappelle quand le fire+ demande du bois. « Recharger du bois » et « Recharger du bois d'urgence » peuvent avoir des actions séparées : messages (Pushover, Telegram, application mobile et autres actions de notification), annonces sur les appareils Amazon Echo et autres actions. Chaque canal est facultatif et a son propre délai. Un canal ne se déclenche que si l'état persiste après son délai. Par défaut, seul « Recharger du bois d'urgence » notifie, « Recharger du bois » peut être activé. Tant que les actions d'urgence ne sont pas activées, les actions de « Recharger du bois » s'appliquent. Il avertit aussi lorsque la porte reste ouverte trop longtemps ou que la cheminée n'a pas assez de tirage. La langue détermine les textes par défaut.</small>
 
     Die Integration installiert und aktualisiert diese Datei. Wird sie geändert, bleibt die Änderung erhalten und es gibt keine Updates mehr.
     <small>The integration installs and updates this file. Once it is changed, the changes are kept and it is no longer updated.</small>
     <small>L'intégration installe et met à jour ce fichier. S'il est modifié, les modifications sont conservées et il n'est plus mis à jour.</small>
   domain: automation
-  source_url: https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/v2.0.8b2/custom_components/drooff_fireplus_v2/blueprints/automation/wood_required_notification.yaml
+  source_url: https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/v2.0.8b3/custom_components/drooff_fireplus_v2/blueprints/automation/wood_required_notification.yaml
   author: Drooff fire+ integration
   homeassistant:
     min_version: "2026.3.0"
@@ -35,20 +35,21 @@ blueprint:
     status_sensor:
       name: Betriebsstatus
       description: |-
-        Der Sensor "Betriebsstatus" des fire+.
-        <small>**Operation status** – The "Operation status" sensor of the fire+.</small>
-        <small>**État de fonctionnement** – Le capteur « État de fonctionnement » du fire+.</small>
+        Der Sensor "Betriebsstatus" des fire+. Leer = automatisch, wenn genau ein fire+ eingerichtet ist, bei mehreren hier wählen. Leere Sensorfelder weiter unten werden mit den Sensoren desselben fire+ belegt.
+        <small>**Operation status** – The "Operation status" sensor of the fire+. Empty = automatic when exactly one fire+ is set up, with several choose it here. Empty sensor fields further down use the sensors of the same fire+.</small>
+        <small>**État de fonctionnement** – Le capteur « État de fonctionnement » du fire+. Vide = automatique si un seul fire+ est configuré, s'il y en a plusieurs, le choisir ici. Les champs de capteur vides plus bas utilisent les capteurs du même fire+.</small>
+      default: ""
       selector:
         entity:
           filter:
             - integration: drooff_fireplus_v2
               domain: sensor
     wood_load_sensor:
-      name: Empfohlene Holzauflage (optional)
+      name: Empfohlene Holzauflage
       description: |-
-        Wenn gesetzt, wird die Holzauflage an die Nachricht angehängt, standardmäßig als Anzahl der Holzscheite.
-        <small>**Recommended wood load (optional)** – If set, the wood load is appended to the message, by default as the number of logs.</small>
-        <small>**Charge de bois recommandée (facultatif)** – Si renseigné, la charge de bois est ajoutée au message, par défaut en nombre de bûches.</small>
+        Die Holzauflage wird an die Nachricht angehängt, standardmäßig als Anzahl der Holzscheite. Leer = der Sensor "Empfohlene Holzauflage" des fire+.
+        <small>**Recommended wood load** – The wood load is appended to the message, by default as the number of logs. Empty = the "Recommended wood load" sensor of the fire+.</small>
+        <small>**Charge de bois recommandée** – La charge de bois est ajoutée au message, par défaut en nombre de bûches. Vide = le capteur « Charge de bois recommandée » du fire+.</small>
       default: ""
       selector:
         entity:
@@ -58,9 +59,9 @@ blueprint:
     wood_load_unit:
       name: Holzauflage angeben als
       description: |-
-        Die Anzahl der Holzscheite ergibt sich aus der empfohlenen Menge in kg und dem Gewicht je Holzscheit, mindestens 1.
-        <small>**Show wood load as** – The number of logs follows from the recommended amount in kg and the weight per log, at least 1.</small>
-        <small>**Afficher la charge de bois en** – Le nombre de bûches découle de la quantité recommandée en kg et du poids par bûche, au moins 1.</small>
+        Die Anzahl der Holzscheite ergibt sich aus der empfohlenen Menge in kg und dem Gewicht je Holzscheit, mindestens 1. Nicht angeben = keine Holzauflage in der Nachricht.
+        <small>**Show wood load as** – The number of logs follows from the recommended amount in kg and the weight per log, at least 1. Do not show = no wood load in the message.</small>
+        <small>**Afficher la charge de bois en** – Le nombre de bûches découle de la quantité recommandée en kg et du poids par bûche, au moins 1. Ne pas afficher = pas de charge de bois dans le message.</small>
       default: logs
       selector:
         select:
@@ -71,6 +72,8 @@ blueprint:
               value: kg
             - label: Holzscheite und kg / Logs and kg / Bûches et kg
               value: both
+            - label: Nicht angeben / Do not show / Ne pas afficher
+              value: none
     log_weight:
       name: Gewicht je Holzscheit
       description: |-
@@ -366,17 +369,26 @@ blueprint:
       name: Weitere Warnungen
       icon: mdi:alert
       description: |-
-        Warnungen bei zu lange offener Tür und zu wenig Kaminzug. Sie verwenden die Aktionen von "Holz nachlegen" oder "Dringend", ohne Verzögerung. Ohne Sensor gibt es keine Warnung.<br>
-        <small>**Other warnings** – Warnings when the door is open too long and when the chimney has too little draught. They use the actions of "wood required" or "urgent", without delay. Without a sensor there is no warning.</small><br>
-        <small>**Autres avertissements** – Avertissements lorsque la porte reste ouverte trop longtemps et lorsque la cheminée n'a pas assez de tirage. Ils utilisent les actions de « Recharger du bois » ou de l'urgence, sans délai. Sans capteur, pas d'avertissement.</small>
+        Warnungen bei zu lange offener Tür und zu wenig Kaminzug. Sie verwenden die Aktionen von "Holz nachlegen" oder "Dringend", ohne Verzögerung. Beide sind eingeschaltet, jede lässt sich mit ihrem eigenen Schalter ausschalten.<br>
+        <small>**Other warnings** – Warnings when the door is open too long and when the chimney has too little draught. They use the actions of "wood required" or "urgent", without delay. Both are on, each can be switched off with its own switch.</small><br>
+        <small>**Autres avertissements** – Avertissements lorsque la porte reste ouverte trop longtemps et lorsque la cheminée n'a pas assez de tirage. Ils utilisent les actions de « Recharger du bois » ou de l'urgence, sans délai. Les deux sont activés, chacun peut être désactivé avec son propre interrupteur.</small>
       collapsed: true
       input:
+        door_enabled:
+          name: Bei zu lange offener Tür warnen
+          description: |-
+            Der fire+ meldet das, wenn die Tür bei über 40 °C länger als 5 Minuten offen ist.
+            <small>**Warn when the door is open too long** – The fire+ reports it when the door is open for more than 5 minutes above 40 °C.</small>
+            <small>**Avertir si la porte reste ouverte trop longtemps** – Le fire+ le signale lorsque la porte est ouverte plus de 5 minutes au-dessus de 40 °C.</small>
+          default: true
+          selector:
+            boolean:
         door_sensor:
           name: Tür zu lange offen
           description: |-
-            Der Sensor "Tür zu lange offen" des fire+. Er meldet sich, wenn die Tür bei über 40 °C länger als 5 Minuten offen ist. Leer = keine Warnung.
-            <small>**Door open too long** – The "Door open too long" sensor of the fire+. It turns on when the door is open for more than 5 minutes above 40 °C. Empty = no warning.</small>
-            <small>**Porte ouverte trop longtemps** – Le capteur « Porte ouverte trop longtemps » du fire+. Il s'active lorsque la porte est ouverte plus de 5 minutes au-dessus de 40 °C. Vide = pas d'avertissement.</small>
+            Der Sensor "Tür zu lange offen" des fire+. Leer = automatisch.
+            <small>**Door open too long** – The "Door open too long" sensor of the fire+. Empty = automatic.</small>
+            <small>**Porte ouverte trop longtemps** – Le capteur « Porte ouverte trop longtemps » du fire+. Vide = automatique.</small>
           default: ""
           selector:
             entity:
@@ -393,12 +405,21 @@ blueprint:
           default: ""
           selector:
             text:
-        draught_sensor:
-          name: Fehlermeldung (Kaminzug)
+        draught_enabled:
+          name: Bei zu wenig Kaminzug warnen
           description: |-
-            Der Sensor "Fehlermeldung" des fire+. Gewarnt wird bei "Kaminzug zu gering" und "Kein Kaminzug". Leer = keine Warnung.
-            <small>**Error message (chimney draught)** – The "Error message" sensor of the fire+. It warns at "Chimney draught too low" and "No chimney draught". Empty = no warning.</small>
-            <small>**Message d'erreur (tirage)** – Le capteur « Message d'erreur » du fire+. Il avertit en cas de « Tirage de la cheminée trop faible » et « Pas de tirage de la cheminée ». Vide = pas d'avertissement.</small>
+            Gewarnt wird bei den Fehlermeldungen "Kaminzug zu gering" und "Kein Kaminzug".
+            <small>**Warn when the chimney draught is too low** – It warns at the error messages "Chimney draught too low" and "No chimney draught".</small>
+            <small>**Avertir si le tirage est trop faible** – Il avertit en cas des messages d'erreur « Tirage de la cheminée trop faible » et « Pas de tirage de la cheminée ».</small>
+          default: true
+          selector:
+            boolean:
+        draught_sensor:
+          name: Fehlermeldung
+          description: |-
+            Der Sensor "Fehlermeldung" des fire+. Leer = automatisch.
+            <small>**Error message** – The "Error message" sensor of the fire+. Empty = automatic.</small>
+            <small>**Message d'erreur** – Le capteur « Message d'erreur » du fire+. Vide = automatique.</small>
           default: ""
           selector:
             entity:
@@ -432,56 +453,75 @@ blueprint:
 
 mode: restart
 
-# the warnings are optional, so their sensors may be empty
+# Empty sensor inputs are found automatically. Trigger variables can not read
+# states, so each template trigger finds the operation status sensor itself:
+# the only sensor of the integration with the status "wood_urgently_required".
+# The other sensors belong to the same device.
 trigger_variables:
+  status_sensor: !input status_sensor
+  door_enabled: !input door_enabled
   door_sensor: !input door_sensor
+  draught_enabled: !input draught_enabled
   draught_sensor: !input draught_sensor
 
 triggers:
-  - trigger: state
-    entity_id: !input status_sensor
-    to: wood_required
-    # wood_urgently_required -> wood_required means wood was added, the fire+
-    # passes through it on the way back to regular
-    not_from:
-      - unavailable
-      - unknown
-      - wood_urgently_required
+  - trigger: template
+    value_template: >-
+      {%- set found = namespace(entities=[]) -%}
+      {%- for e in integration_entities('drooff_fireplus_v2') if e.startswith('sensor.') and 'wood_urgently_required' in (state_attr(e, 'options') or []) -%}
+      {%- set found.entities = found.entities + [e] -%}
+      {%- endfor -%}
+      {%- set s = status_sensor if status_sensor else (found.entities | first if found.entities | length == 1 else '') -%}
+      {{ is_state(s, 'wood_required') }}
     id: required
-  - trigger: state
-    entity_id: !input status_sensor
-    to: wood_urgently_required
-    not_from:
-      - unavailable
-      - unknown
+  - trigger: template
+    value_template: >-
+      {%- set found = namespace(entities=[]) -%}
+      {%- for e in integration_entities('drooff_fireplus_v2') if e.startswith('sensor.') and 'wood_urgently_required' in (state_attr(e, 'options') or []) -%}
+      {%- set found.entities = found.entities + [e] -%}
+      {%- endfor -%}
+      {%- set s = status_sensor if status_sensor else (found.entities | first if found.entities | length == 1 else '') -%}
+      {{ is_state(s, 'wood_urgently_required') }}
     id: urgent
   # A new run cancels the pending reminders, so nothing is sent once wood was added
-  - trigger: state
-    entity_id: !input status_sensor
-    from:
-      - wood_required
-      - wood_urgently_required
-    not_to:
-      - wood_required
-      - wood_urgently_required
-    id: done
-  - trigger: state
-    entity_id: !input status_sensor
-    from: wood_urgently_required
-    to: wood_required
+  - trigger: template
+    value_template: >-
+      {%- set found = namespace(entities=[]) -%}
+      {%- for e in integration_entities('drooff_fireplus_v2') if e.startswith('sensor.') and 'wood_urgently_required' in (state_attr(e, 'options') or []) -%}
+      {%- set found.entities = found.entities + [e] -%}
+      {%- endfor -%}
+      {%- set s = status_sensor if status_sensor else (found.entities | first if found.entities | length == 1 else '') -%}
+      {{ s != '' and states(s) not in ['wood_required', 'wood_urgently_required'] }}
     id: done
   - trigger: template
-    value_template: "{{ door_sensor is string and door_sensor != '' and is_state(door_sensor, 'on') }}"
+    value_template: >-
+      {%- set found = namespace(entities=[], door='') -%}
+      {%- for e in integration_entities('drooff_fireplus_v2') if door_enabled and not door_sensor and e.startswith('sensor.') and 'wood_urgently_required' in (state_attr(e, 'options') or []) -%}
+      {%- set found.entities = found.entities + [e] -%}
+      {%- endfor -%}
+      {%- set s = status_sensor if status_sensor else (found.entities | first if found.entities | length == 1 else '') -%}
+      {%- for e in (device_entities(device_id(s)) if s else []) if e.startswith('binary_sensor.') and states[e] and 'open_since' in states[e].attributes -%}
+      {%- set found.door = e -%}
+      {%- endfor -%}
+      {%- set door = door_sensor if door_sensor else found.door -%}
+      {{ door_enabled and door != '' and is_state(door, 'on') }}
     id: door
   - trigger: template
     value_template: >-
-      {{ draught_sensor is string and draught_sensor != ''
-         and states(draught_sensor) in ['chimney_draught_too_low', 'no_chimney_draught'] }}
+      {%- set found = namespace(entities=[], error='') -%}
+      {%- for e in integration_entities('drooff_fireplus_v2') if draught_enabled and not draught_sensor and e.startswith('sensor.') and 'wood_urgently_required' in (state_attr(e, 'options') or []) -%}
+      {%- set found.entities = found.entities + [e] -%}
+      {%- endfor -%}
+      {%- set s = status_sensor if status_sensor else (found.entities | first if found.entities | length == 1 else '') -%}
+      {%- for e in (device_entities(device_id(s)) if s else []) if e.startswith('sensor.') and 'chimney_draught_too_low' in (state_attr(e, 'options') or []) -%}
+      {%- set found.error = e -%}
+      {%- endfor -%}
+      {%- set error = draught_sensor if draught_sensor else found.error -%}
+      {{ draught_enabled and error != '' and states(error) in ['chimney_draught_too_low', 'no_chimney_draught'] }}
     id: draught
 
 variables:
   language: !input language
-  sensor: !input status_sensor
   wood_load_sensor: !input wood_load_sensor
   wood_load_unit: !input wood_load_unit
   log_weight: !input log_weight
@@ -490,6 +530,25 @@ variables:
   door_message: !input door_message
   draught_message: !input draught_message
   warning_channels: !input warning_channels
+  sensor: >-
+    {%- set found = namespace(entities=[]) -%}
+    {%- for e in integration_entities('drooff_fireplus_v2') if e.startswith('sensor.') and 'wood_urgently_required' in (state_attr(e, 'options') or []) -%}
+    {%- set found.entities = found.entities + [e] -%}
+    {%- endfor -%}
+    {{ status_sensor if status_sensor else (found.entities | first if found.entities | length == 1 else '') }}
+  fire_entities: "{{ device_entities(device_id(sensor)) if sensor else [] }}"
+  wood_load_entity: >-
+    {%- set found = namespace(entity='') -%}
+    {%- for e in fire_entities if e.startswith('sensor.') and state_attr(e, 'device_class') == 'weight' and state_attr(e, 'state_class') is none -%}
+    {%- set found.entity = e -%}
+    {%- endfor -%}
+    {{ wood_load_sensor if wood_load_sensor else found.entity }}
+  draught_entity: >-
+    {%- set found = namespace(entity='') -%}
+    {%- for e in fire_entities if e.startswith('sensor.') and 'chimney_draught_too_low' in (state_attr(e, 'options') or []) -%}
+    {%- set found.entity = e -%}
+    {%- endfor -%}
+    {{ draught_sensor if draught_sensor else found.entity }}
   defaults:
     de:
       title: Kaminofen
@@ -540,9 +599,21 @@ variables:
     custom_delay: !input urgent_custom_delay
 
 actions:
+  # The status triggers also fire when another entity changed the result, e.g.
+  # when the sensor came back after a restart, so they check what changed.
+  # wood_urgently_required -> wood_required means wood was added, the fire+
+  # passes through it on the way back to regular.
   - condition: template
     value_template: >-
-      {{ trigger.id in ['urgent', 'door', 'draught'] or (trigger.id == 'required' and required_enabled) }}
+      {%- set own = trigger.to_state is not none and trigger.to_state.entity_id == sensor -%}
+      {%- set old = trigger.from_state.state if trigger.from_state is not none else 'unknown' -%}
+      {%- if trigger.id == 'urgent' -%}
+      {{ own and old not in ['unavailable', 'unknown'] }}
+      {%- elif trigger.id == 'required' -%}
+      {{ required_enabled and own and old not in ['unavailable', 'unknown', 'wood_urgently_required'] }}
+      {%- else -%}
+      {{ trigger.id in ['door', 'draught'] }}
+      {%- endif -%}
   - variables:
       # door open too long and too little draught: no delay, no wood load
       is_warning: "{{ trigger.id in ['door', 'draught'] }}"
@@ -557,11 +628,12 @@ actions:
         {{ door_message if door_message else texts.door }}
         {%- elif trigger.id == 'draught' -%}
         {{ draught_message if draught_message
-           else (texts.no_draught if is_state(draught_sensor, 'no_chimney_draught') else texts.draught) }}
+           else (texts.no_draught if is_state(draught_entity, 'no_chimney_draught') else texts.draught) }}
         {%- else -%}
         {{ c.message if c.message else texts[trigger.id] }}
         {%- endif -%}
-      wood_load: "{{ states(wood_load_sensor) | float(0) if wood_load_sensor else 0 }}"
+      wood_load: >-
+        {{ states(wood_load_entity) | float(0) if wood_load_entity and wood_load_unit != 'none' else 0 }}
       # number of logs from the amount in kg, at least one
       logs: >-
         {%- set weight = log_weight | float(0.7) -%}

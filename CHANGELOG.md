@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.8b3
+
+Beta: HACS offers it once *Show beta versions* is switched on for the repository.
+
+- Blueprint *Holz nachlegen / Add wood*: with exactly one fire+ the sensors can stay empty (#9). **Betriebsstatus** (*Operation status*) is no longer required: left empty, the blueprint uses the only sensor of the integration with the state *wood urgently required*. With two or more fire+ it guesses nothing and stays silent until the sensor is selected. Empty fields for the wood load, the door and the error message use the sensors of the same fire+ as the operation status, also when that one was selected. A selected sensor always wins.
+- **Changed behaviour:** the wood load is now added to the message also in automations whose field **Empfohlene Holzauflage** (*Recommended wood load*) was empty. To leave it out, choose the new option **Nicht angeben** (*Do not show*) under **Holzauflage angeben als** (*Show wood load as*).
+- Blueprint: the two warnings of 2.0.8b2 have their own switches **Bei zu lange offener Tür warnen** (*Warn when the door is open too long*) and **Bei zu wenig Kaminzug warnen** (*Warn when the chimney draught is too low*). Their sensors are optional.
+- **Changed behaviour:** both warnings are on by default, also in existing automations. Their sensors are found at the fire+ of the operation status sensor, so existing automations warn after the update when the door is open too long or the chimney has too little draught. Switch them off in the section **Weitere Warnungen** (*Other warnings*) if you do not want this.
+- Binary sensor *Door open too long*: new attribute `open_since` with the time the door was opened (empty while it is closed). The blueprint finds the sensor by it.
+- Existing automations keep their settings, an unchanged copy of the blueprint is updated automatically.
+
 ## 2.0.8b2
 
 Beta: HACS offers it once *Show beta versions* is switched on for the repository.
