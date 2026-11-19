@@ -71,6 +71,15 @@ Wechselt der Status von „Holz nachlegen“ zu „Dringend“, werden noch auss
 
 Nach dem Nachlegen geht der fire+ von „Dringend“ oft erst kurz auf „Holz nachlegen“ und dann auf „Regelbetrieb“. Dieser Rückweg löst keine Erinnerung aus, und noch ausstehende Erinnerungen für „Dringend“ werden verworfen.
 
+## Weitere Warnungen
+
+Der zugeklappte Bereich **Weitere Warnungen** enthält zwei optionale Warnungen. Jede ist erst aktiv, wenn ihr Sensor eingetragen ist:
+
+- **Tür zu lange offen**: der gleichnamige Binärsensor. Die Tür der fire+ ist länger als 5 Minuten offen, während der Ofen über 40 °C heiß ist, wie die Warnung der Webapp (nur neuere Geräte). Standardtext „Die Ofentür ist zu lange offen!“.
+- **Fehlermeldung (Kaminzug)**: der Sensor „Fehlermeldung“. Er warnt bei „Kaminzug zu gering“ („Der Schornstein hat zu wenig Zug!“) und „Kein Kaminzug“ („Der Schornstein hat keinen Zug!“), andere Fehler lösen keine Warnung aus.
+
+Beide haben eine eigene Nachricht (leer = Standardtext der gewählten Sprache). **Aktionen der Warnungen** legt fest, ob sie die Aktionen von „Dringend Holz nachlegen“ (Standard; nur wenn **Eigene Aktionen bei „Dringend“ verwenden** an ist, sonst die von „Holz nachlegen“) oder von „Holz nachlegen“ auslösen. Eine Warnung geht sofort raus, die Verzögerungen der Kanäle gelten nicht, und die Nachricht enthält keine Holzauflage. Die Automation läuft im Modus „restart“: Eine Warnung beendet eine Holz-Erinnerung, die noch auf ihre Verzögerung wartet.
+
 ## Anpassen
 
 Die installierte Datei darf geändert werden. Die Integration merkt sich, welche Version sie installiert hat, und lässt eine davon abweichende Datei in Ruhe, beim Neustart wie beim Update. Um wieder die aktuelle Version zu bekommen, die Datei löschen und Home Assistant neu starten. Wer weiter Updates bekommen möchte, speichert seine Anpassung im selben Ordner unter einem anderen Namen.

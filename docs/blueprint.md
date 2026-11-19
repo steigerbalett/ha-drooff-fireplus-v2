@@ -65,6 +65,15 @@ When the status changes from *wood required* to *urgently required*, pending rem
 
 After wood was added, the fire+ often goes from *urgently required* to *wood required* for a moment and then to *regular*. This way back sends no reminder, and pending urgent reminders are dropped.
 
+## Other warnings
+
+The collapsed section **Weitere Warnungen** (*Other warnings*) adds two optional warnings. Each is only active once its sensor is selected:
+
+- **Tür zu lange offen** (*Door open too long*): the binary sensor of the same name. The fire+ door is open for more than 5 minutes while the stove is hotter than 40 °C, like the warning of the web app (only recent devices). Default text "The stove door has been open too long!".
+- **Fehlermeldung (Kaminzug)** (*Error message (chimney draught)*): the *error message* sensor. It warns at *Chimney draught too low* ("The chimney has too little draught!") and *No chimney draught* ("The chimney has no draught!"), other errors do not warn.
+
+Both have their own message (empty = default text of the selected language). **Aktionen der Warnungen** (*Actions of the warnings*) selects whether they run the actions of *wood urgently required* (default; only when **Eigene Aktionen bei "Dringend" verwenden** is on, otherwise those of *wood required*) or of *wood required*. A warning is sent right away, the delays of the channels do not apply, and the message has no wood load. The automation runs in restart mode: a warning stops a wood reminder that is still waiting for its delay.
+
 ## Customising
 
 You can change the installed file. The integration remembers which version it installed and does not touch a file that differs from it, neither at a restart nor with an update. To get the current version again, delete the file and restart Home Assistant. If you would rather keep receiving updates, save your copy under another name in the same folder.

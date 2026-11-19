@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.8b2
+
+Beta: HACS offers it once *Show beta versions* is switched on for the repository.
+
+- Blueprint *Holz nachlegen / Add wood*: new collapsed section *Weitere Warnungen / Other warnings* with two optional warnings, each active once its sensor is selected: the door is open too long (sensor *Door open too long*) and the chimney has too little or no draught (sensor *Error message*, states *Chimney draught too low* and *No chimney draught*). Own messages, default texts in German, English and French. They run the actions of *wood urgently required* (default) or *wood required*, right away and without wood load. Existing automations keep working without them.
+
 ## 2.0.8b1
 
 Beta: HACS offers it once *Show beta versions* is switched on for the repository.

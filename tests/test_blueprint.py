@@ -485,3 +485,90 @@ def test_source_url_points_to_the_release() -> None:
         assert line.split(":", 1)[1].strip() == (
             f"https://github.com/steigerbalett/ha-drooff-fireplus-v2/blob/v{manifest['version']}/{rel}"
         )
+
+
+DOOR = "binary_sensor.drooff_fire_door_open_too_long"
+ERROR = "sensor.drooff_fire_error_message"
+
+
+async def setup_warnings(hass: HomeAssistant, inputs: dict[str, Any]) -> None:
+    """Create an automation with both warnings and their sensors in the normal state."""
+    hass.states.async_set(DOOR, "off")
+    hass.states.async_set(ERROR, "none")
+    await setup_automation(hass, {"door_sensor": DOOR, "draught_sensor": ERROR, **inputs}, required=False)
+
+
+async def test_door_open_too_long(hass: HomeAssistant) -> None:
+    """A door open too long is reported once, without the delay of the wood reminders."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    await setup_warnings(hass, {"notify_delay": {"minutes": 10}})
+    hass.states.async_set(DOOR, "on")
+    await settle()
+    assert [call.data for call in persistent] == [{"title": "Kaminofen", "message": "Die Ofentür ist zu lange offen!"}]
+    hass.states.async_set(DOOR, "off")
+    await settle()
+    assert len(persistent) == 1
+
+
+@pytest.mark.parametrize(
+    ("error", "expected"),
+    [
+        ("chimney_draught_too_low", "The chimney has too little draught!"),
+        ("no_chimney_draught", "The chimney has no draught!"),
+    ],
+)
+async def test_too_little_draught(hass: HomeAssistant, error: str, expected: str) -> None:
+    """Too little or no chimney draught is reported, other errors are not, and no wood load is added."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    hass.states.async_set("sensor.wood", "1.4")
+    await setup_warnings(hass, {"language": "en", "wood_load_sensor": "sensor.wood"})
+    hass.states.async_set(ERROR, "air_slider_stuck")
+    await settle()
+    assert persistent == []
+    hass.states.async_set(ERROR, error)
+    await settle()
+    assert [call.data for call in persistent] == [{"title": "Fireplace", "message": expected}]
+
+
+async def test_warnings_without_sensors(hass: HomeAssistant, caplog: pytest.LogCaptureFixture) -> None:
+    """Without sensors there are no warnings and no errors."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    await setup_automation(hass, {}, required=False)
+    hass.states.async_set(DOOR, "on")
+    hass.states.async_set(ERROR, "chimney_draught_too_low")
+    await settle()
+    assert persistent == []
+    assert "Error" not in caplog.text
+
+
+@pytest.mark.parametrize(("channels", "service"), [("urgent", "pushover"), ("required", "mobile_app_phone")])
+async def test_warning_actions(hass: HomeAssistant, channels: str, service: str) -> None:
+    """The warnings use the urgent actions by default, or those of wood required, with own texts."""
+    calls = {name: async_mock_service(hass, "notify", name) for name in ("pushover", "mobile_app_phone")}
+    await setup_warnings(
+        hass,
+        {
+            "notify_actions": notify("notify.mobile_app_phone"),
+            "urgent_enabled": True,
+            "urgent_notify_actions": notify("notify.pushover"),
+            "warning_channels": channels,
+            "door_message": "Tür zu!",
+        },
+    )
+    hass.states.async_set(DOOR, "on")
+    await settle()
+    assert [call.data["message"] for call in calls[service]] == ["Tür zu!"]
+    assert sum(len(found) for found in calls.values()) == 1
+
+
+async def test_french_warning_texts(hass: HomeAssistant) -> None:
+    """The warnings have French default texts."""
+    persistent = async_mock_service(hass, "notify", "persistent_notification")
+    await setup_warnings(hass, {"language": "fr"})
+    hass.states.async_set(DOOR, "on")
+    hass.states.async_set(ERROR, "chimney_draught_too_low")
+    await settle()
+    assert [call.data["message"] for call in persistent] == [
+        "La porte du poêle est ouverte depuis trop longtemps !",
+        "La cheminée n'a pas assez de tirage !",
+    ]
