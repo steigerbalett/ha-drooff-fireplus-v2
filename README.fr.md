@@ -138,6 +138,7 @@ Au premier démarrage, les compteurs incluent les événements encore enregistr�
 | ------------ | ------ | --------------------------------------------------------------- |
 | `Luminosité` | Number | Luminosité du bandeau LED en pour cent                          |
 | `Volume`     | Number | Volume du signal sonore en pour cent (uniquement Drooff fire+ v2) |
+| `Éteindre`   | Button | Éteint le fire+ comme *fire+ ausschalten* dans son application web, uniquement en veille. Attendez ensuite 2 minutes, puis le fire+ peut être débranché de l'alimentation électrique ; il ne redémarre que lorsque son alimentation est coupée puis rétablie. Désactivé par défaut |
 
 ### Diagnostic
 
@@ -155,8 +156,19 @@ Les entités rarement utiles ou qui écrivent beaucoup de valeurs dans la base d
 | `Mises à jour automatiques`       | Binary Sensor | Le fire+ installe les mises à jour automatiquement (applications web récentes). Désactivé par défaut |
 | `Alerte de tirage`                | Binary Sensor | L'alerte de tirage du fire+ est activée (applications web récentes) |
 | `Version de l'application web`    | Sensor        | Version de l'application web du fire+ (applications web récentes). Désactivé par défaut |
-| `Dernière mise à jour`            | Sensor        | Résultat de la dernière mise à jour logicielle : `no_updates`, `started`, `running`, `successful`, `failed`, `postponed` (jusqu'à l'arrêt du poêle), `not_started` ou `unknown`. Le message du fire+ (en allemand) est un attribut. Désactivé par défaut, lu une fois par minute lorsqu'il est activé |
+| `Dernière mise à jour`            | Sensor        | Résultat de la dernière mise à jour logicielle : `no_updates`, `started`, `running`, `successful`, `failed`, `postponed` (jusqu'à l'arrêt du poêle), `not_started` ou `unknown`. Le message du fire+ (en allemand) est un attribut. Désactivé par défaut, lu une fois par minute lorsqu'il est activé (sinon toutes les 10 minutes pour les avis) |
 | `Recherche de mises à jour`       | Sensor        | Moment où le fire+ recherche des mises à jour chaque semaine, par ex. « Mittwoch, 03:43 Uhr ». Désactivé par défaut |
+
+### Avis
+
+L'intégration affiche des avis sous *Paramètres*, *Réparations* :
+
+- **Nouveau logiciel installé :** la version du micrologiciel ou de l'application web du fire+ a changé, même pendant que Home Assistant ne fonctionnait pas (ancienne et nouvelle version). Confirmez pour le supprimer.
+- **Mise à jour logicielle en attente :** le fire+ a trouvé une mise à jour et l'installe dès que le poêle est en veille. On ne peut pas demander au fire+ si une mise à jour est disponible sans l'installer ; c'est donc la seule indication avant une mise à jour.
+- **Échec de la mise à jour logicielle :** la dernière mise à jour a échoué, avec le message du fire+.
+- **Le fire+ a été éteint :** après *Éteindre*, jusqu'à ce que le fire+ réponde à nouveau.
+
+Les avis concernant les mises à jour disparaissent dès que le fire+ signale un autre résultat. Pour cela, le résultat de la mise à jour est lu toutes les 10 minutes.
 
 ## Carte de tableau de bord
 

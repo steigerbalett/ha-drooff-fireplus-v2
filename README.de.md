@@ -136,6 +136,7 @@ Beim ersten Start enthalten die Zähler die Ereignisse, die noch auf dem fire+ g
 | --- | --- | --- |
 | `Helligkeit` | Zahl | Helligkeit des LED-Streifens in Prozent |
 | `Lautstärke` | Zahl | Lautstärke des Signaltons in Prozent (nur Drooff fire+ v2) |
+| `Herunterfahren` | Taste | Fährt die fire+ herunter wie *fire+ ausschalten* in ihrer Webapp, nur in Standby. Danach 2 Minuten warten, dann darf die fire+ von der Stromversorgung getrennt werden; sie startet erst wieder, wenn ihre Stromversorgung aus- und wieder eingeschaltet wird. Standardmäßig deaktiviert |
 
 ### Diagnose
 
@@ -153,8 +154,19 @@ Selten gebrauchte Entitäten und solche, die viele Werte in die Datenbank schrei
 | `Automatische Updates` | Binärsensor | Der fire+ installiert Updates automatisch (neuere Webapps). Standardmäßig deaktiviert |
 | `Zugwarnung` | Binärsensor | Die Zugwarnung des fire+ ist eingeschaltet (neuere Webapps) |
 | `Version Webapp` | Sensor | Version der fire+ Webapp (neuere Webapps). Standardmäßig deaktiviert |
-| `Letztes Update` | Sensor | Ergebnis des letzten Software-Updates: `no_updates`, `started`, `running`, `successful`, `failed`, `postponed` (bis der Ofen aus ist), `not_started` oder `unknown`. Die Meldung des fire+ ist ein Attribut. Standardmäßig deaktiviert, wird nur bei Aktivierung einmal pro Minute gelesen |
+| `Letztes Update` | Sensor | Ergebnis des letzten Software-Updates: `no_updates`, `started`, `running`, `successful`, `failed`, `postponed` (bis der Ofen aus ist), `not_started` oder `unknown`. Die Meldung des fire+ ist ein Attribut. Standardmäßig deaktiviert, wird bei Aktivierung einmal pro Minute gelesen (sonst alle 10 Minuten für die Hinweise) |
 | `Update-Suche` | Sensor | Wann der fire+ wöchentlich nach Updates sucht, z. B. „Mittwoch, 03:43 Uhr“. Standardmäßig deaktiviert |
+
+### Hinweise
+
+Die Integration zeigt Hinweise unter *Einstellungen*, *Reparaturen*:
+
+- **Neue Software installiert:** Die Firmware- oder Webapp-Version der fire+ hat sich geändert, auch während Home Assistant nicht lief (alte und neue Version). Bestätigen entfernt den Hinweis.
+- **Software-Update wartet:** Die fire+ hat ein Update gefunden und installiert es, sobald der Ofen in Standby ist. Ob ein Update bereitliegt, lässt sich bei der fire+ nicht abfragen, ohne es zu installieren; das ist der einzige Hinweis vor einem Update.
+- **Software-Update fehlgeschlagen:** Das letzte Update ist fehlgeschlagen, mit der Meldung der fire+.
+- **fire+ wurde heruntergefahren:** Nach *Herunterfahren*, bis die fire+ wieder antwortet.
+
+Die Hinweise zu Updates verschwinden, sobald die fire+ ein anderes Ergebnis meldet. Dafür wird das Update-Ergebnis alle 10 Minuten gelesen.
 
 ## Dashboard-Karte
 

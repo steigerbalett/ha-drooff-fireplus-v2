@@ -20,6 +20,7 @@ from homeassistant.components.frontend import add_extra_js_url
 from homeassistant.components.http import StaticPathConfig
 from homeassistant.const import CONF_HOST, Platform
 from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.event import async_track_time_interval
 from homeassistant.helpers.start import async_at_started
@@ -39,7 +40,7 @@ from custom_components.drooff_fireplus_v2.const import (
 )
 
 from .api import FireplusApiClient
-from .coordinator import FireplusDataUpdateCoordinator, statistics_store
+from .coordinator import FireplusDataUpdateCoordinator, issue_id, statistics_store, versions_store
 from .data import FireplusData
 
 if TYPE_CHECKING:
@@ -59,7 +60,11 @@ PLATFORMS: list[Platform] = [
     Platform.BINARY_SENSOR,
     Platform.SWITCH,
     Platform.NUMBER,
+    Platform.BUTTON,
 ]
+
+# Notices (repairs) the integration shows for a config entry
+ISSUES = ("firmware_updated", "update_postponed", "update_failed", "shut_down")
 
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
@@ -102,6 +107,7 @@ SHIPPED_BLUEPRINTS = {
         "448cb3f46e1c23cb747c47a12f4e33665ca672df0f6b25472a2632489922e64e",
         "17c9f78642e5f848fd7689598015a88875078279124a4bb0b5feb58a555faa55",
         "72079e41951d5c0e576da3b412cbf6030508fa9f66fe4359a1c43c55c793a056",
+        "35f2d335acf0bba591a4e665dec49b48200b6eeb7ebe28d57bae2f67ca8f0a67",
     },
 }
 
@@ -189,12 +195,15 @@ async def async_setup_entry(
 
     # https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
     await coordinator.async_config_entry_first_refresh()
+    # notice when the software of the fire+ changed since it was last seen
+    await coordinator.async_load_versions()
 
     # statistics from the event log, read less often than the values
     await coordinator.async_load_statistics()
     await coordinator.async_update_statistics()
     entry.async_on_unload(async_track_time_interval(hass, coordinator.async_update_statistics, EVENTS_INTERVAL))
-    # result of the last software update, only read while one of its sensors is enabled
+    # result of the last software update for the notices about postponed or failed updates
+    await coordinator.async_update_update_status(force=True)
     entry.async_on_unload(async_track_time_interval(hass, coordinator.async_update_update_status, EVENTS_INTERVAL))
 
     # reconfiguration and a new IP address from DHCP reload the entry themselves
@@ -216,5 +225,8 @@ async def async_remove_entry(
     hass: HomeAssistant,
     entry: FireplusConfigEntry,
 ) -> None:
-    """Delete the stored statistics of a removed entry."""
+    """Delete the stored statistics, versions and notices of a removed entry."""
     await statistics_store(hass, entry.entry_id).async_remove()
+    await versions_store(hass, entry.entry_id).async_remove()
+    for key in ISSUES:
+        ir.async_delete_issue(hass, DOMAIN, issue_id(key, entry.entry_id))

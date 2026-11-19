@@ -136,6 +136,7 @@ On the first start the counters include the events still stored on the fire+ (us
 | ------------ | ------ | --------------------------------------------------------------- |
 | `Brightness` | Number | Brightness of the LED strip in percent                          |
 | `Volume`     | Number | Volume of the acoustic signal in percent (only Drooff fire+ v2) |
+| `Shut down`  | Button | Shuts down the fire+ like *fire+ ausschalten* in its web app, only in standby. Afterwards wait 2 minutes, then the fire+ may be disconnected from the power supply; it only starts again when its power supply is switched off and on. Disabled by default |
 
 ### Diagnostic
 
@@ -153,8 +154,19 @@ Entities that are rarely needed or that write many values to the database are di
 | `Automatic updates`    | Binary Sensor | The fire+ installs updates automatically (recent web applications). Disabled by default |
 | `Draught warning`      | Binary Sensor | The draught warning of the fire+ is enabled (recent web applications) |
 | `Web app version`      | Sensor        | Version of the fire+ web application (recent web applications). Disabled by default |
-| `Last update`          | Sensor        | Result of the last software update: `no_updates`, `started`, `running`, `successful`, `failed`, `postponed` (until the stove is off), `not_started` or `unknown`. The message of the fire+ (German) is an attribute. Disabled by default, read once a minute while enabled |
+| `Last update`          | Sensor        | Result of the last software update: `no_updates`, `started`, `running`, `successful`, `failed`, `postponed` (until the stove is off), `not_started` or `unknown`. The message of the fire+ (German) is an attribute. Disabled by default, read once a minute while enabled (otherwise every 10 minutes for the notices) |
 | `Update search`        | Sensor        | When the fire+ looks for updates every week, e.g. "Mittwoch, 03:43 Uhr". Disabled by default |
+
+### Notices
+
+The integration shows notices under *Settings*, *Repairs*:
+
+- **New software installed:** the firmware or web app version of the fire+ has changed, also while Home Assistant was not running (old and new version). Confirm it to remove it.
+- **Software update waiting:** the fire+ has found an update and installs it as soon as the stove is in standby. The fire+ can not be asked whether an update is available without installing it, so this is the only hint before an update.
+- **Software update failed:** the last update failed, with the message of the fire+.
+- **fire+ was shut down:** after *Shut down*, until the fire+ answers again.
+
+The notices about updates disappear when the fire+ reports another result. The update result is read every 10 minutes for this.
 
 ## Dashboard card
 

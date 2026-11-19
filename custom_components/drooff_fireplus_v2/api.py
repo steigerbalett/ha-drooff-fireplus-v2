@@ -33,6 +33,9 @@ ROOM_CONTROLLER = 3
 # Time the fire+ needs before it reports written settings (s)
 SETTINGS_DELAY = 1
 
+# Time to wait for the answer of the fire+ when it shuts down (s)
+SHUTDOWN_TIMEOUT = 10
+
 # Bit in panel value 13 that marks a stove with the Blue Angel label (and an OekoSolve filter)
 BLUE_ANGEL_FLAG = 2
 
@@ -51,6 +54,12 @@ class FireplusApiClientInvalidResponseError(
     FireplusApiClientError,
 ):
     """Exception to indicate that the response contained invalid data."""
+
+
+class FireplusApiClientNotStandbyError(
+    FireplusApiClientError,
+):
+    """Exception to indicate that the fire+ can only do this in standby."""
 
 
 class FireplusApiClient:
@@ -106,6 +115,32 @@ class FireplusApiClient:
         result = await self._api_wrapper(method="get", url=f"http://{self._host}/php/UpdateErgebniss.php")
         schedule = await self._api_wrapper(method="get", url=f"http://{self._host}/php/easupdate.php")
         return FireplusUpdateStatus.parse(result, schedule)
+
+    async def async_shut_down(self) -> None:
+        """
+        Shut down the fire+ like the button of its web app, only possible in standby.
+
+        Afterwards the fire+ can be disconnected from the power supply; it only starts again when
+        it is switched off and on. It may go down before it answers, so a closed connection or a
+        missing answer counts as success.
+        """
+        async with self._write_lock:
+            data = await self.async_get_data()
+            if data.operation_status is not FireplusOperationStatus.STANDBY:
+                raise FireplusApiClientNotStandbyError(data.operation_status.name.lower())
+            try:
+                async with asyncio.timeout(SHUTDOWN_TIMEOUT):
+                    response = await self._session.post(
+                        f"http://{self._host}/php/Ausschalten.php", data={"Ausschalten": "1"}
+                    )
+                    response.raise_for_status()
+            except (aiohttp.ClientResponseError, aiohttp.ClientConnectorError, socket.gaierror) as exception:
+                # the page is missing (older firmware) or the fire+ could not be reached at all
+                msg = f"Error shutting down the fire+ - {exception}"
+                raise FireplusApiClientCommunicationError(msg) from exception
+            except TimeoutError, aiohttp.ClientError:
+                # the fire+ went down before it answered
+                return
 
     async def async_update_settings(
         self,

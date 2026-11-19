@@ -185,6 +185,11 @@
             "led": {
                 "name": "LED"
             }
+        },
+        "button": {
+            "shutdown": {
+                "name": "Éteindre"
+            }
         }
     },
     "exceptions": {
@@ -196,6 +201,37 @@
         },
         "burn_rate_blue_angel": {
             "message": "Les poêles labellisés Ange bleu ne proposent que les puissances 1 (Eco) et 6 (Power), pas {value}."
+        },
+        "shutdown_not_standby": {
+            "message": "Le fire+ ne peut être éteint qu'en veille."
+        },
+        "shutdown_failed": {
+            "message": "L'arrêt du Drooff fire+ a échoué : {error}"
+        }
+    },
+    "issues": {
+        "firmware_updated": {
+            "title": "{name} : nouveau logiciel installé",
+            "fix_flow": {
+                "step": {
+                    "confirm": {
+                        "title": "Nouveau logiciel sur le fire+",
+                        "description": "Le logiciel de {name} est passé de {old_version} à {new_version} (micrologiciel / application web). Confirmez pour supprimer cet avis."
+                    }
+                }
+            }
+        },
+        "update_postponed": {
+            "title": "{name} : mise à jour logicielle en attente",
+            "description": "Le fire+ a trouvé une mise à jour logicielle. Il l'installe dès que le poêle est en veille. Message du fire+ : {message}"
+        },
+        "update_failed": {
+            "title": "{name} : échec de la mise à jour logicielle",
+            "description": "La dernière mise à jour logicielle du fire+ a échoué. Réessayez sur la page de service de l'application web du fire+. Si l'échec persiste, débranchez brièvement le fire+ de l'alimentation électrique ou contactez le service Drooff. Message du fire+ : {message}"
+        },
+        "shut_down": {
+            "title": "{name} a été éteint",
+            "description": "Le fire+ a été éteint depuis Home Assistant. Attendez 2 minutes avant de le débrancher de l'alimentation électrique. Il ne redémarre que lorsque son alimentation est coupée puis rétablie ; d'ici là, ses entités sont indisponibles. Cet avis disparaît dès que le fire+ répond à nouveau."
         }
     }
 }

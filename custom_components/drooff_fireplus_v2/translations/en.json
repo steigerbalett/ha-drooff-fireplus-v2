@@ -185,6 +185,11 @@
             "led": {
                 "name": "LED"
             }
+        },
+        "button": {
+            "shutdown": {
+                "name": "Shut down"
+            }
         }
     },
     "exceptions": {
@@ -196,6 +201,37 @@
         },
         "burn_rate_blue_angel": {
             "message": "Stoves with the Blue Angel label only offer burn rate 1 (Eco) and 6 (Power), not {value}."
+        },
+        "shutdown_not_standby": {
+            "message": "The fire+ can only be shut down in standby."
+        },
+        "shutdown_failed": {
+            "message": "Shutting down the Drooff fire+ failed: {error}"
+        }
+    },
+    "issues": {
+        "firmware_updated": {
+            "title": "{name}: new software installed",
+            "fix_flow": {
+                "step": {
+                    "confirm": {
+                        "title": "New software on the fire+",
+                        "description": "The software of {name} has changed from {old_version} to {new_version} (firmware / web app). Confirm to remove this notice."
+                    }
+                }
+            }
+        },
+        "update_postponed": {
+            "title": "{name}: software update waiting",
+            "description": "The fire+ has found a software update. It installs it as soon as the stove is in standby. Message of the fire+: {message}"
+        },
+        "update_failed": {
+            "title": "{name}: software update failed",
+            "description": "The last software update of the fire+ failed. Try again on the service page of the fire+ web app. If it keeps failing, disconnect the fire+ from the power supply for a moment or contact the Drooff service. Message of the fire+: {message}"
+        },
+        "shut_down": {
+            "title": "{name} was shut down",
+            "description": "The fire+ was shut down from Home Assistant. Wait 2 minutes before you disconnect it from the power supply. It only starts again when its power supply is switched off and on, until then its entities are unavailable. This notice disappears when the fire+ answers again."
         }
     }
 }

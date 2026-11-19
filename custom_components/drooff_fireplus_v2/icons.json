@@ -133,6 +133,11 @@
                     "on": "mdi:toggle-switch"
                 }
             }
+        },
+        "button": {
+            "shutdown": {
+                "default": "mdi:power"
+            }
         }
     }
 }

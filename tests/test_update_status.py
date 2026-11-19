@@ -21,13 +21,13 @@ if TYPE_CHECKING:
 async def test_update_sensors_disabled_by_default(
     hass: HomeAssistant, aioclient_mock: AiohttpClientMocker, config_entry: MockConfigEntry
 ) -> None:
-    """The sensors have to be enabled, until then the update pages are not read."""
+    """The sensors have to be enabled; the update pages are read anyway, for the notices."""
     mock_fireplus(aioclient_mock)
     await setup_integration(hass, config_entry)
     for suffix in ("sensor.update_result", "sensor.update_schedule"):
         entry = er.async_get(hass).async_get(entity_id(hass, config_entry, suffix))
         assert entry.disabled_by is er.RegistryEntryDisabler.INTEGRATION
-    assert not any("Update" in str(call[1]) for call in aioclient_mock.mock_calls)
+    assert any("UpdateErgebniss" in str(call[1]) for call in aioclient_mock.mock_calls)
 
 
 @pytest.mark.usefixtures("entity_registry_enabled_by_default")

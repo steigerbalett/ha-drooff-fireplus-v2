@@ -185,6 +185,11 @@
             "led": {
                 "name": "LED"
             }
+        },
+        "button": {
+            "shutdown": {
+                "name": "Herunterfahren"
+            }
         }
     },
     "exceptions": {
@@ -196,6 +201,37 @@
         },
         "burn_rate_blue_angel": {
             "message": "Öfen mit Blauem Engel bieten nur Brennleistung 1 (Eco) und 6 (Power), nicht {value}."
+        },
+        "shutdown_not_standby": {
+            "message": "Die fire+ lässt sich nur in Standby herunterfahren."
+        },
+        "shutdown_failed": {
+            "message": "Die Drooff fire+ konnte nicht heruntergefahren werden: {error}"
+        }
+    },
+    "issues": {
+        "firmware_updated": {
+            "title": "{name}: neue Software installiert",
+            "fix_flow": {
+                "step": {
+                    "confirm": {
+                        "title": "Neue Software auf der fire+",
+                        "description": "Die Software von {name} hat sich von {old_version} auf {new_version} geändert (Firmware / Webapp). Bestätige, um diesen Hinweis zu entfernen."
+                    }
+                }
+            }
+        },
+        "update_postponed": {
+            "title": "{name}: Software-Update wartet",
+            "description": "Die fire+ hat ein Software-Update gefunden. Sie installiert es, sobald der Ofen in Standby ist. Meldung der fire+: {message}"
+        },
+        "update_failed": {
+            "title": "{name}: Software-Update fehlgeschlagen",
+            "description": "Das letzte Software-Update der fire+ ist fehlgeschlagen. Versuche es auf der Serviceseite der fire+ Webapp erneut. Klappt es weiterhin nicht, trenne die fire+ kurz von der Stromversorgung oder wende dich an den Drooff-Service. Meldung der fire+: {message}"
+        },
+        "shut_down": {
+            "title": "{name} wurde heruntergefahren",
+            "description": "Die fire+ wurde aus Home Assistant heruntergefahren. Warte 2 Minuten, bevor du sie von der Stromversorgung trennst. Sie startet erst wieder, wenn ihre Stromversorgung aus- und wieder eingeschaltet wird, bis dahin sind ihre Entitäten nicht verfügbar. Dieser Hinweis verschwindet, sobald die fire+ wieder antwortet."
         }
     }
 }

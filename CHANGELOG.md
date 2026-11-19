@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.8b1
+
+Beta: HACS offers it once *Show beta versions* is switched on for the repository.
+
+- Notices under *Settings*, *Repairs* about the software of the fire+: new software installed (old and new version, also when it was installed while Home Assistant was not running), update waiting until the stove is in standby, update failed. The fire+ can not be asked whether an update is available without installing it; a waiting update is the only hint before an update. For these notices the update result is read every 10 minutes, also when its sensor is disabled.
+- New button *Shut down* (configuration, disabled by default): shuts down the fire+ like *fire+ ausschalten* in its web app, only in standby. Afterwards the fire+ may be disconnected from the power supply after 2 minutes, it only starts again when its power supply is switched off and on. A notice shows this until the fire+ answers again.
+- The device page shows the new firmware version right after an update, without a reload.
+- Blueprint: only `source_url` points to the new release, nothing else changed.
+
 ## 2.0.7
 
 - French: the integration (setup, entities, states, error messages) is translated into French.
